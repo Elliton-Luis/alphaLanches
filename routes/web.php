@@ -16,10 +16,13 @@ Route::post('/auth', [LoginController::class, 'authUser'])->name('login.auth');
 Route::get('/logout', [LoginController::class, 'logoutUser'])->name('login.logout');
 
 #Rota para a tela de perfil do usuário
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/remove-picture', [ProfileController::class, 'removePicture'])->name('profile.remove_picture');
+    Route::delete('/profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
 });
+
 
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
 
