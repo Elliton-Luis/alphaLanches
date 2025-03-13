@@ -2,6 +2,7 @@
 
 @section('title', 'AlphaLanches - Perfil')
 
+@section('content')
 <div class="container">
     <h2 class="mb-4">Meu Perfil</h2>
 
