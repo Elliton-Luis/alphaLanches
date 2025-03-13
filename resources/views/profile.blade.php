@@ -10,7 +10,7 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <form method="POST" action="{{ route('perfil.update') }}">
+    <form method="POST" action="{{ route('profile.update') }}">
         @csrf
 
         <div class="mb-3">
