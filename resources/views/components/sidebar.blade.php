@@ -1,4 +1,4 @@
-<div id="sidebar" class="collapse d-none d-md-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 200px;">
+<div id="sidebar" class="collapse d-none d-md-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 240px;">
     <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <img src="{{ asset('images/logo_black.png') }}" height="30px" alt="Logo Alpha">
     </a>
@@ -6,7 +6,7 @@
     
     <ul class="nav nav-pills flex-column mb-auto">
         @php
-            $buttons = [
+            $buttons = [ #Falta adicionar as rotas
                 ['icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
                 ['icon' => 'person-fill-add', 'label' => 'Cadastrar Usuário'],
                 ['icon' => 'currency-dollar', 'label' => 'Financeiro'],
@@ -36,7 +36,7 @@
             <strong>{{ auth()->user()->name ?? 'Usuário' }}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li><a class="dropdown-item" href="#">Alterar dados</a></li>
+            <li><a class="dropdown-item" href="#">Configurações</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Sair</a></li>
         </ul>
