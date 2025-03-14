@@ -22,7 +22,7 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/',
+            'telefone' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/',
             'cpf' => 'nullable|regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/|unique:users,cpf,' . $user->id,
             'password' => 'nullable|min:6|confirmed',
             'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
@@ -30,7 +30,7 @@ class ProfileController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->telefone = $request->telefone;
         $user->cpf = $request->cpf;
 
         if ($request->filled('password')) {
