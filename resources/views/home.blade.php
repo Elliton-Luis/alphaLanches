@@ -15,7 +15,7 @@
             @php
                 $buttons = [
                     ['route' => 'painelFinanceiro', 'icon' => 'money-bill-trend-up', 'label' => 'Financeiro'],
-                    ['route' => 'painelEstoque', 'icon' => 'box', 'label' => 'Estoque'],
+                    ['route' => 'estoque', 'icon' => 'box', 'label' => 'Estoque'],
                     ['route' => 'profile', 'icon' => 'user', 'label' => 'Perfil'],
                     ['route' => 'painelUsuarios', 'icon' => 'users', 'label' => 'Usuários'],
                     ['route' => 'painelCompras', 'icon' => 'basket-shopping', 'label' => 'Histórico de Compras'],
