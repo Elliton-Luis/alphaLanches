@@ -2,8 +2,6 @@
 
 @section('title','AlphaLanches AI cachorro')
 
-
-
 @section('content')
     
 @endsection
