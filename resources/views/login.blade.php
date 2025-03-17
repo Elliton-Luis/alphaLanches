@@ -28,18 +28,21 @@
 
         <form action="{{ route('login.auth') }}" method="POST">
             @csrf
-            <div class="mb-3">
-                <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" name="email" placeholder="Digite seu e-mail" required>
+            <div class="mb-3 form-group">
+                <i class="fas fa-envelope icon"></i>
+                <input type="email" class="form-control form-control-lg form-control-icon" name="email" placeholder="Digite seu e-mail" required>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Senha</label>
-                <input type="password" class="form-control" name="password" placeholder="Digite sua senha" required>
+            <div class="mb-3 form-group">
+                <i class="fas fa-lock icon"></i>
+                <input type="password" class="form-control form-control-lg form-control-icon" name="password" placeholder="Digite sua senha" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Entrar</button>
         </form>
         <div class="text-center mt-3">
             <a href="#">Esqueceu a senha?</a>
+        </div>
+        <div class="text-center mt-3">
+        <a href="{{route('login.cadastro')}}">Cadastre-se</a>
         </div>
     </div>
 
