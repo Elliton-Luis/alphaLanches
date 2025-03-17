@@ -17,6 +17,9 @@ Route::get('/logout', [LoginController::class, 'logoutUser'])->name('login.logou
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/remove-picture', [ProfileController::class, 'removePicture'])->name('profile.removePicture');
+    Route::post('/profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
 });
 
 Route::prefix('estoque')->group(function () {
