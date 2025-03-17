@@ -24,10 +24,10 @@
 
             @foreach ($buttons as $btn)
                 <div class="col">
-                    <button class="btn btn-light square-btn" onclick="redirectTo('{{ $btn['route'] }}')">
+                    <button class="btn btn-light square-btn" data-route="{{ url($btn['route']) }}" onclick="redirectTo(this)">
                         <i class="bi bi-{{ $btn['icon'] }} icon-size"></i>
                         <div class="label-size">{{ $btn['label'] }}</div>
-                    </button>
+                    </button>                    
                 </div>
             @endforeach
         </div>
