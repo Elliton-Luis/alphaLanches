@@ -12,7 +12,7 @@
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
             @php
                 $buttons = [
-                    ['route' => 'painelFinanceiro', 'icon' => 'cash-coin', 'label' => 'Financeiro'],
+                    ['route' => 'financeiro', 'icon' => 'cash-coin', 'label' => 'Financeiro'],
                     ['route' => 'estoque', 'icon' => 'box', 'label' => 'Estoque'],
                     ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
                     ['route' => 'painelUsuarios', 'icon' => 'people', 'label' => 'Usuários'],

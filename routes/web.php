@@ -8,6 +8,7 @@ use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EstoqueController;
+use App\Http\Controllers\FinanceiroController;
 
 Route::get('/home', [HomeController::class, 'showHome'])->name('home.index');
 
@@ -30,3 +31,5 @@ Route::prefix('estoque')->group(function () {
 });
 
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
+
+Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name('financeiro.index');
