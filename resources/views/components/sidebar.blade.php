@@ -10,21 +10,21 @@
     <ul class="nav nav-pills flex-column mb-auto">
         @php
             $buttons = [ #Falta adicionar as rotas
-                ['icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
-                ['icon' => 'person-fill-add', 'label' => 'Cadastrar Usuário'],
-                ['icon' => 'currency-dollar', 'label' => 'Financeiro'],
-                ['icon' => 'box', 'label' => 'Estoque'],
-                ['icon' => 'person-circle', 'label' => 'Perfil'],
-                ['icon' => 'people-fill', 'label' => 'Usuários'],
-                ['icon' => 'basket', 'label' => 'Histórico de Compras'],
-                ['icon' => 'shop', 'label' => 'PDV'],
-                ['icon' => 'info-circle', 'label' => 'Sobre Nós'],
+                ['route' => 'home', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
+                ['route' => 'home', 'icon' => 'person-fill-add', 'label' => 'Cadastrar Usuário'], #ERRADO
+                ['route' => 'financeiro', 'icon' => 'currency-dollar', 'label' => 'Financeiro'],
+                ['route' => 'estoque', 'icon' => 'box', 'label' => 'Estoque'],
+                ['route' => 'profile', 'icon' => 'person-circle', 'label' => 'Perfil'],
+                ['route' => 'home', 'icon' => 'people-fill', 'label' => 'Usuários'], #ERRADO
+                ['route' => 'home', 'icon' => 'basket', 'label' => 'Histórico de Compras'], #ERRADO
+                ['route' => 'home', 'icon' => 'shop', 'label' => 'PDV'], #ERRADO
+                ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós'], #ERRADO
             ];
         @endphp
 
         @foreach ($buttons as $btn)
             <li class="nav-item">
-                <a href="#" class="nav-link text-white btn btn-primary text-start">
+                <a href="{{ url($btn['route'])}}" class="nav-link text-white btn btn-primary text-start">
                     <i class="bi bi-{{ $btn['icon'] }} fs-5 me-2"></i> {{ $btn['label'] }}
                 </a>
             </li>
