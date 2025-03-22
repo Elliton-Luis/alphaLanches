@@ -54,7 +54,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         if ($user->profile_picture) {
-            Storage::delete($user->profile_picture);
+            Storage::disk('public')->delete($user->profile_picture);
             $user->profile_picture = null;
             $user->save();
         }
@@ -64,7 +64,12 @@ class ProfileController extends Controller
     public function delete()
     {
         $user = Auth::user();
+        Auth::logout();
+        if ($user->profile_picture) {
+            Storage::disk('public')->delete($user->profile_picture);
+        }
         $user->delete();
         return redirect('/')->with('success', 'Conta excluída com sucesso!');
     }
+    
 }

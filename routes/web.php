@@ -8,6 +8,7 @@ use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EstoqueController;
+use App\Http\Controllers\FinanceiroController;
 
 Route::get('/home', [HomeController::class, 'showHome'])->name('home.index');
 
@@ -17,6 +18,9 @@ Route::get('/logout', [LoginController::class, 'logoutUser'])->name('login.logou
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/remove-picture', [ProfileController::class, 'removePicture'])->name('profile.removePicture');
+    Route::post('/profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
 });
 
 Route::prefix('estoque')->group(function () {
@@ -27,3 +31,5 @@ Route::prefix('estoque')->group(function () {
 });
 
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
+
+Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name('financeiro.index');
