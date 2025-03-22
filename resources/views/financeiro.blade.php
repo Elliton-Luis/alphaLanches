@@ -3,12 +3,13 @@
 @section('title', 'AlphaLanches - Financeiro')
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/financeiro.css') }}">
     <script src="{{ asset('js/financeiro.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <div class="container mt-4 text">
         <h1 class="text-center mb-4">Painel Financeiro</h1>
+
+        <br>
 
         <div class="row justify-content-evenly align-items-center flex-wrap">
             <div class="col-md-3">
