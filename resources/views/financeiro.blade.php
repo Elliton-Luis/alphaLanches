@@ -96,13 +96,48 @@
             </div>
         </div>
 
-        <div class="card mb-4">
+        <div class="card shadow-lg border-0 mb-4">
             <div class="card-body">
-                <h5 class="card-title">Ranking de Produtos Mais Vendidos</h5>
-                <ul class="list-group">
-                    <li class="list-group-item">Sanduíche - 150 vendas</li>
-                    <li class="list-group-item">Refrigerante - 120 vendas</li>
-                    <li class="list-group-item">Salgado - 100 vendas</li>
+                <h5 class="card-title text-center fw-bold mb-3">
+                    <i class="fas fa-trophy text-warning"></i> Ranking de Produtos Mais Vendidos
+                </h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between fw-bold">
+                            <span>🥇 Sanduíche</span>
+                            <span class="badge bg-success rounded-pill">150 vendas</span>
+                        </div>
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 42%" 
+                                 aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">
+                                42%
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between fw-bold">
+                            <span>🥈 Refrigerante</span>
+                            <span class="badge bg-primary rounded-pill">120 vendas</span>
+                        </div>
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 33%" 
+                                 aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">
+                                33%
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between fw-bold">
+                            <span>🥉 Salgado</span>
+                            <span class="badge bg-secondary rounded-pill">100 vendas</span>
+                        </div>
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-secondary" role="progressbar" style="width: 28%" 
+                                 aria-valuenow="28" aria-valuemin="0" aria-valuemax="100">
+                                28%
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
