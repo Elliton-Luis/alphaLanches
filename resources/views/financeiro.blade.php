@@ -7,10 +7,10 @@
     <script src="{{ asset('js/financeiro.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="container mt-4">
+    <div class="container mt-4 text">
         <h1 class="text-center mb-4">Painel Financeiro</h1>
 
-        <div class="row">
+        <div class="row justify-content-evenly align-items-center flex-wrap">
             <div class="col-md-3">
                 <div class="card text-white bg-dark mb-3">
                     <div class="card-body">
