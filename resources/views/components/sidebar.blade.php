@@ -1,7 +1,10 @@
 <div id="sidebar" class="collapse d-none d-md-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 240px;">
-    <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <img src="{{ asset('images/logo_black.png') }}" height="30px" alt="Logo Alpha">
-    </a>
+    <div id="image" style="margin-left: 15%">
+        <a href="{{ url('home') }}" class="d-flex align-items-center" style="width: 100px">
+            <img src="{{ asset('images/AlphaLanches-Logo.png') }}" height=78px" alt="Logo Alpha">
+        </a>
+    </div>
+    
     <hr>
     
     <ul class="nav nav-pills flex-column mb-auto">
