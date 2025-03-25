@@ -10,6 +10,9 @@ class LoginController extends Controller
     public function showlogin(){
         return view('login');
     }
+    public function showCadastro(){
+        return view('cadastro');
+    }
 
     public function authUser(Request $request){
         $dados = $request->except('_token');
@@ -19,6 +22,9 @@ class LoginController extends Controller
         }
 
         return redirect()->route('home.index');
+    }
+    public function storeUser(Request $request){
+        dd($request);
     }
 
     public function logoutUser(Request $request){
