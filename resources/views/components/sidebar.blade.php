@@ -39,7 +39,6 @@
             <strong>{{ auth()->user()->name ?? 'Usuário' }}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li><a class="dropdown-item" href="#">Configurações</a></li>
             <li>
                 <hr class="dropdown-divider">
             </li>
