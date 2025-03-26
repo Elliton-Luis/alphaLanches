@@ -31,6 +31,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login.index')->with('successLogout','Sessão deslogada com sucesso');
+        return redirect()->route('login')->with('successLogout','Sessão deslogada com sucesso');
     }
 }

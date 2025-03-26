@@ -4,9 +4,9 @@
             <img src="{{ asset('images/AlphaLanches-Logo.png') }}" height=78px" alt="Logo Alpha">
         </a>
     </div>
-    
+
     <hr>
-    
+
     <ul class="nav nav-pills flex-column mb-auto">
         @php
             $buttons = [ #Falta adicionar as rotas
@@ -35,13 +35,23 @@
 
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-           data-bs-toggle="dropdown" aria-expanded="false">
+            data-bs-toggle="dropdown" aria-expanded="false">
             <strong>{{ auth()->user()->name ?? 'Usuário' }}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
             <li><a class="dropdown-item" href="#">Configurações</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Sair</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <form id="logout-form" action="{{ route('login.logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a class="dropdown-item" href="#"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Sair
+                </a>
+            </li>
         </ul>
     </div>
 </div>

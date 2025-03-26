@@ -14,7 +14,7 @@ Route::get('/home', [HomeController::class, 'showHome'])->name('home.index');
 
 Route::get('/', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/auth', [LoginController::class, 'authUser'])->name('login.auth');
-Route::get('/logout', [LoginController::class, 'logoutUser'])->name('login.logout');
+Route::post('/logout', [LoginController::class, 'logoutUser'])->name('login.logout');
 Route::get('/cadastro',[LoginController::class, 'showCadastro'])->name('login.cadastro');
 Route::post('/store',[LoginController::class,'storeUser'])->name('login.store');
 
