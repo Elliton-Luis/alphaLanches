@@ -9,7 +9,7 @@
 
     <ul class="nav nav-pills flex-column mb-auto">
         @php
-            $buttons = [ #Falta adicionar as rotas
+            $buttons = [
                 ['route' => 'home', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
                 ['route' => 'home', 'icon' => 'person-fill-add', 'label' => 'Cadastrar Usuário'], #ERRADO
                 ['route' => 'financeiro', 'icon' => 'currency-dollar', 'label' => 'Financeiro'],

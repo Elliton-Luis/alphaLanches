@@ -26,7 +26,7 @@ class LoginController extends Controller
 
         $user = Auth::user();
 
-        switch ($user->tipo) {
+        switch ($user->type) {
             case 'admin':
                 return redirect()->route('home.admin');
             case 'func':
