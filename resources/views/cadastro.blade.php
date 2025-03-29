@@ -93,10 +93,10 @@
 
             <div class="mb-3 form-group">
                 <i class="fas fa-lock icon"></i>
-                <input type="password" class="form-control form-control-lg form-control-icon" name="password_confirmation" placeholder="Confirme sua senha" required>
+                <input type="password" class="form-control form-control-lg form-control-icon" name="confirmPassword" placeholder="Confirme sua senha" required>
             </div>
 
-            <button type="submit" class="btn btn-custom w-100">Cadastrar</button>
+            <button type="submit" class="btn btn-custom text-light w-100">Cadastrar</button>
         </form>
 
         <div class="text-center mt-3">
