@@ -15,7 +15,7 @@ class RecargaController extends Controller
     public function process(Request $request)
     {
         $request->validate([
-            'valor' => 'required|numeric|min:1',
+            'valor' => 'required|numeric|min:0.01',
             'metodo' => 'required|string'
         ]);
 
@@ -23,7 +23,7 @@ class RecargaController extends Controller
         $valor = floatval($request->valor);
 
         // Atualizar saldo do usuário
-        $user->creditos += $valor;
+        $user->credit += $valor;
         $user->save();
 
         return response()->json([
