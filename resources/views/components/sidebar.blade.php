@@ -1,8 +1,6 @@
 <div id="sidebar" class="collapse d-none d-md-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 240px;">
     <div id="image" style="margin-left: 15%">
-        <a href="{{ url('home') }}" class="d-flex align-items-center" style="width: 100px">
-            <img src="{{ asset('images/AlphaLanches-Logo.png') }}" height=78px" alt="Logo Alpha">
-        </a>
+        <img src="{{ asset('images/AlphaLanches-Logo.png') }}" height=78px" alt="Logo Alpha">
     </div>
 
     <hr>
