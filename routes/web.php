@@ -38,8 +38,12 @@ Route::prefix('estoque')->group(function () {
     Route::post('/update-value/{id}', [EstoqueController::class, 'updateValue'])->name('estoque.updateValue');
 });
 
+Route::prefix('recarga')->group(function () {
+    Route::get('/', [RecargaController::class, 'index'])->name('recarga.index');
+    Route::post('/process', [RecargaController::class, 'process'])->name('recarga.process');
+});
+
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
 
 Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name('financeiro.index');
 
-Route::get('/recarga', [RecargaController::class, 'showRecarga'])->name('recarga.index');
