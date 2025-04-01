@@ -46,6 +46,7 @@
                     $buttons = [
                         ['route' => 'home.guard', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
                         ['route' => 'profile.index', 'icon' => 'person', 'label' => 'Perfil'],
+                        ['route' => 'home.guard', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                         ['route' => 'home.guard', 'icon' => 'shop', 'label' => 'Recarga'],
                         ['route' => 'home.guard', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                     ];

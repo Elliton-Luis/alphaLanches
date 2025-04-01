@@ -13,6 +13,7 @@
             $buttons = [
                 ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
                 ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
+                ['route' => 'PainelHistorico', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                 ['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
             ];
         @endphp
