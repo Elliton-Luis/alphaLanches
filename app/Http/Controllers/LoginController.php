@@ -45,10 +45,10 @@ class LoginController extends Controller
     public function storeUser(Request $request){
         $dados = $request->except('_token');
         if($dados['password'] !== $dados['confirmPassword']){
-            return redirect()->back()->with('error','As Senhas não são iguais');
+            return redirect()->back()->with('errorAuth', 'As Senhas não são iguais');
         }
         else if(User::where('email',$dados['email'])->exists()){
-            return redirect()>back()->with('error','Email já cadastrado');
+            return redirect()->back()->with('errorAuth', 'Email já cadastrado');
         }
         else{
             User::Create([
