@@ -12,7 +12,7 @@
         @php
             $buttons = [
                 ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
-                ['route' => 'recarga!!!', 'icon' => 'shop', 'label' => 'PDV'],
+                ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
                 ['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
             ];
         @endphp
