@@ -45,6 +45,7 @@
     </style>
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <script src="{{ asset('js/perfil.js') }}"></script>
 
     <div class="card shadow p-4">
         <h3 class="text-center mb-4">Cadastro de Usuário</h3>
@@ -78,12 +79,12 @@
 
             <div class="mb-3 form-group">
                 <i class="fas fa-phone-alt icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="telefone" placeholder="Digite seu telefone" />
+                <input type="text" class="form-control form-control-lg form-control-icon" name="telefone" placeholder="Digite seu telefone" oninput="mascaraTelefone(event)" maxlength="15"/>
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-id-card icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="cpf" placeholder="Digite seu CPF" />
+                <input type="text" class="form-control form-control-lg form-control-icon" name="cpf" placeholder="Digite seu CPF" oninput="mascaraCpf(event)" maxlength="14" />
             </div>
 
             <div class="mb-3 form-group">
