@@ -58,7 +58,7 @@ class LoginController extends Controller
                 'telefone'=> $dados['telefone'],
                 'cpf'=>$dados['cpf']
             ]);
-            return redirect()->route('home.index')->with('success', 'Cadastrado com Sucesso');
+            return redirect()->route('login')->with('success', 'Cadastrado com Sucesso');
         }
   }
 
