@@ -68,12 +68,12 @@
 
             <div class="mb-3 form-group">
                 <i class="fas fa-user icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="name" placeholder="Digite seu nome" required>
+                <input type="text" class="form-control form-control-lg form-control-icon" name="name" placeholder="Digite seu nome*" required>
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-envelope icon"></i>
-                <input type="email" class="form-control form-control-lg form-control-icon" name="email" placeholder="Digite seu e-mail" required>
+                <input type="email" class="form-control form-control-lg form-control-icon" name="email" placeholder="Digite seu e-mail*" required>
             </div>
 
             <div class="mb-3 form-group">
@@ -88,12 +88,12 @@
 
             <div class="mb-3 form-group">
                 <i class="fas fa-lock icon"></i>
-                <input type="password" class="form-control form-control-lg form-control-icon" name="password" placeholder="Digite sua senha" required>
+                <input type="password" class="form-control form-control-lg form-control-icon" name="password" placeholder="Digite sua senha*" required>
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-lock icon"></i>
-                <input type="password" class="form-control form-control-lg form-control-icon" name="confirmPassword" placeholder="Confirme sua senha" required>
+                <input type="password" class="form-control form-control-lg form-control-icon" name="confirmPassword" placeholder="Confirme sua senha*" required>
             </div>
 
             <button type="submit" class="btn btn-custom text-light w-100">Cadastrar</button>
