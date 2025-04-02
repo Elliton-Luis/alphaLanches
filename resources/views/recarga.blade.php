@@ -3,13 +3,11 @@
 @section('title', 'AlphaLanches - Recarga')
 
 @section('content')
-    <script src="{{ asset('js/recarga.js') }}"></script>
-
     <div class="container mt-4">
         <h2 class="text-center">Recarga de Créditos</h2>
 
         <div class="card p-4 shadow-sm mt-4">
-            <h5>Saldo Atual: <span id="saldo-atual" class="fw-bold text-success">R$ {{ number_format(auth()->user()->creditos, 2, ',', '.') }}</span></h5>
+            <h5>Saldo Atual: <span id="saldo-atual" class="fw-bold text-success">R$ {{ number_format(auth()->user()->credit, 2, ',', '.') }}</span></h5>
 
             <label class="form-label mt-3">Valor da Recarga:</label>
             <div class="input-group p-2 rounded">
@@ -46,4 +44,10 @@
             <button class="btn btn-primary w-100 mt-3" onclick="realizarRecarga()">Confirmar Recarga</button>
         </div>
     </div>
+
+    <script>
+        var RECARGA_PROCESS_URL = "{{ route('recarga.process') }}";
+        var CSRF_TOKEN = "{{ csrf_token() }}";
+    </script>
+    <script src="{{ asset('js/recarga.js') }}"></script>    
 @endsection

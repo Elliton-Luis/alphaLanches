@@ -8,7 +8,8 @@ use App\Models\User;
 
 class RecargaController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('recarga');
     }
 
@@ -28,7 +29,7 @@ class RecargaController extends Controller
 
         return response()->json([
             'sucesso' => true,
-            'novo_saldo' => $user->creditos
+            'novo_saldo' => $user->credit
         ]);
     }
 }

@@ -34,16 +34,22 @@ function realizarRecarga() {
         return;
     }
 
-    fetch("{{ route('recarga.process') }}", {
+    fetch(RECARGA_PROCESS_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            "X-CSRF-TOKEN": CSRF_TOKEN
         },
         body: JSON.stringify({ valor: valor, metodo: metodo })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Erro ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
     .then(data => {
+        console.log("Resposta do servidor:", data);
         if (data.sucesso) {
             document.getElementById("saldo-atual").innerText = `R$ ${data.novo_saldo.toFixed(2).replace('.', ',')}`;
             document.getElementById("valor").value = "";
