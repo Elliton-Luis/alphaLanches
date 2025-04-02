@@ -38,6 +38,7 @@
                 case 'student':
                     $buttons = [
                         ['route' => 'home.student', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
+                        ['route' => 'recarga.index', 'icon' => 'shop', 'label' => 'Recarga'],
                         ['route' => 'profile.index', 'icon' => 'person-circle', 'label' => 'Perfil'],
                     ];
                     break;
