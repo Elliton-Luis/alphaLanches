@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cadastro</title>
+    <title>AlphaLanches - Cadastro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
@@ -45,6 +45,7 @@
     </style>
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <script src="{{ asset('js/perfil.js') }}"></script>
 
     <div class="card shadow p-4">
         <h3 class="text-center mb-4">Cadastro de Usuário</h3>
@@ -68,32 +69,32 @@
 
             <div class="mb-3 form-group">
                 <i class="fas fa-user icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="name" placeholder="Digite seu nome" required>
+                <input type="text" class="form-control form-control-lg form-control-icon" name="name" placeholder="Digite seu nome*" required>
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-envelope icon"></i>
-                <input type="email" class="form-control form-control-lg form-control-icon" name="email" placeholder="Digite seu e-mail" required>
+                <input type="email" class="form-control form-control-lg form-control-icon" name="email" placeholder="Digite seu e-mail*" required>
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-phone-alt icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="telefone" placeholder="Digite seu telefone" />
+                <input type="text" class="form-control form-control-lg form-control-icon" name="telefone" placeholder="Digite seu telefone" oninput="mascaraTelefone(event)" maxlength="15"/>
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-id-card icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="cpf" placeholder="Digite seu CPF" />
+                <input type="text" class="form-control form-control-lg form-control-icon" name="cpf" placeholder="Digite seu CPF" oninput="mascaraCpf(event)" maxlength="14" />
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-lock icon"></i>
-                <input type="password" class="form-control form-control-lg form-control-icon" name="password" placeholder="Digite sua senha" required>
+                <input type="password" class="form-control form-control-lg form-control-icon" name="password" placeholder="Digite sua senha*" required>
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-lock icon"></i>
-                <input type="password" class="form-control form-control-lg form-control-icon" name="confirmPassword" placeholder="Confirme sua senha" required>
+                <input type="password" class="form-control form-control-lg form-control-icon" name="confirmPassword" placeholder="Confirme sua senha*" required>
             </div>
 
             <button type="submit" class="btn btn-custom text-light w-100">Cadastrar</button>

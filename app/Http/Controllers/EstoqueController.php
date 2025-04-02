@@ -22,7 +22,6 @@ class EstoqueController extends Controller
 
     public function store(Request $request)
     {
-        // Validação dos dados
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'describe' => 'nullable|string',
@@ -31,7 +30,6 @@ class EstoqueController extends Controller
             'amount' => 'required|integer',
         ]);
 
-        // Criar o produto
         $product = Produto::create([
             'name' => $validated['name'],
             'describe' => $validated['describe'],
@@ -40,7 +38,7 @@ class EstoqueController extends Controller
             'amount' => $validated['amount'],
         ]);
 
-        return response()->json(['message' => 'Produto adicionado com sucesso!', 'product' => $product]);
+        return redirect()->route('estoque.index');
     }
 
     public function updateStock(Request $request, $id)
@@ -56,5 +54,7 @@ class EstoqueController extends Controller
         $product = Produto::findOrFail($id);
         $product->price = $request->price;
         $product->save();
+
+        return response()->json(['price' => $product->price]);
     }
 }
