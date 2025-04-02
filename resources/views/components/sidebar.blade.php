@@ -79,9 +79,6 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
             <li>
-                <hr class="dropdown-divider">
-            </li>
-            <li>
                 <form id="logout-form" action="{{ route('login.logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
