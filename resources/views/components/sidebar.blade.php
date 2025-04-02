@@ -73,9 +73,8 @@
     <hr>
 
     <div class="dropdown d-flex align-items-center">
-        <img id="profilePreview"
-        src={{ auth()->user()->profile_picture ? asset('storage/' . auth()->user()->profile_picture) : asset('images/photo_user_generic.png') }}
-        class="rounded-circle border profile-image" width="45" height="45" alt="Foto de Perfil" style="margin-right: 10px;">
+        <img src={{ auth()->user()->profile_picture ? asset('storage/' . auth()->user()->profile_picture) : asset('images/photo_user_generic.png') }} class="rounded-circle border" width="45" height="45"
+            alt="Foto de Perfil" style="margin-right: 10px;">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
             data-bs-toggle="dropdown" aria-expanded="false">
             <strong style="font-size: 19px;">{{ auth()->user()->name ?? 'Usuário' }}</strong>
