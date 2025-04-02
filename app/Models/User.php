@@ -19,6 +19,7 @@ class User extends Authenticatable
         'type',
         'telefone',
         'cpf',
+        'credit',
         'profile_picture'
     ];
 
