@@ -40,6 +40,7 @@
                         ['route' => 'home.student', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
                         ['route' => 'recarga.index', 'icon' => 'shop', 'label' => 'Recarga'],
                         ['route' => 'profile.index', 'icon' => 'person-circle', 'label' => 'Perfil'],
+                        ['route' => 'home.student', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                     ];
                     break;
 
