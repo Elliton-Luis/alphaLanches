@@ -80,7 +80,12 @@
 
             <div class="mb-3 form-group">
                 <i class="fas fa-phone-alt icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="telefone" placeholder="Digite seu telefone" />
+                <input type="text" class="form-control form-control-lg form-control-icon" id="telefone" name="telefone" placeholder="Digite seu telefone" />
+                <script>
+                jQuery(function ($) {
+                    $("#telefone").mask("(99) 9 9999-9999");
+                });
+                </script>
             </div>
 
             <div class="mb-3 form-group">
@@ -88,8 +93,9 @@
                 <input type="text" class="form-control form-control-lg form-control-icon" id="cpf" name="cpf" placeholder="Digite seu CPF" />
                 <script>
                 jQuery(function ($) {
-                $("#cpf").mask("999.999.999-99");
-                });</script>
+                    $("#cpf").mask("999.999.999-99");
+                });
+                </script>
             </div>
 
             <div class="mb-3 form-group">
