@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\FinanceiroController;
 use App\Http\Controllers\RecargaController;
+use App\Http\Controllers\EsqueciSenhaController;
 
 Route::prefix('home')->middleware('auth')->group(function () {
     Route::get('/admin', [HomeController::class, 'homeAdmin'])->name('home.admin');
@@ -47,3 +48,4 @@ Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('cr
 
 Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name('financeiro.index');
 
+Route::get('/esqueciSenha', [EsqueciSenhaController::class, 'showEsqueciSenha'])->name('esqueciSenha.index');

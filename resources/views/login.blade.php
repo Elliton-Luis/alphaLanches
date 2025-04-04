@@ -69,7 +69,7 @@
             <button type="submit" class="btn btn-primary w-100">Entrar</button>
         </form>
         <div class="text-center mt-3">
-            <a href="#">Esqueceu a senha?</a>
+            <a href="{{route('esqueciSenha.index')}}">Esqueceu a senha?</a>
         </div>
         <div class="text-center mt-3">
             <a href="{{route('login.cadastro')}}">Cadastre-se</a>
