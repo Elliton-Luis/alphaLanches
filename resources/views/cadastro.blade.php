@@ -51,16 +51,16 @@
     <div class="card shadow p-4">
         <h3 class="text-center mb-4">Cadastro de Usuário</h3>
 
-        @if(Session::has('errorAuth'))
+        @if(Session::has('error'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ Session::get('errorAuth') }}
+            {{ Session::get('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
 
-        @if(Session::has('successLogout'))
+        @if(Session::has('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ Session::get('successLogout') }}
+            {{ Session::get('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
