@@ -45,7 +45,8 @@
     </style>
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
-    <script src="{{ asset('js/perfil.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <div class="card shadow p-4">
         <h3 class="text-center mb-4">Cadastro de Usuário</h3>
@@ -79,12 +80,22 @@
 
             <div class="mb-3 form-group">
                 <i class="fas fa-phone-alt icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="telefone" placeholder="Digite seu telefone" oninput="mascaraTelefone(event)" maxlength="15"/>
+                <input type="text" class="form-control form-control-lg form-control-icon" id="telefone" name="telefone" placeholder="Digite seu telefone" />
+                <script>
+                jQuery(function ($) {
+                    $("#telefone").mask("(99) 9 9999-9999");
+                });
+                </script>
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-id-card icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="cpf" placeholder="Digite seu CPF" oninput="mascaraCpf(event)" maxlength="14" />
+                <input type="text" class="form-control form-control-lg form-control-icon" id="cpf" name="cpf" placeholder="Digite seu CPF" />
+                <script>
+                jQuery(function ($) {
+                    $("#cpf").mask("999.999.999-99");
+                });
+                </script>
             </div>
 
             <div class="mb-3 form-group">
@@ -104,7 +115,7 @@
             <a href="{{ route('login') }}" class="text-decoration-none">Já possui uma conta? Faça login</a>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
 </html>
