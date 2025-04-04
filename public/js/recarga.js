@@ -1,13 +1,27 @@
 function digitar(tecla) {
     let input = document.getElementById("valor");
+
     if (tecla === 'C') {
-        input.value = ''; // Limpar campo
-    } else if (tecla === '.' && input.value.includes('.')) {
-        return; // Evita múltiplos pontos decimais
-    } else {
-        input.value += tecla;
+        input.value = '';
+        return;
     }
+
+    let valorAtual = input.value;
+
+    if (tecla === '.' && valorAtual.includes('.')) {
+        return;
+    }
+
+    if (valorAtual.includes('.')) {
+        let [inteiro, decimal] = valorAtual.split('.');
+        if (decimal.length >= 2) {
+            return;
+        }
+    }
+
+    input.value += tecla;
 }
+
 
 function selecionarPagamento(metodo) {
     let nomeMetodo = {
