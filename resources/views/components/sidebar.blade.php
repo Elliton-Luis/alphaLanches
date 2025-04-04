@@ -7,7 +7,7 @@
 
     <ul class="nav nav-pills flex-column mb-auto">
         @php
-            $userType = auth()->user()->type ?? 'guest'; // Pegando o tipo do usuário logado
+            $userType = auth()->user()->type ?? 'guest';
             $buttons = [];
 
             switch ($userType) {

@@ -5,6 +5,8 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/perfil.css') }}">
     <script src="{{ asset('js/perfil.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <div class="container">
         <h2 class="mb-4">Meu Perfil</h2>
@@ -39,8 +41,12 @@
 
                     <div class="mb-3">
                         <label for="cpf" class="form-label">CPF</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" value="{{ old('cpf', $user->cpf) }}"
-                            oninput="mascaraCpf(event)" maxlength="14">
+                        <input type="text" class="form-control" id="cpf" name="cpf">
+                        <script>
+                            jQuery(function ($) {
+                            $("#cpf").mask("999.999.999-99");
+                        });
+                        </script>
                         @error('cpf') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
 

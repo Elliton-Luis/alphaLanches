@@ -22,7 +22,7 @@ class LoginController extends Controller
         $dados = $request->except('_token');
 
         if (!Auth::attempt($dados)) {
-            return redirect()->back()->with('errorAuth', 'Ta errado seu burro estupido');
+            return redirect()->back()->with('errorAuth', 'Email ou Senha Incorreto');
         }
 
         $user = Auth::user();
