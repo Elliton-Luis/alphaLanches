@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Middleware\verifyAdmin;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\HomeController;
@@ -24,6 +26,13 @@ Route::post('/auth', [LoginController::class, 'authUser'])->name('login.auth');
 Route::post('/logout', [LoginController::class, 'logoutUser'])->name('login.logout');
 Route::get('/cadastro', [LoginController::class, 'showCadastro'])->name('login.cadastro');
 Route::post('/store', [LoginController::class, 'storeUser'])->name('login.store');
+
+Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
