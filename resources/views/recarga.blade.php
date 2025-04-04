@@ -25,17 +25,24 @@
             </div>
 
             <label class="form-label mt-3">Escolha um método de pagamento:</label>
-            <div class="d-flex justify-content-around">
-                <button class="btn btn-outline-primary" onclick="selecionarPagamento('pix')">
-                    <i class="bi bi-qr-code"></i> Pix
-                </button>
-                <button class="btn btn-outline-success" onclick="selecionarPagamento('cartao')">
-                    <i class="bi bi-credit-card"></i> Cartão de Crédito
-                </button>
-                <button class="btn btn-outline-warning" onclick="selecionarPagamento('boleto')">
-                    <i class="bi bi-file-earmark-text"></i> Boleto
-                </button>
+            <div class="row text-center g-2">
+                <div class="col-12 col-md-4">
+                    <button class="btn btn-outline-primary w-100" onclick="selecionarPagamento('pix')">
+                        <i class="bi bi-qr-code"></i> Pix
+                    </button>
+                </div>
+                <div class="col-12 col-md-4">
+                    <button class="btn btn-outline-success w-100" onclick="selecionarPagamento('cartao')">
+                        <i class="bi bi-credit-card"></i> Cartão de Crédito
+                    </button>
+                </div>
+                <div class="col-12 col-md-4">
+                    <button class="btn btn-outline-warning w-100" onclick="selecionarPagamento('boleto')">
+                        <i class="bi bi-file-earmark-text"></i> Boleto
+                    </button>
+                </div>
             </div>
+
 
             <div id="info-pagamento" class="alert alert-info mt-3 d-none">
                 Método selecionado: <span id="metodo-selecionado" class="fw-bold"></span>
