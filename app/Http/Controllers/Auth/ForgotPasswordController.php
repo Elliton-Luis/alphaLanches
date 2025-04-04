@@ -10,7 +10,7 @@ class ForgotPasswordController extends Controller
 {
     public function showLinkRequestForm()
     {
-        return view('auth.passwords.email');
+        return view('esqueciSenha');
     }
 
     public function sendResetLinkEmail(Request $request)
@@ -18,6 +18,8 @@ class ForgotPasswordController extends Controller
         $request->validate(['email' => 'required|email']);
 
         $status = Password::sendResetLink($request->only('email'));
+
+        dd($status); // 🔍 Debug aqui
 
         return $status === Password::RESET_LINK_SENT
             ? back()->with(['status' => __($status)])
