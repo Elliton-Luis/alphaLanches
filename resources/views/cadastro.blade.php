@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cadastro</title>
+    <title>AlphaLanches - Cadastro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
@@ -70,12 +70,12 @@
 
             <div class="mb-3 form-group">
                 <i class="fas fa-user icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="name" placeholder="Digite seu nome" required>
+                <input type="text" class="form-control form-control-lg form-control-icon" name="name" placeholder="Digite seu nome*" required>
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-envelope icon"></i>
-                <input type="email" class="form-control form-control-lg form-control-icon" name="email" placeholder="Digite seu e-mail" required>
+                <input type="email" class="form-control form-control-lg form-control-icon" name="email" placeholder="Digite seu e-mail*" required>
             </div>
 
             <div class="mb-3 form-group">
@@ -102,11 +102,17 @@
                 <i class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"></i>
                 <input type="password" class="form-control form-control-lg ps-5 pe-5" name="password" id="password" placeholder="Digite sua senha" required>
                 <i class="fas fa-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 text-secondary" id="togglePassword" style="cursor: pointer;"></i>
+            <div class="mb-3 form-group">
+                <i class="fas fa-lock icon"></i>
+                <input type="password" class="form-control form-control-lg form-control-icon" name="password" placeholder="Digite sua senha*" required>
             </div>
 
             <div class="mb-3 position-relative">
                 <i class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"></i>
                 <input type="password" class="form-control form-control-lg ps-5 pe-5" name="confirmPassword" id="confirmPassword" placeholder="Confirme sua senha" required>
+            <div class="mb-3 form-group">
+                <i class="fas fa-lock icon"></i>
+                <input type="password" class="form-control form-control-lg form-control-icon" name="confirmPassword" placeholder="Confirme sua senha*" required>
             </div>
             
             <script>
