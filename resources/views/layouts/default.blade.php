@@ -23,7 +23,7 @@
         }
 
         .square-btn:hover {
-            background-color: #4ab3ce;
+            background-color: #22D8E6;
         }
 
         .icon-size {
