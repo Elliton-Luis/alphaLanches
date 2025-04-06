@@ -30,7 +30,7 @@
                             onchange="previewImage(event)">
                     </label>
                 </div>
-                                
+
                 <div class="col-md-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome</label>
@@ -44,8 +44,8 @@
                         <input type="text" class="form-control" id="cpf" name="cpf">
                         <script>
                             jQuery(function ($) {
-                            $("#cpf").mask("999.999.999-99");
-                        });
+                                $("#cpf").mask("999.999.999-99");
+                            });
                         </script>
                         @error('cpf') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
@@ -63,6 +63,11 @@
                         <label for="telefone" class="form-label">Telefone</label>
                         <input type="text" class="form-control" id="telefone" name="telefone"
                             value="{{ old('telefone', $user->telefone) }}" oninput="mascaraTelefone(event)" maxlength="15">
+                        <script>
+                            jQuery(function ($) {
+                                $("#telefone").mask("(99) 9 9999-9999");
+                            });
+                        </script>
                         @error('telefone') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
 
