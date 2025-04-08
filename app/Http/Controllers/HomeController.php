@@ -16,6 +16,7 @@ class HomeController extends Controller
                     ['route' => 'painelUsuarios', 'icon' => 'people', 'label' => 'Usuários'],
                     ['route' => 'painelCompras', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                     ['route' => 'painelPDV', 'icon' => 'shop', 'label' => 'PDV'],
+                    ['route' => 'guardRequests.index', 'icon' => 'journal-plus', 'label' => 'Pedidos de Resposável'],
                     ['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                     ];
             }

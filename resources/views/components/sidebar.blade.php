@@ -20,8 +20,8 @@
                         ['route' => 'home', 'icon' => 'people', 'label' => 'Usuários'],
                         ['route' => 'home', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                         ['route' => 'home', 'icon' => 'shop', 'label' => 'PDV'],
-                        ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
-                        ['route' => 'guardRequests.index', 'icon' => 'journal-plus', 'label' => 'Pedidos de Resposável']
+                        ['route' => 'guardRequests.index', 'icon' => 'journal-plus', 'label' => 'Pedidos de Resposável'],
+                        ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós']
                     ];
                     break;
 
