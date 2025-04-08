@@ -21,6 +21,7 @@
                         ['route' => 'home.admin', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                         ['route' => 'home.admin', 'icon' => 'shop', 'label' => 'PDV'],
                         ['route' => 'home.admin', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
+                        ['route' => 'guardRequests.index', 'icon' => 'journal-plus', 'label' => 'Pedidos de Resposável']
                     ];
                     break;
 
