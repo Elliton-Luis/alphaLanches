@@ -65,8 +65,8 @@
             </script>
         </div>
 
-
-            <button type="submit" class="btn btn-success w-100">Entrar</button>
+            
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
         </form>
         <div class="text-center mt-3">
             <a href="{{route('password.request')}}">Esqueceu a senha?</a>

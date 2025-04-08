@@ -98,10 +98,6 @@
                 </script>
             </div>
 
-
-
-
-
             <div class="mb-3">
                 <input type="checkbox" name="confirmacao" id="confirmacao" value="1" class="form-check-input" required>
                 <label for="confirmacao" class="form-check-label">Confirmo que sou responsável pelo cadastro</label>
