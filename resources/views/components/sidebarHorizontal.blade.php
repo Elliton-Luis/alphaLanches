@@ -14,7 +14,7 @@
                 </ul>
             </div>
             <div>
-                <h1 class="text-light"><a href="{{ route('home.' . Auth::user()->type) }}">AlphaLanches</a></h1>
+                <h1 class="text-light"><a href="{{ route('home') }}">AlphaLanches</a></h1>
             </div>
         </div>
     </nav>

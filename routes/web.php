@@ -13,19 +13,8 @@ use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\FinanceiroController;
 use App\Http\Controllers\RecargaController;
 use App\Http\Controllers\EsqueciSenhaController;
-use App\Http\Controllers\GuardRequestController;
+Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware();
 
-
-Route::get('/guardrequests', [GuardRequestController::class, 'guardconfirm'])->name('guardRequests.index');
-
-Route::get('/guardrequests/{id}', [GuardRequestController::class, 'acceptRequest'])->name('guardRequests.accept');
-
-Route::prefix('home')->middleware('auth')->group(function () {
-    Route::get('/admin', [HomeController::class, 'homeAdmin'])->name('home.admin');
-    Route::get('/func', [HomeController::class, 'homeFunc'])->name('home.func');
-    Route::get('/student', [HomeController::class, 'homeStudent'])->name('home.student');
-    Route::get('/guard', [HomeController::class, 'homeGuard'])->name('home.guard');
-});
 
 Route::get('/', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/auth', [LoginController::class, 'authUser'])->name('login.auth');

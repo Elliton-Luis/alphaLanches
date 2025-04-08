@@ -45,7 +45,7 @@
                         <script>
                             jQuery(function ($) {
                             $("#cpf").mask("999.999.999-99");
-                        });
+                            });
                         </script>
                         @error('cpf') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
