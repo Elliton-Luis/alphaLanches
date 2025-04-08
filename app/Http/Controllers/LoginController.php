@@ -24,23 +24,7 @@ class LoginController extends Controller
         if (!Auth::attempt($dados)) {
             return redirect()->back()->with('errorAuth', 'Email ou Senha Incorreto');
         }
-
-        $user = Auth::user();
-
-        switch ($user->type) {
-            case 'admin':
-                return redirect()->route('home.admin');
-            case 'func':
-                return redirect()->route('home.func');
-            case 'student':
-                return redirect()->route('home.student');
-            case 'guard':
-                return redirect()->route('home.guard');
-            default:
-                Auth::logout();
-                return redirect()->route('login')->with('errorAuth', 'Tipo de usuário inválido.');
-
-        }
+        return redirect('home')->with('success','login realizado com sucesso');
     }
     public function storeUser(Request $request){
         $dados = $request->except('_token');
