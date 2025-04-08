@@ -13,6 +13,12 @@ use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\FinanceiroController;
 use App\Http\Controllers\RecargaController;
 use App\Http\Controllers\EsqueciSenhaController;
+use App\Http\Controllers\GuardRequestController;
+
+
+Route::get('/guardrequests', [GuardRequestController::class, 'guardconfirm'])->name('guardRequests.index');
+
+Route::get('/guardrequests/{id}', [GuardRequestController::class, 'acceptRequest'])->name('guardRequests.accept');
 
 Route::prefix('home')->middleware('auth')->group(function () {
     Route::get('/admin', [HomeController::class, 'homeAdmin'])->name('home.admin');

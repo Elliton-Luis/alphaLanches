@@ -51,9 +51,9 @@
     <div class="card shadow p-4">
         <h3 class="text-center mb-4">Cadastro de Usuário</h3>
 
-        @if(Session::has('error'))
+        @if(Session::has('errorAuth'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ Session::get('error') }}
+            {{ Session::get('errorAuth') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
@@ -98,33 +98,14 @@
                 </script>
             </div>
 
-            <div class="mb-3 position-relative">
-                <i class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                <input type="password" class="form-control form-control-lg ps-5 pe-5" name="password" id="password" placeholder="Digite sua senha" required>
-                <i class="fas fa-eye-slash position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i>
+
+
+
+
+            <div class="mb-3">
+                <input type="checkbox" name="confirmacao" id="confirmacao" value="1" class="form-check-input" required>
+                <label for="confirmacao" class="form-check-label">Confirmo que sou responsável pelo cadastro</label>
             </div>
-
-            <div class="mb-3 position-relative">
-                <i class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                <input type="password" class="form-control form-control-lg ps-5 pe-5" name="confirmPassword" id="confirmPassword" placeholder="Confirme sua senha" required>
-            </div>
-            
-            <script>
-                const toggle = document.getElementById('togglePassword');
-                const password = document.getElementById('password');
-                const confirmPassword = document.getElementById('confirmPassword');
-
-                toggle.addEventListener('click', function () {
-                    const show = password.type === 'password';
-                    
-                    password.type = show ? 'text' : 'password';
-                    confirmPassword.type = show ? 'text' : 'password';
-
-                    this.classList.toggle('fa-eye');
-                    this.classList.toggle('fa-eye-slash');
-                });
-            </script>
-
 
             <button type="submit" class="btn btn-custom text-light w-100">Cadastrar</button>
         </form>
