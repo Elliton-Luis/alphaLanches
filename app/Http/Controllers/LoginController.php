@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\GuardRequest as GR;
 
 class LoginController extends Controller
 {
@@ -28,6 +29,16 @@ class LoginController extends Controller
     }
     public function storeUser(Request $request){
         $dados = $request->except('_token');
+        if($dados['confirmacao' ]== 1){
+            if(GR::where('cpf',$dados['cpf'])->exists() || GR::where('email',$dados['email'])->exists() || GR::where('telefone',$dados['telefone'])->exists()){
+                return redirect()->back()->with('errorAuth', 'Você já tem um pedido em aberto, qualquer dúvida entrar em contato com o administrador');
+            }
+            if(User::where('cpf',$dados['cpf'])->exists() || User::where('email',$dados['email'])->exists() || User::where('telefone',$dados['telefone'])->exists()){
+                return redirect()->back()->with('errorAuth', 'Usuário já cadastrado, qualquer dúvida entrar em contato com o administrador');
+            }
+            GR::create(['name'=>$dados['name'],'email'=>$dados['email'],'telefone'=>$dados['telefone'],'cpf'=>$dados['cpf']]);
+            return redirect()->route('login')->with('success', 'Request enviado com sucesso, por favor aguarde confirmação');
+        }
         if($dados['password'] !== $dados['confirmPassword']){
             return redirect()->back()->with('errorAuth', 'As Senhas não são iguais');
         }

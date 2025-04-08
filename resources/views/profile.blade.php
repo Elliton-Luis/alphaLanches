@@ -30,7 +30,7 @@
                             onchange="previewImage(event)">
                     </label>
                 </div>
-                                
+
                 <div class="col-md-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome</label>
