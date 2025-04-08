@@ -30,14 +30,14 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/remove-picture', [ProfileController::class, 'removePicture'])->name('profile.removePicture');
     Route::post('/profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
 });
 
 Route::prefix('estoque')->group(function () {
-    Route::get('/', [EstoqueController::class, 'index'])->name('estoque.index');
+    Route::get('/', [EstoqueController::class, 'index'])->name('estoque');
     Route::post('/store', [EstoqueController::class, 'store'])->name('estoque.store');
     Route::post('/update-stock/{id}', [EstoqueController::class, 'updateStock'])->name('estoque.updateStock');
     Route::post('/update-value/{id}', [EstoqueController::class, 'updateValue'])->name('estoque.updateValue');
@@ -50,4 +50,7 @@ Route::prefix('recarga')->group(function () {
 
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
 
-Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name('financeiro.index');
+Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name('financeiro');
+Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->name('painel.usuarios');
+Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])->name('painel.compras');
+Route::get('/painelPDV', [CreateUserController::class, 'showPainelPDV'])->name('painel.pdv');
