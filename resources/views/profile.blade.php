@@ -30,7 +30,7 @@
                             onchange="previewImage(event)">
                     </label>
                 </div>
-                                
+
                 <div class="col-md-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome</label>
@@ -80,7 +80,7 @@
             </div>
 
             <div class="text-left mt-3">
-                <button type="submit" class="btn btn-primary me-2">Salvar Alterações</button>
+                <button type="submit" class="btn btn-secondary me-2">Salvar Alterações</button>
             </div>
         </form>
 
