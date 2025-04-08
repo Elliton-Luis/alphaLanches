@@ -14,10 +14,13 @@ use App\Http\Controllers\FinanceiroController;
 use App\Http\Controllers\RecargaController;
 use App\Http\Controllers\EsqueciSenhaController;
 use App\Http\Controllers\GuardRequestController;
+use App\Http\Middleware\VerifyAuthAdmin;
 
-Route::get('/guardrequests', [GuardRequestController::class, 'guardconfirm'])->name('guardRequests.index');
+Route::prefix('guardrequest')->middleware(VerifyAuthAdmin::class)->group(function (){
 
-Route::get('/guardrequests/{id}', [GuardRequestController::class, 'acceptRequest'])->name('guardRequests.accept');
+    Route::get('/guardrequests', [GuardRequestController::class, 'guardconfirm'])->name('guardRequests.index');
+    Route::get('/guardrequests/{id}', [GuardRequestController::class, 'acceptRequest'])->name('guardRequests.accept');
+});
 
 Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware();
 
