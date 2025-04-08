@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Middleware\verifyAdmin;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\HomeController;
@@ -12,8 +10,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\FinanceiroController;
 use App\Http\Controllers\RecargaController;
-use App\Http\Controllers\EsqueciSenhaController;
 use App\Http\Controllers\GuardRequestController;
+use App\Http\Controllers\PasswordController;
 
 Route::get('/guardrequests', [GuardRequestController::class, 'guardconfirm'])->name('guardRequests.index');
 
@@ -27,12 +25,10 @@ Route::post('/logout', [LoginController::class, 'logoutUser'])->name('login.logo
 Route::get('/cadastro', [LoginController::class, 'showCadastro'])->name('login.cadastro');
 Route::post('/store', [LoginController::class, 'storeUser'])->name('login.store');
 
-Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-
-Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-
+Route::get('password/reset', [PasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [PasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [PasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [PasswordController::class, 'reset'])->name('password.update');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
