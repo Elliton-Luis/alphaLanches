@@ -1,6 +1,6 @@
 <div id="sidebar" class="collapse d-none d-md-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 240px;">
     <div id="image" style="margin-left: 15%">
-    <a href="{{ route('home.' . Auth::user()->type) }}"><img src="{{ asset('images/AlphaLanches-Logo.png') }}" height="78px" alt="Logo Alpha"></a>
+    <a href="{{ route('home') }}"><img src="{{ asset('images/AlphaLanches-Logo.png') }}" height="78px" alt="Logo Alpha"></a>
     </div>
 
     <hr>
@@ -13,45 +13,45 @@
             switch ($userType) {
                 case 'admin':
                     $buttons = [
-                        ['route' => 'home.admin', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
+                        ['route' => 'home', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
                         ['route' => 'financeiro.index', 'icon' => 'cash-coin', 'label' => 'Financeiro'],
                         ['route' => 'estoque.index', 'icon' => 'box', 'label' => 'Estoque'],
                         ['route' => 'profile.index', 'icon' => 'person', 'label' => 'Perfil'],
-                        ['route' => 'home.admin', 'icon' => 'people', 'label' => 'Usuários'],
-                        ['route' => 'home.admin', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
-                        ['route' => 'home.admin', 'icon' => 'shop', 'label' => 'PDV'],
-                        ['route' => 'home.admin', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
+                        ['route' => 'home', 'icon' => 'people', 'label' => 'Usuários'],
+                        ['route' => 'home', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
+                        ['route' => 'home', 'icon' => 'shop', 'label' => 'PDV'],
+                        ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                         ['route' => 'guardRequests.index', 'icon' => 'journal-plus', 'label' => 'Pedidos de Resposável']
                     ];
                     break;
 
                 case 'func':
                     $buttons = [
-                        ['route' => 'home.func', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
+                        ['route' => 'home', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
                         ['route' => 'estoque.index', 'icon' => 'box', 'label' => 'Estoque'],
                         ['route' => 'profile.index', 'icon' => 'person', 'label' => 'Perfil'],
-                        ['route' => 'home.func', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
-                        ['route' => 'home.func', 'icon' => 'shop', 'label' => 'PDV'],
-                        ['route' => 'home.func', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
+                        ['route' => 'home', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
+                        ['route' => 'home', 'icon' => 'shop', 'label' => 'PDV'],
+                        ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                     ];
                     break;
 
                 case 'student':
                     $buttons = [
-                        ['route' => 'home.student', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
+                        ['route' => 'home', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
                         ['route' => 'recarga.index', 'icon' => 'shop', 'label' => 'Recarga'],
                         ['route' => 'profile.index', 'icon' => 'person-circle', 'label' => 'Perfil'],
-                        ['route' => 'home.student', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
+                        ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                     ];
                     break;
 
                 case 'guard':
                     $buttons = [
-                        ['route' => 'home.guard', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
+                        ['route' => 'home', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
                         ['route' => 'profile.index', 'icon' => 'person', 'label' => 'Perfil'],
-                        ['route' => 'home.guard', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
+                        ['route' => 'home', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                         ['route' => 'recarga.index', 'icon' => 'shop', 'label' => 'Recarga'],
-                        ['route' => 'home.guard', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
+                        ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                     ];
                     break;
 
