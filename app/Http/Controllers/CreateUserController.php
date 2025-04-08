@@ -10,7 +10,7 @@ class CreateUserController extends Controller
         return view('accounts.home');
     }
     public function showPainelUsuarios(){
-        return view('painel.usuarios');
+        return view('painelUsuarios');
     }
     public function showPainelCompras(){
         return view('painel.compras');

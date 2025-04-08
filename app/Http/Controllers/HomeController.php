@@ -18,7 +18,7 @@ class HomeController extends Controller
                     ['route' => 'financeiro', 'icon' => 'cash-coin', 'label' => 'Financeiro'],
                     ['route' => 'estoque', 'icon' => 'box', 'label' => 'Estoque'],
                     ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
-                    ['route' => 'painel.usuarios', 'icon' => 'people', 'label' => 'Usuários'],
+                    ['route' => 'painelUsuarios', 'icon' => 'people', 'label' => 'Usuários'],
                     ['route' => 'painel.compras', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                     ['route' => 'painel.pdv', 'icon' => 'shop', 'label' => 'PDV'],
                     //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],

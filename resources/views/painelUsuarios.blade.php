@@ -10,4 +10,3 @@
         <livewire:form-create-account/>
     </div>
 @endsection
-
