@@ -42,6 +42,12 @@
         .btn-custom:hover {
             background-color: #2e59d9;
         }
+
+        @media (max-width: 576px) {
+            .card {
+                margin: 0 1rem;
+            }
+        }
     </style>
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">

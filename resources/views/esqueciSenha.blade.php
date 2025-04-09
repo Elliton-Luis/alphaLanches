@@ -10,19 +10,47 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .card {
+            max-width: 400px;
+            width: 100%;
+        }
 
+        .card img {
+            max-width: 150px;
+        }
+
+        .btn-primary {
+            background-color: #4e73df;
+            border-color: #4e73df;
+        }
+
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            border-color: #2e59d9;
+        }
+
+        @media (max-width: 576px) {
+            .card {
+                margin: 0 1rem;
+            }
+        }
+    </style>
 </head>
 
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
-    <div class="card p-4 shadow" style="width: 350px;">
-        <div class="d-flex justify-content-center align-items-center">
-            <img src="{{ asset('images/AlphaLanches-Logo.png') }}" width="50%" alt="Logo Alpha">
+    <div class="card p-4 shadow">
+        <div class="d-flex justify-content-center align-items-center mb-3">
+            <img src="{{ asset('images/AlphaLanches-Logo.png') }}" alt="Logo Alpha">
         </div>
 
         <h3 class="text-center mb-3">Redefinir Senha</h3>
 
         @if (session('status'))
-            <div class="alert alert-success">{{ session('status') }}</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('status') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
 
         <p class="text-center mb-3 border border-primary rounded p-2">
@@ -40,6 +68,8 @@
             <button type="submit" class="btn btn-primary w-100">Enviar link de redefinição</button>
         </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>
