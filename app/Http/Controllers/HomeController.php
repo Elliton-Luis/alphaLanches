@@ -21,6 +21,7 @@ class HomeController extends Controller
                     ['route' => 'painelUsuarios', 'icon' => 'people', 'label' => 'Usuários'],
                     ['route' => 'painel.compras', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                     ['route' => 'painel.pdv', 'icon' => 'shop', 'label' => 'PDV'],
+                    ['route' => 'guardrequest', 'icon' => 'journal-plus', 'label' => 'Pedidos de Responsáveis'],
                     //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                     ];
             }
@@ -40,6 +41,7 @@ class HomeController extends Controller
                 return [
                     ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
                     ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
+                    ['route' => 'painel.compras', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                     //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                 ];
             }
@@ -48,7 +50,6 @@ class HomeController extends Controller
             {
                 return [
                     ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
-                    ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
                     ['route' => 'PainelHistorico', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                     //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                 ];

@@ -62,10 +62,10 @@
                     <div class="mb-3">
                         <label for="telefone" class="form-label">Telefone</label>
                         <input type="text" class="form-control" id="telefone" name="telefone"
-                            value="{{ old('telefone', $user->telefone) }}" oninput="mascaraTelefone(event)" maxlength="15">
+                            value="{{ old('telefone', $user->telefone) }}" maxlength="16">
                         <script>
                             jQuery(function ($) {
-                                $("#telefone").mask("(99) 9 9999-9999");
+                                $("#telefone").mask("(99) 99999-9999");
                             });
                         </script>
                         @error('telefone') <small class="text-danger">{{ $message }}</small> @enderror
