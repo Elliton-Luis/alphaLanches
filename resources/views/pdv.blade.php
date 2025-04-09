@@ -6,13 +6,15 @@
     <div class="container mt-4 text">
         <h1 class="text-center mb-4">Painel PDV</h1>
 
+        <div id="alert-container"></div>
+
         <br>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <form method="POST" action="{{ route('pdv.store') }}">
+        <form id="pdv-form" method="POST" action="{{ route('pdv.store') }}">
             @csrf
 
             <div class="mb-3">
@@ -28,16 +30,16 @@
                     <div class="input-group mb-2">
                         <input id="searchName" class="form-control border-primary" type="text"
                             placeholder="Digite o nome do produto">
-                            <select id="searchType" class="form-select border-primary">
-                                <option value="">Todos os Tipos</option>
-                                <option value="drink">Bebida</option>
-                                <option value="savory">Salgado</option>
-                                <option value="lunch">Almoço</option>
-                                <option value="snacks">Lanches</option>
-                                <option value="natural">Natural</option>
-                            </select>
+                        <select id="searchType" class="form-select border-primary">
+                            <option value="">Todos os Tipos</option>
+                            <option value="drink">Bebida</option>
+                            <option value="savory">Salgado</option>
+                            <option value="lunch">Almoço</option>
+                            <option value="snacks">Lanches</option>
+                            <option value="natural">Natural</option>
+                        </select>
                     </div>
-                    
+
                     <ul class="list-group" id="product-list">
                         @foreach($products as $product)
                             <li class="list-group-item product-item" data-id="{{ $product->id }}"
@@ -102,11 +104,11 @@
             list.innerHTML = '';
             cart.forEach((item, index) => {
                 list.innerHTML += `
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        ${item.name} x ${item.quantity}
-                                                        <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
-                                                    </li>
-                                                `;
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                         ${item.name} x ${item.quantity}
+                        <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                        </li>
+                         `;
             });
             document.getElementById('items_json').value = JSON.stringify(cart.map(i => ({
                 product_id: i.product_id,
@@ -166,6 +168,43 @@
 
         searchName.addEventListener('input', filterProducts);
         searchType.addEventListener('change', filterProducts);
+
+        function showAlert(message, type = 'danger') {
+            const alertContainer = document.getElementById('alert-container');
+
+            alertContainer.innerHTML = '';
+
+            const alertElement = document.createElement('div');
+            alertElement.className = `alert alert-${type} alert-dismissible fade show`;
+            alertElement.role = 'alert';
+            alertElement.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+
+            alertContainer.appendChild(alertElement);
+        }
+
+
+        document.getElementById('pdv-form').addEventListener('submit', function (e) {
+            const customerId = document.getElementById('customer_id').value;
+            const cartItems = JSON.parse(document.getElementById('items_json').value || '[]');
+
+            // Remove alertas anteriores
+            document.querySelectorAll('.alert').forEach(el => el.remove());
+
+            if (!customerId) {
+                e.preventDefault();
+                showAlert('Por favor, selecione um cliente antes de finalizar a venda.');
+                return;
+            }
+
+            if (cartItems.length === 0) {
+                e.preventDefault();
+                showAlert('Adicione pelo menos um produto ao carrinho antes de finalizar a venda.');
+                return;
+            }
+        });
 
     </script>
 @endsection
