@@ -4,72 +4,66 @@
     </div>
 
     <hr>
-
     <ul class="nav nav-pills flex-column mb-auto">
-        @php
-            $userType = auth()->user()->type ?? 'guest';
-            $buttons = [];
+            @if (auth()->user()->type === 'admin')
+            <li class="nav-item">
+                <a href="/financeiro" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-cash-coin fs-5 me-2"></i> Financeiro
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/painelUsuarios" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-people fs-5 me-2"></i> Usuários
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/guardrequest/guardrequests" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-journal-plus fs-5 me-2"></i> Pedidos de Responsáveis
+                </a>
+            </li>
+            @endif
 
-            switch ($userType) {
-                case 'admin':
-                    $buttons = [
-                        ['route' => 'home', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
-                        ['route' => 'financeiro.index', 'icon' => 'cash-coin', 'label' => 'Financeiro'],
-                        ['route' => 'estoque.index', 'icon' => 'box', 'label' => 'Estoque'],
-                        ['route' => 'profile.index', 'icon' => 'person', 'label' => 'Perfil'],
-                        ['route' => 'home', 'icon' => 'people', 'label' => 'Usuários'],
-                        ['route' => 'home', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
-                        ['route' => 'home', 'icon' => 'shop', 'label' => 'PDV'],
-                        ['route' => 'guardRequests.index', 'icon' => 'journal-plus', 'label' => 'Pedidos de Resposável'],
-                        ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós']
-                    ];
-                    break;
+            @if (in_array(auth()->user()->type, ['admin', 'func']))
+            <li class="nav-item">
+                <a href="/estoque" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-box fs-5 me-2"></i> Estoque
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/painel/compras" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-basket3 fs-5 me-2"></i> Histórico de Compras
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/painel/pdv" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-shop fs-5 me-2"></i> PDV
+                </a>
+            </li>
+        @endif
 
-                case 'func':
-                    $buttons = [
-                        ['route' => 'home', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
-                        ['route' => 'estoque.index', 'icon' => 'box', 'label' => 'Estoque'],
-                        ['route' => 'profile.index', 'icon' => 'person', 'label' => 'Perfil'],
-                        ['route' => 'home', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
-                        ['route' => 'home', 'icon' => 'shop', 'label' => 'PDV'],
-                        ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
-                    ];
-                    break;
+        @if (in_array(auth()->user()->type, ['admin', 'func', 'guard', 'student']))
+            <li class="nav-item">
+                <a href="/profile" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-person fs-5 me-2"></i> Perfil
+                </a>
+            </li>
+        @endif
 
-                case 'student':
-                    $buttons = [
-                        ['route' => 'home', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
-                        ['route' => 'recarga.index', 'icon' => 'shop', 'label' => 'Recarga'],
-                        ['route' => 'profile.index', 'icon' => 'person-circle', 'label' => 'Perfil'],
-                        ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
-                    ];
-                    break;
+        @if (in_array(auth()->user()->type, ['guard', 'student']))
+            <li class="nav-item">
+                <a href="/recarga" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-wallet fs-5 me-2"></i> Recarga
+                </a>
+            </li>
+        @endif
 
-                case 'guard':
-                    $buttons = [
-                        ['route' => 'home', 'icon' => 'house-door-fill', 'label' => 'Painel Inicial'],
-                        ['route' => 'profile.index', 'icon' => 'person', 'label' => 'Perfil'],
-                        ['route' => 'home', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
-                        ['route' => 'recarga.index', 'icon' => 'shop', 'label' => 'Recarga'],
-                        ['route' => 'home', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
-                    ];
-                    break;
-
-                default:
-                    $buttons = [];
-                    break;
-            }
-        @endphp
-
-        <ul class="nav nav-pills flex-column mb-auto">
-            @foreach ($buttons as $btn)
-                <li class="nav-item">
-                    <a href="{{ route($btn['route']) }}" class="nav-link text-white btn btn-primary text-start">
-                        <i class="bi bi-{{ $btn['icon'] }} fs-5 me-2"></i> {{ $btn['label'] }}
-                    </a>
-                </li>
-            @endforeach
-        </ul>
+        @if (auth()->user()->type === 'student')
+            <li class="nav-item">
+                <a href="/PainelHistorico" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-basket3 fs-5 me-2"></i> Histórico de Compras
+                </a>
+            </li>
+        @endif
 
     </ul>
 

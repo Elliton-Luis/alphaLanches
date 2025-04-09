@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('describe');
+            $table->string('describe')->nullable();
             $table->decimal('price');
             $table->enum('type',['drink','savory','lunch','snacks','natural']);
             $table->timestamps();

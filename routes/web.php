@@ -12,10 +12,12 @@ use App\Http\Controllers\FinanceiroController;
 use App\Http\Controllers\RecargaController;
 use App\Http\Controllers\GuardRequestController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Middleware\VerifyAuthAdmin;
 
-Route::get('/guardrequests', [GuardRequestController::class, 'guardconfirm'])->name('guardRequests.index');
-
-Route::get('/guardrequests/{id}', [GuardRequestController::class, 'acceptRequest'])->name('guardRequests.accept');
+Route::prefix('guardrequest')->middleware(VerifyAuthAdmin::class)->group(function (){
+    Route::get('/guardrequests', [GuardRequestController::class, 'guardconfirm'])->name('guardRequests.index');
+    Route::get('/guardrequests/{id}', [GuardRequestController::class, 'acceptRequest'])->name('guardRequests.accept');
+});
 
 Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware();
 
@@ -51,4 +53,7 @@ Route::prefix('recarga')->group(function () {
 
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
 
-Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name('financeiro.index');
+Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name('financeiro');
+Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->name('painel.usuarios');
+Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])->name('painel.compras');
+Route::get('/painelPDV', [CreateUserController::class, 'showPainelPDV'])->name('painel.pdv');
