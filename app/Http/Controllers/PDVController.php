@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Produto;
 use App\Models\Sale;
 use App\Models\SaleProduct;
+use App\Models\User;
 
 class PDVController extends Controller
 {
@@ -19,11 +20,13 @@ class PDVController extends Controller
     {
         $request->validate([
             'customer_id' => 'required|exists:users,id',
-            'items' => 'required|array',
+            'items_json' => 'required|string',
         ]);
 
+        $items = json_decode($request->items_json, true);
+
         $total = 0;
-        foreach ($request->items as $item) {
+        foreach ($items as $item) {
             $product = Produto::find($item['product_id']);
             $total += $product->price * $item['quantity'];
         }
@@ -34,7 +37,7 @@ class PDVController extends Controller
             'value' => $total,
         ]);
 
-        foreach ($request->items as $item) {
+        foreach ($items as $item) {
             SaleProduct::create([
                 'sale_id' => $sale->id,
                 'product_id' => $item['product_id'],
@@ -43,5 +46,13 @@ class PDVController extends Controller
         }
 
         return redirect()->route('pdv.index')->with('success', 'Venda realizada com sucesso!');
+    }
+
+
+    public function searchUser(Request $request)
+    {
+        $search = $request->get('query');
+        $customers = User::where('name', 'LIKE', "%{$search}%")->limit(10)->get(['id', 'name']);
+        return response()->json($customers);
     }
 }

@@ -16,52 +16,105 @@
             @csrf
 
             <div class="mb-3">
-                <label for="customer_id">Cliente (ID)</label>
-                <input type="number" name="customer_id" class="form-control" required>
+                <label for="customer_search">Cliente:</label>
+                <input type="text" id="customer_search" class="form-control" placeholder="Digite o nome do cliente">
+                <input type="hidden" name="customer_id" id="customer_id">
+                <div id="customer_list" class="list-group position-absolute z-3"></div>
             </div>
 
-            <h4>Produtos</h4>
-            <div id="products-area">
-                <div class="product-item row mb-2">
-                    <div class="col-md-6">
-                        <select name="items[0][product_id]" class="form-control">
-                            @foreach($products as $product)
-                                <option value="{{ $product->id }}">{{ $product->name }} - R${{ $product->price }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="number" name="items[0][quantity]" class="form-control" value="1" min="1">
-                    </div>
+            <div class="row">
+                <!-- Lista de Produtos -->
+                <div class="col-md-6">
+                    <h4>Produtos</h4>
+                    <ul class="list-group" id="product-list">
+                        @foreach($products as $product)
+                            <li class="list-group-item product-item" data-id="{{ $product->id }}"
+                                data-name="{{ $product->name }}" data-price="{{ $product->price }}">
+                                {{ $product->name }} - R${{ number_format($product->price, 2, ',', '.') }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+                    <h4>Carrinho</h4>
+                    <ul class="list-group mb-3" id="cart-list"></ul>
+
+                    <input type="hidden" name="items_json" id="items_json">
+
+                    <button type="submit" class="btn btn-success">Finalizar Venda</button>
                 </div>
             </div>
-
-            <button type="button" onclick="addProduct()" class="btn btn-secondary mb-3">+ Produto</button>
-            <br>
-            <button type="submit" class="btn btn-primary">Finalizar Venda</button>
-
-            <script>
-                let productIndex = 1;
-
-                function addProduct() {
-                    const area = document.getElementById('products-area');
-                    const newItem = document.createElement('div');
-                    newItem.className = 'product-item row mb-2';
-                    newItem.innerHTML = `
-                            <div class="col-md-6">
-                                <select name="items[${productIndex}][product_id]" class="form-control">
-                                    @foreach($products as $product)
-                                        <option value="{{ $product->id }}">{{ $product->name }} - R${{ $product->price }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="number" name="items[${productIndex}][quantity]" class="form-control" value="1" min="1">
-                            </div>
-                        `;
-                    area.appendChild(newItem);
-                    productIndex++;
-                }
-            </script>
+        </form>
     </div>
+
+    <script>
+        let cart = [];
+
+        document.querySelectorAll('.product-item').forEach(item => {
+            item.addEventListener('click', function () {
+                const id = this.dataset.id;
+                const name = this.dataset.name;
+                const price = parseFloat(this.dataset.price);
+
+                const found = cart.find(p => p.product_id == id);
+                if (found) {
+                    found.quantity += 1;
+                } else {
+                    cart.push({ product_id: id, name, price, quantity: 1 });
+                }
+
+                updateCart();
+            });
+        });
+
+        function updateCart() {
+            const list = document.getElementById('cart-list');
+            list.innerHTML = '';
+            cart.forEach((item, index) => {
+                list.innerHTML += `
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    ${item.name} x ${item.quantity}
+                                    <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                                </li>
+                            `;
+            });
+            document.getElementById('items_json').value = JSON.stringify(cart.map(i => ({
+                product_id: i.product_id,
+                quantity: i.quantity
+            })));
+        }
+
+        // Autocomplete de cliente
+        const input = document.getElementById('customer_search');
+        const list = document.getElementById('customer_list');
+
+        input.addEventListener('input', function () {
+            const query = this.value;
+
+            if (query.length < 1) {
+                list.innerHTML = '';
+                return;
+            }
+
+            fetch(`{{ route('searchUser') }}?query=${query}`)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    list.innerHTML = '';
+                    data.forEach(c => {
+                        const item = document.createElement('a');
+                        item.href = "#";
+                        item.classList.add('list-group-item', 'list-group-item-action');
+                        item.textContent = c.name;
+                        item.addEventListener('click', () => {
+                            input.value = c.name;
+                            document.getElementById('customer_id').value = c.id;
+                            list.innerHTML = '';
+                        });
+                        list.appendChild(item);
+                    });
+                });
+        });
+    </script>
 @endsection
