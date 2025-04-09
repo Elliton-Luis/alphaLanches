@@ -12,6 +12,7 @@ use App\Http\Controllers\FinanceiroController;
 use App\Http\Controllers\RecargaController;
 use App\Http\Controllers\GuardRequestController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\PDVController;
 use App\Http\Middleware\VerifyAuthAdmin;
 
 Route::prefix('guardrequest')->middleware(VerifyAuthAdmin::class)->group(function (){
@@ -56,4 +57,9 @@ Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('cr
 Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name('financeiro');
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->name('painel.usuarios');
 Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])->name('painel.compras');
-Route::get('/painelPDV', [CreateUserController::class, 'showPainelPDV'])->name('painel.pdv');
+
+
+Route::prefix('pdv')->group(function () {
+    Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
+    Route::post('/store', [PDVController::class, 'store'])->name('pdv.store');
+});
