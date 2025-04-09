@@ -12,12 +12,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/painel/usuarios" class="nav-link text-white btn btn-primary text-start">
+                <a href="/painelUsuarios" class="nav-link text-white btn btn-primary text-start">
                     <i class="bi bi-people fs-5 me-2"></i> Usuários
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/guardrequests" class="nav-link text-white btn btn-primary text-start">
+                <a href="/guardrequests/guardrequests" class="nav-link text-white btn btn-primary text-start">
                     <i class="bi bi-journal-plus fs-5 me-2"></i> Pedidos de Responsáveis
                 </a>
             </li>
