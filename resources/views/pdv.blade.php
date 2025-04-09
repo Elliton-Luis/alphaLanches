@@ -23,20 +23,21 @@
             </div>
 
             <div class="row">
-                <!-- Lista de Produtos -->
                 <div class="col-md-6">
                     <h4>Produtos</h4>
                     <div class="input-group mb-2">
-                        <input class="form-control border-primary" type="text" wire:model.lazy="name" placeholder="Nome">
-                        <select class="form-select border-primary" wire:model.lazy="type">
-                            <option value="">Selecione um Tipo</option>
-                            <option value="drink">Bebida</option>
-                            <option value="savory">Salgado</option>
-                            <option value="lunch">Almoço</option>
-                            <option value="snacks">Lanches</option>
-                            <option value="natural">Natural</option>
-                        </select>
+                        <input id="searchName" class="form-control border-primary" type="text"
+                            placeholder="Digite o nome do produto">
+                            <select id="searchType" class="form-select border-primary">
+                                <option value="">Todos os Tipos</option>
+                                <option value="drink">Bebida</option>
+                                <option value="savory">Salgado</option>
+                                <option value="lunch">Almoço</option>
+                                <option value="snacks">Lanches</option>
+                                <option value="natural">Natural</option>
+                            </select>
                     </div>
+                    
                     <ul class="list-group" id="product-list">
                         @foreach($products as $product)
                             <li class="list-group-item product-item" data-id="{{ $product->id }}"
@@ -101,11 +102,11 @@
             list.innerHTML = '';
             cart.forEach((item, index) => {
                 list.innerHTML += `
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            ${item.name} x ${item.quantity}
-                                            <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
-                                        </li>
-                                    `;
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        ${item.name} x ${item.quantity}
+                                                        <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                                                    </li>
+                                                `;
             });
             document.getElementById('items_json').value = JSON.stringify(cart.map(i => ({
                 product_id: i.product_id,
@@ -113,7 +114,6 @@
             })));
         }
 
-        // Autocomplete de cliente
         const input = document.getElementById('customer_search');
         const list = document.getElementById('customer_list');
 
@@ -144,5 +144,28 @@
                     });
                 });
         });
+
+        const searchName = document.getElementById('searchName');
+        const searchType = document.getElementById('searchType');
+        const allProducts = Array.from(document.querySelectorAll('.product-item'));
+
+        function filterProducts() {
+            const nameFilter = searchName.value.toLowerCase();
+            const typeFilter = searchType.value;
+
+            allProducts.forEach(product => {
+                const name = product.dataset.name.toLowerCase();
+                const type = product.dataset.type;
+
+                const matchesName = name.includes(nameFilter);
+                const matchesType = !typeFilter || type === typeFilter;
+
+                product.style.display = (matchesName && matchesType) ? 'block' : 'none';
+            });
+        }
+
+        searchName.addEventListener('input', filterProducts);
+        searchType.addEventListener('change', filterProducts);
+
     </script>
 @endsection
