@@ -14,7 +14,6 @@
 
         <div id="alert-container"></div>
 
-        <br>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -23,15 +22,14 @@
         <form id="pdv-form" method="POST" action="{{ route('pdv.store') }}">
             @csrf
 
-            <div class="mb-3">
-                <label for="customer_search">Cliente:</label>
+            <div class="mb-3 border border-primary rounded">
                 <input type="text" id="customer_search" class="form-control" placeholder="Digite o nome do cliente">
                 <input type="hidden" name="customer_id" id="customer_id">
                 <div id="customer_list" class="list-group position-absolute z-3"></div>
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 border border-primary rounded" style="padding-top: 10px;">
                     <h4>Produtos</h4>
                     <div class="input-group mb-2">
                         <input id="searchName" class="form-control border-primary" type="text"
@@ -93,6 +91,8 @@
                     <button type="submit" class="btn btn-success">Finalizar Venda</button>
 
                     <div class="mb-3">
+                        <br>
+
                         <h5>Total: <span id="total_price" class="text-success fw-bold">R$ 0,00</span></h5>
                     </div>
                 </div>
@@ -128,14 +128,14 @@
                 const subtotal = item.price * item.quantity;
                 total += subtotal;
                 list.innerHTML += `
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            ${item.name}
-                            <div>
-                                <input type="number" min="1" value="${item.quantity}" data-index="${index}" class="form-control d-inline w-auto quantity-input" style="width: 60px;" />
-                                <span class="ms-2">R$ ${subtotal.toFixed(2)}</span>
-                            </div>
-                        </li>
-                    `;
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                ${item.name}
+                                <div>
+                                    <input type="number" min="1" value="${item.quantity}" data-index="${index}" class="form-control d-inline w-auto quantity-input" style="width: 60px;" />
+                                    <span class="ms-2">R$ ${subtotal.toFixed(2)}</span>
+                                </div>
+                            </li>
+                        `;
             });
 
             document.getElementById('total_price').textContent = `R$ ${total.toFixed(2)}`;
@@ -219,9 +219,9 @@
             alertElement.className = `alert alert-${type} alert-dismissible fade show`;
             alertElement.role = 'alert';
             alertElement.innerHTML = `
-                        ${message}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    `;
+                            ${message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        `;
 
             alertContainer.appendChild(alertElement);
         }
