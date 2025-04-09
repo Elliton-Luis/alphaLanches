@@ -13,7 +13,8 @@ class PDVController extends Controller
     public function index()
     {
         $products = Produto::all();
-        return view('pdv', compact('products'));
+        $todayTotal = Sale::whereDate('saleDate', today())->sum('value');
+        return view('pdv', compact('products', 'todayTotal'));        
     }
 
     public function store(Request $request)
@@ -21,6 +22,7 @@ class PDVController extends Controller
         $request->validate([
             'customer_id' => 'required|exists:users,id',
             'items_json' => 'required|string',
+            'payment_method' => 'required|in:dinheiro,creditos,cartao,pix',
         ]);
 
         $items = json_decode($request->items_json, true);
@@ -35,6 +37,7 @@ class PDVController extends Controller
             'customer_id' => $request->customer_id,
             'saleDate' => now(),
             'value' => $total,
+            'payment_method' => $request->payment_method,
         ]);
 
         foreach ($items as $item) {

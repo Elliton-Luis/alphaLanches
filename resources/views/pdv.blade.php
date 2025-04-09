@@ -6,6 +6,12 @@
     <div class="container mt-4 text">
         <h1 class="text-center mb-4">Painel PDV</h1>
 
+        @if(isset($todayTotal))
+            <div class="alert alert-info text-center">
+                Total de Vendas Hoje: <strong>R$ {{ number_format($todayTotal, 2, ',', '.') }}</strong>
+            </div>
+        @endif
+
         <div id="alert-container"></div>
 
         <br>
@@ -73,7 +79,22 @@
 
                     <input type="hidden" name="items_json" id="items_json">
 
+                    <div class="mb-3">
+                        <label for="payment_method">Forma de Pagamento:</label>
+                        <select name="payment_method" id="payment_method" class="form-select" required>
+                            <option value="">Selecione</option>
+                            <option value="dinheiro">Dinheiro</option>
+                            <option value="cartao_credito">Cartão de Crédito</option>
+                            <option value="cartao_debito">Cartão de Débito</option>
+                            <option value="pix">PIX</option>
+                        </select>
+                    </div>
+
                     <button type="submit" class="btn btn-success">Finalizar Venda</button>
+
+                    <div class="mb-3">
+                        <h5>Total: <span id="total_price" class="text-success fw-bold">R$ 0,00</span></h5>
+                    </div>
                 </div>
             </div>
         </form>
@@ -102,19 +123,39 @@
         function updateCart() {
             const list = document.getElementById('cart-list');
             list.innerHTML = '';
+            let total = 0;
             cart.forEach((item, index) => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
                 list.innerHTML += `
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                         ${item.name} x ${item.quantity}
-                        <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                            ${item.name}
+                            <div>
+                                <input type="number" min="1" value="${item.quantity}" data-index="${index}" class="form-control d-inline w-auto quantity-input" style="width: 60px;" />
+                                <span class="ms-2">R$ ${subtotal.toFixed(2)}</span>
+                            </div>
                         </li>
-                         `;
+                    `;
             });
+
+            document.getElementById('total_price').textContent = `R$ ${total.toFixed(2)}`;
             document.getElementById('items_json').value = JSON.stringify(cart.map(i => ({
                 product_id: i.product_id,
                 quantity: i.quantity
             })));
         }
+
+        document.addEventListener('input', function (e) {
+            if (e.target.classList.contains('quantity-input')) {
+                const index = e.target.dataset.index;
+                const newQty = parseInt(e.target.value);
+                if (newQty > 0) {
+                    cart[index].quantity = newQty;
+                    updateCart();
+                }
+            }
+        });
+
 
         const input = document.getElementById('customer_search');
         const list = document.getElementById('customer_list');
@@ -178,9 +219,9 @@
             alertElement.className = `alert alert-${type} alert-dismissible fade show`;
             alertElement.role = 'alert';
             alertElement.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        `;
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    `;
 
             alertContainer.appendChild(alertElement);
         }
