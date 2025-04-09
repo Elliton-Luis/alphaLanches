@@ -124,18 +124,25 @@
             const list = document.getElementById('cart-list');
             list.innerHTML = '';
             let total = 0;
+
             cart.forEach((item, index) => {
                 const subtotal = item.price * item.quantity;
                 total += subtotal;
+
                 list.innerHTML += `
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                ${item.name}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div style="display: contents;">
+                                <div>${item.name}</div>
+                                <div><input type="number" min="1" value="${item.quantity}" data-index="${index}" class="form-control d-inline w-auto quantity-input" style="width: 60px;" /></div>
+                                <div><span class="ms-2">R$ ${subtotal.toFixed(2)}</span></div>
                                 <div>
-                                    <input type="number" min="1" value="${item.quantity}" data-index="${index}" class="form-control d-inline w-auto quantity-input" style="width: 60px;" />
-                                    <span class="ms-2">R$ ${subtotal.toFixed(2)}</span>
+                                <button class="btn btn-sm btn-danger remove-item" data-index="${index}">
+                                <i class="bi bi-trash"></i>
                                 </div>
-                            </li>
-                        `;
+                                </button>
+                            </div>
+                        </li>
+                    `;
             });
 
             document.getElementById('total_price').textContent = `R$ ${total.toFixed(2)}`;
@@ -144,6 +151,14 @@
                 quantity: i.quantity
             })));
         }
+
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.remove-item')) {
+                const index = e.target.closest('.remove-item').dataset.index;
+                cart.splice(index, 1);
+                updateCart();
+            }
+        });
 
         document.addEventListener('input', function (e) {
             if (e.target.classList.contains('quantity-input')) {
@@ -219,9 +234,9 @@
             alertElement.className = `alert alert-${type} alert-dismissible fade show`;
             alertElement.role = 'alert';
             alertElement.innerHTML = `
-                            ${message}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        `;
+                                        ${message}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    `;
 
             alertContainer.appendChild(alertElement);
         }
