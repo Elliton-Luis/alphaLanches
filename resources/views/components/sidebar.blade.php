@@ -35,7 +35,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/painel/pdv" class="nav-link text-white btn btn-primary text-start">
+                <a href="/pdv" class="nav-link text-white btn btn-primary text-start">
                     <i class="bi bi-shop fs-5 me-2"></i> PDV
                 </a>
             </li>

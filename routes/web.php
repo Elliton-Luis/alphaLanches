@@ -58,5 +58,8 @@ Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->name('painel.usuarios');
 Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])->name('painel.compras');
 
-Route::get('/pos', [PDVController::class, 'index'])->name('pos.index');
-Route::post('/pos', [PDVController::class, 'store'])->name('pos.store');
+
+Route::prefix('pdv')->group(function () {
+    Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
+    Route::post('/store', [PDVController::class, 'store'])->name('pdv.store');
+});
