@@ -12,7 +12,7 @@ class PDVController extends Controller
     public function index()
     {
         $products = Produto::all();
-        return view('pos.index', compact('products'));
+        return view('pdv', compact('products'));
     }
 
     public function store(Request $request)
@@ -42,6 +42,6 @@ class PDVController extends Controller
             ]);
         }
 
-        return redirect()->route('pos.index')->with('success', 'Venda realizada com sucesso!');
+        return redirect()->route('pdv.index')->with('success', 'Venda realizada com sucesso!');
     }
 }
