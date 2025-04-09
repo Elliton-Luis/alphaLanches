@@ -26,11 +26,39 @@
                 <!-- Lista de Produtos -->
                 <div class="col-md-6">
                     <h4>Produtos</h4>
+                    <div class="input-group mb-2">
+                        <input class="form-control border-primary" type="text" wire:model.lazy="name" placeholder="Nome">
+                        <select class="form-select border-primary" wire:model.lazy="type">
+                            <option value="">Selecione um Tipo</option>
+                            <option value="drink">Bebida</option>
+                            <option value="savory">Salgado</option>
+                            <option value="lunch">Almoço</option>
+                            <option value="snacks">Lanches</option>
+                            <option value="natural">Natural</option>
+                        </select>
+                    </div>
                     <ul class="list-group" id="product-list">
                         @foreach($products as $product)
                             <li class="list-group-item product-item" data-id="{{ $product->id }}"
-                                data-name="{{ $product->name }}" data-price="{{ $product->price }}">
-                                {{ $product->name }} - R${{ number_format($product->price, 2, ',', '.') }}
+                                data-name="{{ $product->name }}" data-price="{{ $product->price }}"
+                                data-amount="{{ $product->amount }}" data-type="{{ $product->type }}"
+                                data-describe="{{ $product->describe }}">
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>{{ $product->name }}</strong>
+                                        <br>
+                                        <small class="text-muted">
+                                            {{ $product->type }} - {{ $product->describe ?? 'Sem descrição' }}
+                                        </small>
+                                    </div>
+                                    <div>
+                                        <span
+                                            class="badge bg-primary">R${{ number_format($product->price, 2, ',', '.') }}</span>
+                                        <br>
+                                        <span class="badge bg-secondary">Estoque: {{ $product->amount }}</span>
+                                    </div>
+                                </div>
                             </li>
                         @endforeach
                     </ul>
@@ -73,11 +101,11 @@
             list.innerHTML = '';
             cart.forEach((item, index) => {
                 list.innerHTML += `
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    ${item.name} x ${item.quantity}
-                                    <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
-                                </li>
-                            `;
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            ${item.name} x ${item.quantity}
+                                            <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                                        </li>
+                                    `;
             });
             document.getElementById('items_json').value = JSON.stringify(cart.map(i => ({
                 product_id: i.product_id,
