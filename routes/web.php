@@ -15,9 +15,9 @@ use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\PDVController;
 use App\Http\Middleware\VerifyAuthAdmin;
 
-Route::prefix('guardrequest')->middleware(VerifyAuthAdmin::class)->group(function (){
-    Route::get('/guardrequests', [GuardRequestController::class, 'guardconfirm'])->name('guardRequests.index');
-    Route::get('/guardrequests/{id}', [GuardRequestController::class, 'acceptRequest'])->name('guardRequests.accept');
+Route::prefix('guardrequest')->middleware(VerifyAuthAdmin::class)->group(function () {
+    Route::get('/', [GuardRequestController::class, 'guardConfirm'])->name('guardRequests.index');
+    Route::get('/{id}', [GuardRequestController::class, 'acceptRequest'])->name('guardRequests.accept');
 });
 
 Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware();
