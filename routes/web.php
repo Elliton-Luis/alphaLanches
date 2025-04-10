@@ -62,7 +62,7 @@ Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'
 Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])->name('painel.compras');
 
 
-Route::prefix('pdv')->middleware(VerifyAuthAdmin::class)->group(function () {
+Route::prefix('pdv')->middleware(VerifyFuncAdmin::class)->group(function () {
     Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
     Route::get('/searchUser', [PDVController::class, 'searchUser'])->name('searchUser');
     Route::post('/store', [PDVController::class, 'store'])->name('pdv.store');
