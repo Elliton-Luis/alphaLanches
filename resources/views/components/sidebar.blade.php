@@ -17,7 +17,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/guardrequest/" class="nav-link text-white btn btn-primary text-start">
+                <a href="/responsaveis/" class="nav-link text-white btn btn-primary text-start">
                     <i class="bi bi-journal-plus fs-5 me-2"></i> Pedidos de Responsáveis
                 </a>
             </li>
@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/painel/compras" class="nav-link text-white btn btn-primary text-start">
+                <a href="/painelCompras" class="nav-link text-white btn btn-primary text-start">
                     <i class="bi bi-basket3 fs-5 me-2"></i> Histórico de Compras
                 </a>
             </li>

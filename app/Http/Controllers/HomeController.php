@@ -19,9 +19,9 @@ class HomeController extends Controller
                     ['route' => 'estoque', 'icon' => 'box', 'label' => 'Estoque'],
                     ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
                     ['route' => 'painelUsuarios', 'icon' => 'people', 'label' => 'Usuários'],
-                    ['route' => 'painel.compras', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
+                    ['route' => 'painelCompras', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                     ['route' => 'pdv', 'icon' => 'shop', 'label' => 'PDV'],
-                    ['route' => 'guardrequest/', 'icon' => 'journal-plus', 'label' => 'Pedidos de Responsáveis'],
+                    ['route' => 'responsaveis/', 'icon' => 'journal-plus', 'label' => 'Pedidos de Responsáveis'],
                     //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                     ];
             }
