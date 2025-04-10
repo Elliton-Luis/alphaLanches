@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use App\Mail\sendGuardMail;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\sendGuardRejectMail;
 
 
 class GuardRequestController extends Controller
@@ -35,5 +36,15 @@ class GuardRequestController extends Controller
         $request->delete();
 
         return redirect()->route('guardRequests.index')->with('success', 'Usuário '.$user->name.' Criado com sucesso');
+    }
+
+    public function rejectRequest(String $id, Request $request){
+        $guard = GuardRequest::find($id);
+        $dadosMail['name'] = $guard->name;
+        $dadosMail['message'] = $request['MRejeitar'];
+        Mail::to($guard->email)->send(new sendGuardRejectMail($dadosMail));
+        $guard->delete();
+
+        return redirect()->route('guardRequests.index')->with('success', 'Pedido Rejeitado');
     }
 }

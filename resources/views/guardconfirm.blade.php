@@ -34,7 +34,29 @@
                             <td>
                                 <div class="d-flex justify-content-center p-1 gap-2">
                                     <a class="btn btn-success btn-sm" href="{{route('guardRequests.accept', ['id'=>$request->id])}}">Aceitar</a>
-                                    <button class="btn btn-danger btn-sm">Rejeitar</button>
+                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal1{{$loop->index}}">Rejeitar</button>
+                                    <div class="modal fade" id="modal1{{$loop->index}}" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-4">Rejeitar {{$request->name}}</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="POST" action="{{route('guardRequests.reject', ['id'=>$request->id])}}">
+                                                        @csrf
+                                                        <div>
+                                                            <label for="" class="form-label">Motivo da Rejeição</label>
+                                                            <textarea name="MRejeitar" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                        </div>
+                                                        <div class="d-flex justify-content-end mt-2">
+                                                            <button type="submit" class="btn btn-danger">Rejeitar Pedido</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
