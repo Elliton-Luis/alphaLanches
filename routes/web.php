@@ -15,10 +15,10 @@ use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\PDVController;
 use App\Http\Middleware\VerifyAuthAdmin;
 
-Route::prefix('guardrequest')->middleware(VerifyAuthAdmin::class)->group(function () {
+Route::prefix('responsaveis')->middleware(VerifyAuthAdmin::class)->group(function () {
     Route::get('/', [GuardRequestController::class, 'guardConfirm'])->name('guardRequests.index');
     Route::get('/{id}', [GuardRequestController::class, 'acceptRequest'])->name('guardRequests.accept');
-    Route::post('/guardrequest/{id}', [GuardRequestController::class, 'rejectRequest'])->name('guardRequests.reject');
+    Route::post('/rejeitado/{id}', [GuardRequestController::class, 'rejectRequest'])->name('guardRequests.reject');
 });
 
 Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware();
@@ -29,10 +29,12 @@ Route::post('/logout', [LoginController::class, 'logoutUser'])->name('login.logo
 Route::get('/cadastro', [LoginController::class, 'showCadastro'])->name('login.cadastro');
 Route::post('/store', [LoginController::class, 'storeUser'])->name('login.store');
 
-Route::get('password/reset', [PasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [PasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('password/reset/{token}', [PasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset', [PasswordController::class, 'reset'])->name('password.update');
+Route::prefix('senha')->group(function () {
+    Route::get('resetar', [PasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('email', [PasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('resetar/{token}', [PasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('resetar', [PasswordController::class, 'reset'])->name('password.update');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
