@@ -63,4 +63,5 @@ Route::prefix('pdv')->group(function () {
     Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
     Route::get('/searchUser', [PDVController::class, 'searchUser'])->name('searchUser');
     Route::post('/store', [PDVController::class, 'store'])->name('pdv.store');
+    Route::post('/repor', [PDVController::class, 'reporEstoque'])->name('repor');
 });

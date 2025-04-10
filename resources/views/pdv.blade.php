@@ -14,9 +14,15 @@
 
         <div id="alert-container"></div>
 
-
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if(Session::has('errorAuth'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ Session::get('errorAuth') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
 
         <form id="pdv-form" method="POST" action="{{ route('pdv.store') }}">
@@ -82,8 +88,8 @@
                         <select name="payment_method" id="payment_method" class="form-select" required>
                             <option value="">Selecione</option>
                             <option value="dinheiro">Dinheiro</option>
-                            <option value="cartao_credito">Cartão de Crédito</option>
-                            <option value="cartao_debito">Cartão de Débito</option>
+                            <option value="credit">Crédito</option>
+                            <option value="cartao">Cartão</option>
                             <option value="pix">PIX</option>
                         </select>
                     </div>
@@ -98,6 +104,19 @@
                 </div>
             </div>
         </form>
+        <div class="col-md-6" style="margin-top: 10px;">
+            <h5>Reposição Rápida</h5>
+            <form method="POST" action="{{ route('repor') }}">
+                @csrf
+                <select name="product_id" class="form-select mb-2">
+                    @foreach($products as $product)
+                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                    @endforeach
+                </select>
+                <input type="number" name="amount" class="form-control mb-2" placeholder="Quantidade">
+                <button type="submit" class="btn btn-warning">Repor Estoque</button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -130,19 +149,19 @@
                 total += subtotal;
 
                 list.innerHTML += `
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div style="display: contents;">
-                                <div>${item.name}</div>
-                                <div><input type="number" min="1" value="${item.quantity}" data-index="${index}" class="form-control d-inline w-auto quantity-input" style="width: 60px;" /></div>
-                                <div><span class="ms-2">R$ ${subtotal.toFixed(2)}</span></div>
-                                <div>
-                                <button class="btn btn-sm btn-danger remove-item" data-index="${index}">
-                                <i class="bi bi-trash"></i>
-                                </div>
-                                </button>
-                            </div>
-                        </li>
-                    `;
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <div style="display: contents;">
+                                                    <div>${item.name}</div>
+                                                    <div><input type="number" min="1" value="${item.quantity}" data-index="${index}" class="form-control d-inline w-auto quantity-input" style="width: 60px;" /></div>
+                                                    <div><span class="ms-2">R$ ${subtotal.toFixed(2)}</span></div>
+                                                    <div>
+                                                    <button class="btn btn-sm btn-danger remove-item" data-index="${index}">
+                                                    <i class="bi bi-trash"></i>
+                                                    </div>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        `;
             });
 
             document.getElementById('total_price').textContent = `R$ ${total.toFixed(2)}`;
@@ -234,9 +253,9 @@
             alertElement.className = `alert alert-${type} alert-dismissible fade show`;
             alertElement.role = 'alert';
             alertElement.innerHTML = `
-                                        ${message}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    `;
+                                                            ${message}
+                                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        `;
 
             alertContainer.appendChild(alertElement);
         }
