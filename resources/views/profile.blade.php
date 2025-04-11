@@ -41,7 +41,7 @@
 
                     <div class="mb-3">
                         <label for="cpf" class="form-label">CPF</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf">
+                        <input type="text" class="form-control" id="cpf" name="cpf" value="{{ old('cpf', $user->cpf) }}">
                         <script>
                             jQuery(function ($) {
                                 $("#cpf").mask("999.999.999-99");
