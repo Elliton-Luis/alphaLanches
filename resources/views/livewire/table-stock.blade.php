@@ -4,19 +4,19 @@
     <div class="container-fluid px-3 px-md-5 mt-4">
         <h2 class="text-center mb-4 fw-bold">Controle de Estoque</h2>
 
-        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+        <div class="d-flex justify-content-between align-items-center mb-3 gap-2">
             <button id="btn-add" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modal-add">Adicionar Produto</button>
-            <input type="text" id="search" placeholder="Buscar produto..." class="form-control w-100 w-md-50 my-2 my-md-0">
-        </div>
+            <input type="text" placeholder="Buscar produto..." class="form-control w-50 w-md-50 my-2 my-md-0" wire:model.lazy="filterName">
 
-        <select class="form-select my-3" wire:model.lazy="filterType">
-            <option value="">Todos</option>
-            <option value="drink">Bebidas</option>
-            <option value="savory">Salgados</option>
-            <option value="lunch">Almoço</option>
-            <option value="snacks">Lanches</option>
-            <option value="natural">Natural</option>
-        </select>
+            <select class="w-50 form-select my-3" wire:model.lazy="filterType">
+                <option value="">Todos</option>
+                <option value="bebida">Bebidas</option>
+                <option value="salgado">Salgados</option>
+                <option value="almoço">Almoço</option>
+                <option value="lanche">Lanches</option>
+                <option value="natural">Natural</option>
+            </select>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-striped mt-3">

@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('describe')->nullable();
             $table->decimal('price');
-            $table->enum('type',['drink','savory','lunch','snacks','natural']);
+            $table->enum('type',['bebida','salgado','almoço','lanche','natural']);
             $table->timestamps();
         });
     }
