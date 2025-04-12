@@ -21,7 +21,8 @@ class HomeController extends Controller
                     ['route' => 'painelUsuarios', 'icon' => 'people', 'label' => 'Usuários'],
                     ['route' => 'painelCompras', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                     ['route' => 'pdv', 'icon' => 'shop', 'label' => 'PDV'],
-                    ['route' => 'responsaveis/', 'icon' => 'journal-plus', 'label' => 'Pedidos de Responsáveis'],
+                    ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
+                    ['route' => 'responsaveis', 'icon' => 'journal-plus', 'label' => 'Pedidos de Responsáveis'],
                     //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                     ];
             }
