@@ -46,5 +46,11 @@ class TableACcountsAdmin extends Component
         return view('livewire.table-a-ccounts-admin', ['users'=>$users]);
     }
 
+    public function deleteUser($id){
+        $user = User::find($id);
+        $user->delete();
+        session()->with('success','Usuário deletado com sucesso')
+        return 0;
+    }
 
 }

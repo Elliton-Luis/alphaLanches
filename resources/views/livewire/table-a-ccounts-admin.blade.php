@@ -46,13 +46,13 @@
                                 <td>{{ $user->type }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-warning">Editar</button>
-                                    <button class="btn btn-sm btn-danger">Excluir</button>
+                                    <button wire:click='deleteUser({{$user->id}})' class="btn btn-sm btn-danger">Excluir</button>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $users->links('vendor.livewire.bootstrap') }}
+                    {{$users->links('vendor.livewire.bootstrap') }}
                 </div>
             </div>
           </div>
