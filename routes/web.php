@@ -14,6 +14,7 @@ use App\Http\Controllers\GuardRequestController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\PDVController;
 use App\Http\Middleware\VerifyAuthAdmin;
+use App\Http\Middleware\VerifyFuncAdmin;
 
 Route::prefix('responsaveis')->middleware(VerifyAuthAdmin::class)->group(function () {
     Route::get('/', [GuardRequestController::class, 'guardConfirm'])->name('guardRequests.index');
