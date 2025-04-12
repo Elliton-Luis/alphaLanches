@@ -16,7 +16,7 @@
         <h2 class="text-center mb-4 fw-bold">Controle de Estoque</h2>
 
         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-            <button id="btn-add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">Adicionar Produto</button>
+            <button id="btn-add" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modal-add">Adicionar Produto</button>
             <input type="text" id="search" placeholder="Buscar produto..." class="form-control w-100 w-md-50 my-2 my-md-0">
         </div>
 
@@ -44,9 +44,9 @@
                         <tr>
                             <td>{{ $product->name }}</td>
                             <td>
-                                <button class="btn btn-sm btn-danger" onclick="updateStock({{ $product->id }}, -1)">-</button>
+                                <button class="btn btn-sm btn-danger px-3 mx-3" onclick="updateStock({{ $product->id }}, -1)">-</button>
                                 <span id="qtd-{{ $product->id }}">{{ $product->amount }}</span>
-                                <button class="btn btn-sm btn-success" onclick="updateStock({{ $product->id }}, 1)">+</button>
+                                <button class="btn btn-sm btn-success px-3 mx-3" onclick="updateStock({{ $product->id }}, 1)">+</button>
                             </td>
                             <td>{{ ucfirst($product->type) }}</td>
                             <td>
