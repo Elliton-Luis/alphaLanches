@@ -52,6 +52,12 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @if (Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{Session('error')}}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     {{$users->links('vendor.livewire.bootstrap') }}
                 </div>
             </div>

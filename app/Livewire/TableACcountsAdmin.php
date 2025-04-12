@@ -48,9 +48,10 @@ class TableACcountsAdmin extends Component
 
     public function deleteUser($id){
         $user = User::find($id);
+        if($id = auth()->user()->id){
+            return session()->flash('error','Não é possível deletar a sí mesmo');
+        }
         $user->delete();
-        session()->with('success','Usuário deletado com sucesso')
-        return 0;
     }
 
 }
