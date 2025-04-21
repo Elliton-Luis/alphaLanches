@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mt-4 text">
-        <h1 class="text-center mb-4">Painel PDV</h1>
+        <h2 class="text-center mb-5">Painel PDV</h2>
 
         @if(isset($todayTotal))
             <div class="alert alert-info text-center">

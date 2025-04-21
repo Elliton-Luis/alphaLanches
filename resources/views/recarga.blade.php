@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mt-4">
-        <h2 class="text-center text-primary fw-bold">Recarga de Créditos</h2>
+        <h2 class="text-center mb-5">Recarga de Créditos</h2>
 
         <div class="card p-4 shadow-lg mt-4 border-0">
             <h5 class="text-secondary">Saldo Atual:
@@ -18,7 +18,6 @@
                     style="background-color: rgb(199, 248, 203); font-weight: bold;" readonly>
             </div>
 
-            <!-- Teclado Digital -->
             <div class="d-flex flex-wrap justify-content-center mt-4">
                 @foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 'C', '.'] as $tecla)
                     <button class="btn btn-secondary m-1 flex-grow-1 shadow-sm"

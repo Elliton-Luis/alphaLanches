@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <div class="container">
-        <h2 class="mb-4 text-center">Meu Perfil</h2>
+        <h2 class="mb-5 text-center">Meu Perfil</h2>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>

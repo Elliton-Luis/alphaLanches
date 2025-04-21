@@ -13,7 +13,7 @@
     <script src="{{ asset('js/estoque.js') }}"></script>
 
     <div class="container">
-        <h2>Controle de Estoque</h2>
+        <h2 class="text-center mb-5">Controle de Estoque</h2>
 
         <br>
 
