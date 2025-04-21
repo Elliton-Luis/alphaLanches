@@ -10,7 +10,8 @@ class RecargaController extends Controller
 {
     public function index()
     {
-        return view('recarga');
+        $users = User::all();
+        return view('recarga', compact('users'));
     }
 
     public function process(Request $request)
@@ -20,10 +21,9 @@ class RecargaController extends Controller
             'metodo' => 'required|string'
         ]);
 
-        $user = Auth::user();
+        $user = User::find($request->user_id);
         $valor = floatval($request->valor);
 
-        // Atualizar saldo do usuário
         $user->credit += $valor;
         $user->save();
 
