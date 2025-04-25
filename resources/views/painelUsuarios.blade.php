@@ -3,10 +3,7 @@
 @section('title', 'Criar Login - Alpha')
 
 @section('content')
-    <div class="container mt-4">
-        <h1 class="text-center mb-4 fw-bold">
-            <i class="bi bi-person-lines-fill"></i> Gerenciamento de Contas
-        </h1>
+    <h2 class="text-center mb-5">Gerenciamento de contas</h2>
 
         <div class="row g-4">
             <div class="col-12 col-md-6">

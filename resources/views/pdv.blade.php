@@ -3,8 +3,8 @@
 @section('title', 'AlphaLanches - PDV')
 
 @section('content')
-    <div class="container mt-4">
-        <h1 class="text-center mb-4 fw-bold">Painel PDV</h1>
+    <div class="container mt-4 text">
+        <h2 class="text-center mb-5">Painel PDV</h2>
 
         @if(isset($todayTotal))
             <div class="alert alert-info text-center">
@@ -139,4 +139,17 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .list-group-item {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #91b6ee;
+            cursor: pointer;
+        }
+    </style>
+
+    <script src="{{ asset('js/pdv.js') }}"></script>
 @endsection

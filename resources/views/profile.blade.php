@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <div class="container">
-        <h2 class="mb-4 text-center">Meu Perfil</h2>
+        <h2 class="mb-5 text-center">Meu Perfil</h2>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -41,7 +41,7 @@
 
                     <div class="mb-3">
                         <label for="cpf" class="form-label">CPF</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf">
+                        <input type="text" class="form-control" id="cpf" name="cpf" value="{{ old('cpf', $user->cpf) }}">
                         <script>
                             jQuery(function ($) {
                                 $("#cpf").mask("999.999.999-99");

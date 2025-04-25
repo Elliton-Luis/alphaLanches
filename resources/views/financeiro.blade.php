@@ -3,11 +3,8 @@
 @section('title', 'AlphaLanches - Financeiro')
 
 @section('content')
-    <script src="{{ asset('js/financeiro.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <div class="container mt-4">
-        <h1 class="text-center mb-4 fw-bold">Painel Financeiro</h1>
+    <div class="container mt-4 text">
+        <h2 class="text-center mb-5">Painel Financeiro</h2>
 
         <div class="row g-4">
             <div class="col-12 col-sm-6 col-lg-3">
@@ -147,4 +144,7 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/financeiro.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection
