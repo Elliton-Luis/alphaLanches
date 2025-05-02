@@ -75,4 +75,5 @@ Route::prefix('agendamento')->group(function () {
     Route::get('/searchUser', [AgendamentoController::class, 'searchUser'])->name('searchUser');
     Route::post('/store', [AgendamentoController::class, 'store'])->name('agendamento.store');
     Route::post('/repor', [AgendamentoController::class, 'reporEstoque'])->name('repor');
+    Route::patch('/cancelar/{id}', [AgendamentoController::class, 'cancelar'])->name('agendamento.cancelar');
 });

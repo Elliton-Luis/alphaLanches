@@ -82,6 +82,11 @@
                         </select>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="scheduled_date">Data da Pedido:</label>
+                        <input type="date" name="scheduled_date" id="scheduled_date" class="form-control" required>
+                    </div>
+
                     <button type="submit" class="btn btn-success">Finalizar Venda</button>
 
                     <div class="mb-3">
@@ -92,6 +97,34 @@
                 </div>
             </div>
         </form>
+    </div>
+
+    <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#pedidosModal">
+        Ver Pedidos
+    </button>
+
+    <div class="modal fade" id="pedidosModal" tabindex="-1" aria-labelledby="pedidosModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Minhas Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    @foreach($pedidos as $pedido)
+                        <div class="border p-2 mb-2">
+                            <p><strong>Data:</strong> {{ $pedido->scheduled_date }}</p>
+                            <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
+                            <form method="POST" action="{{ route('agendamento.cancelar', $pedido->id) }}">
+                                @csrf
+                                @method('PATCH')
+                                <button class="btn btn-sm btn-danger">Cancelar Pedido</button>
+                            </form>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 
     <style>
