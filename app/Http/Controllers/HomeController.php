@@ -42,6 +42,7 @@ class HomeController extends Controller
                 return [
                     ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
                     ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
+                    ['route' => 'agendamento', 'icon' => 'calendar-event', 'label' => 'Agendamento'],
                     ['route' => 'painel.compras', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                     //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                 ];
@@ -51,6 +52,7 @@ class HomeController extends Controller
             {
                 return [
                     ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
+                    ['route' => 'agendamento', 'icon' => 'calendar-event', 'label' => 'Agendamento'],
                     ['route' => 'PainelHistorico', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                     //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
                 ];

@@ -57,6 +57,14 @@
             </li>
         @endif
 
+        @if (in_array(auth()->user()->type, ['guard', 'student']))
+            <li class="nav-item">
+                <a href="/agendamento" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-calendar-event fs-5 me-2"></i> Agendamento
+                </a>
+            </li>
+        @endif
+
         @if (auth()->user()->type === 'student')
             <li class="nav-item">
                 <a href="/PainelHistorico" class="nav-link text-white btn btn-primary text-start">
