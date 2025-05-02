@@ -31,7 +31,7 @@ class AgendamentoController extends Controller
         foreach ($items as $item) {
             $product = Produto::find($item['product_id']);
             if (!$product || $product->amount < $item['quantity']) {
-                return redirect()->route('pdv.index')->with('errorAuth', "Estoque insuficiente para o produto {$product->name}.");
+                return redirect()->route('agendamento.index')->with('errorAuth', "Estoque insuficiente para o produto {$product->name}.");
             }
             $total += $product->price * $item['quantity'];
         }
@@ -39,7 +39,7 @@ class AgendamentoController extends Controller
         if ($request->payment_method == 'credit') {
             $customer = User::find($request->customer_id);
             if ($customer->credit < $total) {
-                return redirect()->route('pdv.index')->with('errorAuth', 'Créditos insuficientes para esta venda.');
+                return redirect()->route('agendamento.index')->with('errorAuth', 'Créditos insuficientes para esta venda.');
             }
             $customer->credit -= $total;
             $customer->save();
@@ -64,7 +64,7 @@ class AgendamentoController extends Controller
             ]);
         }
 
-        return redirect()->route('pdv.index')->with('success', 'Venda realizada com sucesso!');
+        return redirect()->route('agendamento.index')->with('success', 'Venda realizada com sucesso!');
     }
 
     public function searchUser(Request $request)

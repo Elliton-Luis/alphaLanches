@@ -19,14 +19,8 @@
             </div>
         @endif
 
-        <form id="pdv-form" method="POST" action="{{ route('pdv.store') }}">
+        <form id="agendamento-form" method="POST" action="{{ route('agendamento.store') }}">
             @csrf
-
-            <div class="mb-3 border border-primary rounded">
-                <input type="text" id="customer_search" class="form-control" placeholder="Digite o nome do cliente">
-                <input type="hidden" name="customer_id" id="customer_id">
-                <div id="customer_list" class="list-group position-absolute z-3"></div>
-            </div>
 
             <div class="row">
                 <div class="col-md-6 border border-primary rounded" style="padding-top: 10px;">
@@ -98,19 +92,6 @@
                 </div>
             </div>
         </form>
-        <div class="col-md-6" style="margin-top: 10px;">
-            <h5>Reposição Rápida</h5>
-            <form method="POST" action="{{ route('repor') }}">
-                @csrf
-                <select name="product_id" class="form-select mb-2">
-                    @foreach($products as $product)
-                        <option value="{{ $product->id }}">{{ $product->name }}</option>
-                    @endforeach
-                </select>
-                <input type="number" name="amount" class="form-control mb-2" placeholder="Quantidade">
-                <button type="submit" class="btn btn-warning">Repor Estoque</button>
-            </form>
-        </div>
     </div>
 
     <style>
@@ -124,5 +105,5 @@
         }
     </style>
 
-    <script src="{{ asset('js/pdv.js') }}"></script>
+    <script src="{{ asset('js/agendamento.js') }}"></script>
 @endsection

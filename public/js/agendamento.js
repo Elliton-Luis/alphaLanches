@@ -139,7 +139,7 @@ function showAlert(message, type = 'danger') {
 }
 
 
-document.getElementById('pdv-form').addEventListener('submit', function (e) {
+document.getElementById('agendamento-form').addEventListener('submit', function (e) {
     const customerId = document.getElementById('customer_id').value;
     const cartItems = JSON.parse(document.getElementById('items_json').value || '[]');
 
