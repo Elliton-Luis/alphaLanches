@@ -49,7 +49,7 @@
             </li>
         @endif
 
-        @if (in_array(auth()->user()->type, ['admin', 'guard', 'student']))
+        @if (in_array(auth()->user()->type, ['admin', 'guard']))
             <li class="nav-item">
                 <a href="/recarga" class="nav-link text-white btn btn-primary text-start">
                     <i class="bi bi-wallet fs-5 me-2"></i> Recarga
