@@ -14,7 +14,7 @@ class AgendamentoController extends Controller
     {
         $products = Produto::all();
         $todayTotal = Sale::whereDate('saleDate', today())->sum('value');
-        return view('pdv', compact('products', 'todayTotal'));
+        return view('agendamento', compact('products', 'todayTotal'));
     }
 
     public function store(Request $request)
