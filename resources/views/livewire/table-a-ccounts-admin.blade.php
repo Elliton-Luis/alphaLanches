@@ -1,4 +1,4 @@
-<div class="w-100 w-md-50 m-2">
+<div class="m-2"">
     <div class="accordion" id="accordionTableAccounts">
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -8,7 +8,7 @@
                 </button>
             </h2>
             <div id="tableOne" class="accordion-collapse collapse show" data-bs-parent="#accordionTableAccounts">
-                <div class="accordion-body">
+                <div class="accordion-body" style="width: 625px;">
                     @if(session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{ session('success') }}

@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title','GuardConfirm')
+@section('title','AlphaLanches - Responsáveis')
 @section('content')
 
 <div class="container">
