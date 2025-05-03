@@ -55,7 +55,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <div class="card shadow p-4">
-        <h3 class="text-center mb-4">Cadastro de Usuário</h3>
+        <h3 class="text-center mb-4">Cadastro de Responsável</h3>
 
         @if(Session::has('errorAuth'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
