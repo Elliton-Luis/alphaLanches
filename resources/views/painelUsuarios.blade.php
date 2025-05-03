@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Criar Login - Alpha')
+@section('title', 'AlphaLanches - Usuários')
 
 @section('content')
     <h2 class="text-center mb-5">Gerenciamento de contas</h2>

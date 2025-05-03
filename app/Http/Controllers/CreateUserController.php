@@ -12,10 +12,4 @@ class CreateUserController extends Controller
     public function showPainelUsuarios(){
         return view('painelUsuarios');
     }
-    public function showPainelCompras(){
-        return view('painel.compras');
-    }
-    public function showPainelPDV(){
-        return view('painel.pdv');
-    }
 }

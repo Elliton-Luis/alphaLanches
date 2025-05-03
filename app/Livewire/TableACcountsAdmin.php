@@ -32,25 +32,25 @@ class TableACcountsAdmin extends Component
     }
 
     public function render()
-    {
-        $query = User::query();
+{
+    $query = User::query();
 
-        if ($this->filterName) {
-            $query->where('name', 'like', '%' . $this->name . '%');
-        }
-
-        if ($this->filterTelefone) {
-            $query->where('telefone', 'like', '%' . $this->name . '%');
-        }
-
-        if ($this->filterType) {
-            $query->where('type', $this->type);
-        }
-
-        $users = $query->paginate(5);
-
-        return view('livewire.table-a-ccounts-admin', ['users' => $users]);
+    if ($this->filterName) {
+        $query->where('name', 'like', '%' . $this->filterName . '%');
     }
+
+    if ($this->filterTelefone) {
+        $query->where('telefone', 'like', '%' . $this->filterTelefone . '%');
+    }
+
+    if ($this->filterType) {
+        $query->where('type', $this->filterType);
+    }
+
+    $users = $query->paginate(5);
+
+    return view('livewire.table-a-ccounts-admin', ['users' => $users]);
+}
 
     public function deleteUser($id)
     {

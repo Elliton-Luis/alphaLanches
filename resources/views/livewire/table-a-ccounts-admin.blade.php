@@ -107,18 +107,18 @@
 </div>
 
 @push('scripts')
-<script>
-    window.addEventListener('showEditModal', () => {
-        const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
-        modal.show();
-    });
+    <script>
+        window.addEventListener('showEditModal', () => {
+            const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
+            modal.show();
+        });
 
-    window.addEventListener('hideEditModal', () => {
-        const modalEl = document.getElementById('editUserModal');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        if (modal) {
-            modal.hide();
-        }
-    });
-</script>
+        window.addEventListener('hideEditModal', () => {
+            const modalEl = document.getElementById('editUserModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) {
+                modal.hide();
+            }
+        });
+    </script>
 @endpush
