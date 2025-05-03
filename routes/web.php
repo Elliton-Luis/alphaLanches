@@ -62,7 +62,6 @@ Route::get('/financeiro', [FinanceiroController::class, 'showFinanceiro'])->name
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->name('painel.usuarios');
 Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])->name('painel.compras');
 
-
 Route::prefix('pdv')->group(function () {
     Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
     Route::get('/searchUser', [PDVController::class, 'searchUser'])->name('searchUser');

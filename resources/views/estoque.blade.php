@@ -6,6 +6,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 @section('content')
@@ -14,11 +15,7 @@
 
     <div class="container">
         <h2 class="text-center mb-5">Controle de Estoque</h2>
-
-        <br>
-
-        <button id="btn-add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">Adicionar Produto</button>
-
+        
         <div id="modal-add" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -49,9 +46,9 @@
             </div>
         </div>
 
-        <input type="text" id="search" placeholder="Buscar produto..." class="form-control my-3">
+        <input type="text" id="search" placeholder="Buscar produto..." class="form-control my-3 border border-3">
 
-        <select id="filter-type" class="form-control my-3" onchange="filterByType()">
+        <select id="filter-type" class="form-control my-3 border border-3" onchange="filterByType()">
             <option value="">Todos</option>
             <option value="drink">Bebidas</option>
             <option value="savory">Salgados</option>
@@ -60,7 +57,7 @@
             <option value="natural">Natural</option>
         </select>
 
-        <table class="table table-striped mt-3">
+        <table class="table table-striped mt-3 border border-3">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -87,5 +84,7 @@
                 @endforeach
             </tbody>
         </table>
+
+        <button id="btn-add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">Adicionar Produto</button>
     </div>
 @endsection
