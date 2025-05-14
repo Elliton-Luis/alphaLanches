@@ -28,12 +28,6 @@
         <form id="pdv-form" method="POST" action="{{ route('pdv.store') }}">
             @csrf
 
-            <div class="mb-3 border border-primary rounded">
-                <input type="text" id="customer_search" class="form-control" placeholder="Digite o nome do cliente">
-                <input type="hidden" name="customer_id" id="customer_id">
-                <div id="customer_list" class="list-group position-absolute z-3"></div>
-            </div>
-
             <div class="row">
                 <div class="col-md-6 border border-primary rounded" style="padding-top: 10px;">
                     <h4>Produtos</h4>
@@ -88,7 +82,6 @@
                         <select name="payment_method" id="payment_method" class="form-select" required>
                             <option value="">Selecione</option>
                             <option value="dinheiro">Dinheiro</option>
-                            <option value="credit">Crédito</option>
                             <option value="cartao">Cartão</option>
                             <option value="pix">PIX</option>
                         </select>

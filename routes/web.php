@@ -64,15 +64,6 @@ Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])
 
 Route::prefix('pdv')->group(function () {
     Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
-    Route::get('/searchUser', [PDVController::class, 'searchUser'])->name('searchUser');
     Route::post('/store', [PDVController::class, 'store'])->name('pdv.store');
     Route::post('/repor', [PDVController::class, 'reporEstoque'])->name('repor');
-});
-
-Route::prefix('agendamento')->group(function () {
-    Route::get('/', [AgendamentoController::class, 'index'])->name('agendamento.index');
-    Route::get('/searchUser', [AgendamentoController::class, 'searchUser'])->name('searchUser');
-    Route::post('/store', [AgendamentoController::class, 'store'])->name('agendamento.store');
-    Route::post('/repor', [AgendamentoController::class, 'reporEstoque'])->name('repor');
-    Route::patch('/cancelar/{id}', [AgendamentoController::class, 'cancelar'])->name('agendamento.cancelar');
 });
