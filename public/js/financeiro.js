@@ -7,15 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
         new Chart(ctx, {
             type: "bar",
             data: {
-                labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"],
+                labels: window.vendasMesesLabels || [],
                 datasets: [{
-                    label: "Receitas", 
-                    data: [5000, 7000, 6000, 8000, 7500, 9000],
-                    backgroundColor: "#28a745"
-                }, {
-                    label: "Despesas",
-                    data: [3000, 4000, 3500, 5000, 4500, 6000],
-                    backgroundColor: "#dc3545"
+                    label: "Receita", 
+                    data: window.vendasMesesData || [],
+                    backgroundColor: "#ecab0f"
                 }]
             },
             options: {
