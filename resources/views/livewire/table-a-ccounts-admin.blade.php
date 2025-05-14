@@ -52,7 +52,7 @@
                                             <td>{{ $user->telefone }}</td>
                                         @endif
 
-                                        <td>{{ $user->type }}</td>
+                                        <td>{{ $user->tipo_traduzido }}</td>
                                         <td>
                                             <button class="btn btn-sm btn-warning"
                                                 wire:click="editUser({{ $user->id }})">Editar</button>

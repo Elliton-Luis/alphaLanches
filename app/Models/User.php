@@ -35,4 +35,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function getTipoTraduzidoAttribute()
+    {
+        return match ($this->type) {
+            'guard' => 'Responsável',
+            'student' => 'Estudante',
+            'func' => 'Funcionário',
+            'admin' => 'Administrador',
+            default => 'Desconhecido',
+        };
+    }
 }
