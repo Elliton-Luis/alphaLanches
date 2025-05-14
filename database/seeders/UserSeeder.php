@@ -12,6 +12,7 @@ class UserSeeder extends Seeder
 
     public function run(): void
     {
+
         User::create([
             'name'=>'admin1',
             'email'=>'admin1@mail.com',
@@ -38,6 +39,20 @@ class UserSeeder extends Seeder
             'email'=>'func1@mail.com',
             'password'=>bcrypt('func@123'),
             'type'=>'func'
+        ]);
+
+        User::create([
+            'name'=>'pai1',
+            'email'=>'pai1@mail.com',
+            'password'=>bcrypt('pai@123'),
+            'type'=>'guard'
+        ]);
+
+        User::create([
+            'name'=>'pai2',
+            'email'=>'pai2@mail.com',
+            'password'=>bcrypt('pai@123'),
+            'type'=>'guard'
         ]);
     }
 }

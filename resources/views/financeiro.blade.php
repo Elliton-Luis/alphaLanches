@@ -8,26 +8,10 @@
 
         <div class="row g-4">
             <div class="col-12 col-sm-6 col-lg-3">
-                <div class="card text-white bg-dark">
-                    <div class="card-body">
-                        <h5 class="card-title">Saldo Atual</h5>
-                        <p class="card-text">R$ 5.240,00</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card text-white bg-success">
                     <div class="card-body">
                         <h5 class="card-title">Receita Atual</h5>
-                        <p class="card-text">R$ 42.500,00</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="card text-white bg-danger">
-                    <div class="card-body">
-                        <h5 class="card-title">Despesa Atual</h5>
-                        <p class="card-text">R$ 26.000,00</p>
+                        <p class="card-text">R$ {{ number_format($totalSalesValue, 2, ',', '.') }}</p>
                     </div>
                 </div>
             </div>
@@ -35,13 +19,17 @@
                 <div class="card text-white bg-primary">
                     <div class="card-body">
                         <h5 class="card-title">Vendas do Dia</h5>
-                        <p class="card-text">R$ 850,00</p>
+                        <p class="card-text">Vendas {{ $dailySales }}</p>
+                        <p class="card-text">R$ {{ number_format($totalDailyValue, 2, ',', '.') }}</p>
                     </div>
                 </div>
-                <div class="card text-white bg-warning mt-3">
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3">   
+                <div class="card text-white bg-warning">
                     <div class="card-body">
                         <h5 class="card-title">Vendas do Mês</h5>
-                        <p class="card-text">R$ 15.320,00</p>
+                        <p class="card-text">Vendas {{ $monthlySales }}</p>
+                        <p class="card-text">R$ {{ number_format($totalMonthlyValue, 2, ',', '.') }}</p>
                     </div>
                 </div>
             </div>
@@ -51,7 +39,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Receitas e Despesas</h5>
+                        <h5 class="card-title">Receita</h5>
                         <canvas id="graficoReceitasDespesas"></canvas>
                     </div>
                 </div>
@@ -61,35 +49,29 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Últimas Transações</h5>
-                        <div class="table-responsive">
-                            <table class="table table-striped">
+                        <div class="table-responsive" style="max-height: 280px; overflow-y: auto;">
+                            <table class="table table-striped" >
                                 <thead>
                                     <tr>
                                         <th>Cliente</th>
                                         <th>Produto</th>
+                                        <th>Quantidade</th>
                                         <th>Valor</th>
                                         <th>Data</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>João Silva</td>
-                                        <td>Sanduíche</td>
-                                        <td>R$ 12,00</td>
-                                        <td>20/03/2025</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Maria Souza</td>
-                                        <td>Suco Natural</td>
-                                        <td>R$ 8,00</td>
-                                        <td>20/03/2025</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Carlos Lima</td>
-                                        <td>Salgado</td>
-                                        <td>R$ 6,50</td>
-                                        <td>20/03/2025</td>
-                                    </tr>
+                                    @foreach($sales as $sale)
+                                        @foreach($sale->saleProducts as $saleProduct)
+                                            <tr>
+                                                <td>{{ $sale->user->name }}</td>
+                                                <td>{{ $saleProduct->product->name }}</td>
+                                                <td>{{ $saleProduct->productQuantity }}</td>
+                                                <td>R$ {{ number_format($saleProduct->productQuantity * $saleProduct->product->price, 2, ',', '.') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($sale->saleDate)->format('d/m/Y') }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -104,47 +86,43 @@
                     <i class="fas fa-trophy text-warning"></i> Ranking de Produtos Mais Vendidos
                 </h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between align-items-center fw-bold">
-                            <span><i class="fas fa-medal text-warning"></i> Sanduíche</span>
-                            <span class="badge bg-success rounded-pill">150 vendas</span>
-                        </div>
-                        <div class="progress mt-2">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 42%"
-                                 aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">
-                                42%
+                    @foreach($ranking as $item)
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center fw-bold">
+                                <span>
+                                    @if($loop->iteration == 1)
+                                        <i class="fas fa-medal text-warning"></i>
+                                    @elseif($loop->iteration == 2)
+                                        <i class="fas fa-medal text-secondary"></i>
+                                    @elseif($loop->iteration == 3)
+                                        <i class="fas fa-medal text-dark"></i>
+                                    @else
+                                        <i class="fas fa-star text-muted"></i>
+                                    @endif
+                                    {{ $item['name'] }}
+                                </span>
+                                <span class="badge bg-success rounded-pill">
+                                    {{ $item['quantity'] }} vendas
+                                </span>
                             </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between align-items-center fw-bold">
-                            <span><i class="fas fa-medal text-secondary"></i> Refrigerante</span>
-                            <span class="badge bg-primary rounded-pill">120 vendas</span>
-                        </div>
-                        <div class="progress mt-2">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 33%"
-                                 aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">
-                                33%
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-success" role="progressbar" 
+                                    style="width: {{ $item['percentage'] ?? 0 }}%" 
+                                    aria-valuenow="{{ $item['percentage'] ?? 0 }}"" 
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    {{ $item['percentage'] }}%
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between align-items-center fw-bold">
-                            <span><i class="fas fa-medal text-dark"></i> Salgado</span>
-                            <span class="badge bg-secondary rounded-pill">100 vendas</span>
-                        </div>
-                        <div class="progress mt-2">
-                            <div class="progress-bar bg-secondary" role="progressbar" style="width: 28%"
-                                 aria-valuenow="28" aria-valuemin="0" aria-valuemax="100">
-                                28%
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
-    </div>
 
-    <script src="{{ asset('js/financeiro.js') }}"></script>
+    <script>
+        window.vendasMesesLabels = @json($months);
+        window.vendasMesesData = @json($revenues);
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('js/financeiro.js') }}"></script>
 @endsection
