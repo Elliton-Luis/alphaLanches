@@ -12,46 +12,82 @@ class TableACcountsAdmin extends Component
 
     use WithPagination;
 
-    protected $listeners = ['storeAccount'=>'render'];
+    protected $listeners = ['storeAccount' => 'render'];
 
-    public $name;
-    public $telefone;
-    public $type;
+    public $filterName;
+    public $filterTelefone;
+    public $filterType;
+
+    public $editUserId;
+    public $editName;
+    public $editTelefone;
+    public $editType;
+    protected $paginationTheme = 'bootstrap';
 
     public function mount()
     {
-        $this->name = null;
-        $this->telefone = null;
-        $this->type = null;
+        $this->filterName = null;
+        $this->filterTelefone = null;
+        $this->filterType = null;
     }
 
     public function render()
     {
         $query = User::query();
 
-        if($this->name){
-            $query->where('name','like','%'.$this->name.'%');
+        if ($this->filterName) {
+            $query->where('name', 'like', '%' . $this->filterName . '%');
         }
 
-        if($this->telefone){
-            $query->where('telefone','like','%'.$this->name.'%');
+        if ($this->filterTelefone) {
+            $query->where('telefone', 'like', '%' . $this->filterTelefone . '%');
         }
 
-        if($this->type){
-            $query->where('type',$this->type);
+        if ($this->filterType) {
+            $query->where('type', $this->filterType);
         }
 
         $users = $query->paginate(5);
 
-        return view('livewire.table-a-ccounts-admin', ['users'=>$users]);
+        return view('livewire.table-a-ccounts-admin', ['users' => $users]);
     }
 
-    public function deleteUser($id){
+    public function deleteUser($id)
+    {
         $user = User::find($id);
-        if($id == auth()->user()->id){
-            return session()->flash('error','Não é possível deletar a sí mesmo');
+        if ($user) {
+            $user->delete();
+            session()->flash('success', 'Usuário excluído com sucesso!');
         }
-        $user->delete();
     }
 
+    public function editUser($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $this->editUserId = $user->id;
+            $this->editName = $user->name;
+            $this->editTelefone = $user->telefone;
+            $this->editType = $user->type;
+
+            $this->dispatch('showEditModal');
+        }
+    }
+
+    public function updateUser()
+    {
+        $user = User::find($this->editUserId);
+        if ($user) {
+            $user->update([
+                'name' => $this->editName,
+                'telefone' => $this->editTelefone,
+                'type' => $this->editType,
+            ]);
+
+            session()->flash('success', 'Usuário atualizado com sucesso!');
+
+            $this->reset(['editUserId', 'editName', 'editTelefone', 'editType']);
+            $this->dispatch('hideEditModal');
+        }
+    }
 }

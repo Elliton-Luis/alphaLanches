@@ -1,16 +1,10 @@
 @extends('layouts.default')
 
-@section('title', 'AlphaLanches - PDV')
+@section('title', 'AlphaLanches - Agendamento')
 
 @section('content')
     <div class="container mt-4 text">
-        <h2 class="text-center mb-5">Painel PDV</h2>
-
-        @if(isset($todayTotal))
-            <div class="alert alert-info text-center">
-                Total de Vendas Hoje: <strong>R$ {{ number_format($todayTotal, 2, ',', '.') }}</strong>
-            </div>
-        @endif
+        <h2 class="text-center mb-5">Painel Agendamento</h2>
 
         <div id="alert-container"></div>
 
@@ -25,7 +19,7 @@
             </div>
         @endif
 
-        <form id="pdv-form" method="POST" action="{{ route('pdv.store') }}">
+        <form id="agendamento-form" method="POST" action="{{ route('agendamento.store') }}">
             @csrf
 
             <div class="row">
@@ -82,9 +76,15 @@
                         <select name="payment_method" id="payment_method" class="form-select" required>
                             <option value="">Selecione</option>
                             <option value="dinheiro">Dinheiro</option>
+                            <option value="credit">Crédito</option>
                             <option value="cartao">Cartão</option>
                             <option value="pix">PIX</option>
                         </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="scheduled_date">Data da Pedido:</label>
+                        <input type="date" name="scheduled_date" id="scheduled_date" class="form-control" required>
                     </div>
 
                     <button type="submit" class="btn btn-success">Finalizar Venda</button>
@@ -97,18 +97,33 @@
                 </div>
             </div>
         </form>
-        <div class="col-md-6" style="margin-top: 10px;">
-            <h5>Reposição Rápida</h5>
-            <form method="POST" action="{{ route('repor') }}">
-                @csrf
-                <select name="product_id" class="form-select mb-2">
-                    @foreach($products as $product)
-                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+    </div>
+
+    <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#pedidosModal">
+        Ver Pedidos
+    </button>
+
+    <div class="modal fade" id="pedidosModal" tabindex="-1" aria-labelledby="pedidosModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Minhas Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    @foreach($pedidos as $pedido)
+                        <div class="border p-2 mb-2">
+                            <p><strong>Data:</strong> {{ $pedido->scheduled_date }}</p>
+                            <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
+                            <form method="POST" action="{{ route('agendamento.cancelar', $pedido->id) }}">
+                                @csrf
+                                @method('PATCH')
+                                <button class="btn btn-sm btn-danger">Cancelar Pedido</button>
+                            </form>
+                        </div>
                     @endforeach
-                </select>
-                <input type="number" name="amount" class="form-control mb-2" placeholder="Quantidade">
-                <button type="submit" class="btn btn-warning">Repor Estoque</button>
-            </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -123,5 +138,5 @@
         }
     </style>
 
-    <script src="{{ asset('js/pdv.js') }}"></script>
+    <script src="{{ asset('js/agendamento.js') }}"></script>
 @endsection

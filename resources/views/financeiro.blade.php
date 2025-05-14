@@ -5,7 +5,6 @@
 @section('content')
     <div class="container mt-4 text">
         <h2 class="text-center mb-5">Painel Financeiro</h2>
-
         <div class="row g-4">
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card text-white bg-success">
@@ -15,8 +14,17 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="card text-white bg-primary">
+
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Receitas e Despesas</h5>
+                        <canvas id="graficoReceitasDespesas"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-primary mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Vendas do Dia</h5>
                         <p class="card-text">Vendas {{ $dailySales }}</p>
@@ -34,7 +42,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row g-4 mt-4">
             <div class="col-12 col-lg-6">
                 <div class="card">
@@ -80,7 +87,7 @@
             </div>
         </div>
 
-        <div class="card shadow-lg border-0 mt-4">
+        <div class="card shadow-lg border-0 mb-4">
             <div class="card-body">
                 <h5 class="card-title text-center fw-bold mb-3">
                     <i class="fas fa-trophy text-warning"></i> Ranking de Produtos Mais Vendidos

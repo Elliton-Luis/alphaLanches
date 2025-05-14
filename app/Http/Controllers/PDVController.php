@@ -7,6 +7,7 @@ use App\Models\Produto;
 use App\Models\Sale;
 use App\Models\SaleProduct;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class PDVController extends Controller
 {
@@ -19,8 +20,9 @@ class PDVController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+
         $request->validate([
-            'customer_id' => 'required|exists:users,id',
             'items_json' => 'required|string',
             'payment_method' => 'required|in:dinheiro,credit,cartao,pix',
         ]);
@@ -36,17 +38,8 @@ class PDVController extends Controller
             $total += $product->price * $item['quantity'];
         }
 
-        if ($request->payment_method == 'credit') {
-            $customer = User::find($request->customer_id);
-            if ($customer->credit < $total) {
-                return redirect()->route('pdv.index')->with('errorAuth', 'Créditos insuficientes para esta venda.');
-            }
-            $customer->credit -= $total;
-            $customer->save();
-        }
-
         $sale = Sale::create([
-            'customer_id' => $request->customer_id,
+            'customer_id' => $user->id,
             'saleDate' => now(),
             'value' => $total,
             'payment_method' => $request->payment_method,
@@ -65,13 +58,6 @@ class PDVController extends Controller
         }
 
         return redirect()->route('pdv.index')->with('success', 'Venda realizada com sucesso!');
-    }
-
-    public function searchUser(Request $request)
-    {
-        $search = $request->get('query');
-        $customers = User::where('name', 'LIKE', "%{$search}%")->limit(10)->get(['id', 'name']);
-        return response()->json($customers);
     }
 
     public function reporEstoque(Request $request)

@@ -1,9 +1,9 @@
 @extends('layouts.default')
-@section('title','GuardConfirm')
+@section('title','AlphaLanches - Responsáveis')
 @section('content')
 
-<div class="container mt-4">
-    <h2 class="text-center mb-5 fw-bold">
+<div class="container">
+    <h2 class="text-center mb-5">
         Pedidos de Responsáveis
     </h2>
     @if(Session::has('success'))
@@ -11,7 +11,7 @@
             {{ Session::get('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @endif
+        @endif
     <div class="table-responsive">
         <table class="table table-bordered border-dark">
             <thead class="table-dark">
@@ -32,14 +32,14 @@
                             <td>{{$request->cpf}}</td>
                             <td>{{$request->telefone}}</td>
                             <td>
-                                <div class="d-flex justify-content-center flex-wrap gap-2">
+                                <div class="d-flex justify-content-center p-1 gap-2">
                                     <a class="btn btn-success btn-sm" href="{{route('guardRequests.accept', ['id'=>$request->id])}}">Aceitar</a>
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal1{{$loop->index}}">Rejeitar</button>
                                     <div class="modal fade" id="modal1{{$loop->index}}" tabindex="-1" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5">Rejeitar {{$request->name}}</h1>
+                                                    <h1 class="modal-title fs-4">Rejeitar {{$request->name}}</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -47,7 +47,7 @@
                                                         @csrf
                                                         <div>
                                                             <label for="" class="form-label">Motivo da Rejeição</label>
-                                                            <textarea name="MRejeitar" class="form-control" id="" cols="30" rows="5"></textarea>
+                                                            <textarea name="MRejeitar" class="form-control" id="" cols="30" rows="10"></textarea>
                                                         </div>
                                                         <div class="d-flex justify-content-end mt-2">
                                                             <button type="submit" class="btn btn-danger">Rejeitar Pedido</button>
@@ -62,9 +62,7 @@
                         </tr>
                     @endforeach
                 @else
-                    <tr>
-                        <td colspan="5" class="text-center">Nenhum pedido encontrado</td>
-                    </tr>
+                    <h2 class="text-center">Nenhum pedido encontrado</h2>
                 @endif
             </tbody>
         </table>
@@ -72,3 +70,4 @@
 </div>
 
 @endsection
+
