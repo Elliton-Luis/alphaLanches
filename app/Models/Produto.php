@@ -15,4 +15,16 @@ class Produto extends Model
     {
         return $this->hasMany(SaleProduct::class);
     }
+
+    public function getTipoTraduzidoAttribute()
+    {
+        return match ($this->type) {
+            'drink' => 'Bebida',
+            'savory' => 'Salgado',
+            'lunch' => 'Almoço',
+            'snacks' => 'Lanches',
+            'natural' => 'Natural',
+            default => 'Desconhecido',
+        };
+    }
 }

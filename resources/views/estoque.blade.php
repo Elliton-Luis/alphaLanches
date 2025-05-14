@@ -15,7 +15,7 @@
 
     <div class="container">
         <h2 class="text-center mb-5">Controle de Estoque</h2>
-        
+
         <div id="modal-add" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -29,7 +29,8 @@
                             <input type="text" id="name" name="name" placeholder="Nome" class="form-control mb-3">
                             <input type="text" id="describe" name="describe" placeholder="Descrição"
                                 class="form-control mb-3">
-                            <input type="number" id="price" name="price" placeholder="Valor" class="form-control mb-3" step="0.01">
+                            <input type="number" id="price" name="price" placeholder="Valor" class="form-control mb-3"
+                                step="0.01">
                             <input type="number" id="amount" name="amount" placeholder="Quantidade"
                                 class="form-control mb-3">
                             <select id="type" name="type" class="form-control mb-3">
@@ -75,7 +76,7 @@
                             <span id="qtd-{{ $product->id }}">{{ $product->amount }}</span>
                             <button class="btn btn-sm btn-success" onclick="updateStock({{ $product->id }}, 1)">+</button>
                         </td>
-                        <td>{{ ucfirst($product->type) }}</td>
+                        <td>{{ ucfirst($product->tipo_traduzido) }}</td>
                         <td>
                             <input type="number" value="{{ $product->price }}"
                                 onchange="updateValue({{ $product->id }}, this.value)">
@@ -85,6 +86,7 @@
             </tbody>
         </table>
 
-        <button id="btn-add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">Adicionar Produto</button>
+        <button id="btn-add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">Adicionar
+            Produto</button>
     </div>
 @endsection
