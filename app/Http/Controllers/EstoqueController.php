@@ -44,22 +44,50 @@ class EstoqueController extends Controller
     public function updateStock(Request $request, $id)
     {
         $data = $request->json()->all(); // <- Adicionado para pegar o JSON corretamente
-    
+
         $product = Produto::findOrFail($id);
         $product->amount += $data['change'];
         $product->save();
-    
+
         return response()->json(['amount' => $product->amount]);
-    }    
+    }
 
     public function updateValue(Request $request, $id)
     {
         $data = $request->json()->all(); // <- Também adicionado aqui
-    
+
         $product = Produto::findOrFail($id);
         $product->price = $data['price'];
         $product->save();
-    
+
         return response()->json(['price' => $product->price]);
-    }    
+    }
+
+    public function edit($id)
+    {
+        $product = Produto::findOrFail($id);
+        return response()->json($product);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'describe' => 'nullable|string',
+            'price' => 'required|numeric',
+            'type' => 'required|string',
+            'amount' => 'required|integer',
+        ]);
+
+        $product = Produto::findOrFail($id);
+        $product->update($validated);
+
+        return redirect()->route('estoque.index');
+    }
+
+    public function destroy($id)
+    {
+        Produto::findOrFail($id)->delete();
+        return redirect()->route('estoque.index');
+    }
 }

@@ -13,10 +13,10 @@ function updateStock(id, change) {
         },
         body: JSON.stringify({ change: change })
     })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById(`qtd-${id}`).textContent = data.amount;
-    });
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById(`qtd-${id}`).textContent = data.amount;
+        });
 }
 
 function updateValue(id, price) {
@@ -28,13 +28,31 @@ function updateValue(id, price) {
         },
         body: JSON.stringify({ price: price })
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Preço atualizado:', data.price);
-    });
+        .then(response => response.json())
+        .then(data => {
+            console.log('Preço atualizado:', data.price);
+        });
 }
 
 function filterByType() {
     let type = document.getElementById('filter-type').value;
     window.location.href = `/estoque?type=${type}`;
+}
+
+function openEditModal(id) {
+    fetch(`/estoque/edit/${id}`)
+        .then(response => response.json())
+        .then(product => {
+            document.getElementById('edit-name').value = product.name;
+            document.getElementById('edit-describe').value = product.describe;
+            document.getElementById('edit-price').value = product.price;
+            document.getElementById('edit-amount').value = product.amount;
+            document.getElementById('edit-type').value = product.type;
+
+            const form = document.getElementById('form-edit');
+            form.action = `/estoque/update/${id}`;
+
+            let modal = new bootstrap.Modal(document.getElementById('modal-edit'));
+            modal.show();
+        });
 }
