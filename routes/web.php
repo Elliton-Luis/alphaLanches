@@ -49,6 +49,9 @@ Route::prefix('estoque')->group(function () {
     Route::post('/store', [EstoqueController::class, 'store'])->name('estoque.store');
     Route::post('/update-stock/{id}', [EstoqueController::class, 'updateStock'])->name('estoque.updateStock');
     Route::post('/update-value/{id}', [EstoqueController::class, 'updateValue'])->name('estoque.updateValue');
+    Route::get('/edit/{id}', [EstoqueController::class, 'edit'])->name('estoque.edit');
+    Route::post('/update/{id}', [EstoqueController::class, 'update'])->name('estoque.update');
+    Route::delete('/delete/{id}', [EstoqueController::class, 'destroy'])->name('estoque.destroy');
 });
 
 Route::prefix('recarga')->group(function () {
