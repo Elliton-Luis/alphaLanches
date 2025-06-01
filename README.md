@@ -1,3 +1,5 @@
+---
+
 # 🍔 AlphaLanches
 
 **Descrição:**
@@ -9,14 +11,13 @@ Um sistema web para a lanchonete da escola Sete de Setembro em Paulo Afonso - BA
 
 * [🚀 Sobre o Projeto](#-sobre-o-projeto)
 * [🛠 Funcionalidades](#-funcionalidades)
+* [📅 Futuras Funcionalidades](#-futuras-funcionalidades)
 * [💻 Tecnologias Utilizadas](#-tecnologias-utilizadas)
 * [📦 Requisitos](#-requisitos)
 * [🔧 Instalação](#-instalação)
 * [⚙️ Configuração](#️-configuração)
 * [▶️ Executando o Projeto](#️-executando-o-projeto)
 * [🗄️ Banco de Dados](#️-banco-de-dados)
-* [🙌 Contribuição](#-contribuição)
-* [📄 Licença](#-licença)
 
 ---
 
@@ -38,9 +39,15 @@ Sistema web desenvolvido com Laravel para gerenciar uma lanchonete, incluindo fu
 * 📈 Relatórios de vendas diárias, semanais e mensais
 * 📊 Ranking de produtos mais vendidos
 * 🔎 Filtro e busca de produtos e usuários
-* ✅ Histórico de vendas e pedidos
 * 🔐 Autenticação e controle de acesso
 
+---
+
+## 📅 Futuras Funcionalidades
+
+* 🔑 Recuperação de senha através do email
+* ✅ Histórico de vendas e pedidos
+* 🕰️ Agendamento de um pedido
 ---
 
 ## 💻 Tecnologias Utilizadas
@@ -111,6 +118,7 @@ Sistema web desenvolvido com Laravel para gerenciar uma lanchonete, incluindo fu
    ```bash
    php artisan migrate --seed
    ```
+🚨 **OBS:** Verifique os seeds para saber a senha e o email para fazer login.
 
 2. **Inicie o servidor de desenvolvimento:**
 
