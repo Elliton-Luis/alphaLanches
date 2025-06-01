@@ -1,3 +1,4 @@
+# 🍔 AlphaLanches
 
 **Descrição:**
 Um sistema web para a lanchonete da escola Sete de Setembro em Paulo Afonso - BA, desenvolvido por estudantes do 3º período do curso de Sistema de Informações em parceria com a faculdade do mesmo grupo, UniRios também de Paulo Afonso - BA. Projeto realizado para melhorar a eficiência e promover a total eficácia das vendas de produtos alimentícios para os demais alunos.
