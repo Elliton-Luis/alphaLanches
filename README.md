@@ -1,5 +1,3 @@
----
-
 # 🍔 AlphaLanches
 
 **Descrição:**
