@@ -21,20 +21,6 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name'=>'admin2',
-            'email'=>'admin2@mail.com',
-            'password'=>bcrypt('admin@123'),
-            'type'=>'admin'
-        ]);
-
-        User::create([
-            'name'=>'admin3',
-            'email'=>'admi3n@mail.com',
-            'password'=>bcrypt('admin@123'),
-            'type'=>'admin'
-        ]);
-
-        User::create([
             'name'=>'func1',
             'email'=>'func1@mail.com',
             'password'=>bcrypt('func@123'),
@@ -53,6 +39,13 @@ class UserSeeder extends Seeder
             'email'=>'pai2@mail.com',
             'password'=>bcrypt('pai@123'),
             'type'=>'guard'
+        ]);
+
+        User::create([
+            'name'=>'student1',
+            'email'=>'student1@mail.com',
+            'password'=>bcrypt('student@123'),
+            'type'=>'student'
         ]);
     }
 }
