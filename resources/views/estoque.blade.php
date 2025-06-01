@@ -81,15 +81,14 @@
             </div>
         </div>
 
-        <input type="text" id="search" placeholder="Buscar produto..." class="form-control my-3 border border-3">
-
         <select id="filter-type" class="form-control my-3 border border-3" onchange="filterByType()">
-            <option value="">Todos</option>
+            <option value="">Filtrar Produtos</option>
             <option value="drink">Bebidas</option>
             <option value="savory">Salgados</option>
             <option value="lunch">Almoço</option>
             <option value="snacks">Lanches</option>
             <option value="natural">Natural</option>
+            <option value="">Todos</option>
         </select>
 
         <table class="table table-striped mt-3 border border-3">
