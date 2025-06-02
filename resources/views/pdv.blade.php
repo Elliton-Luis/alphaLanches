@@ -31,18 +31,7 @@
             <div class="row">
                 <div class="col-md-6 border border-primary rounded" style="padding-top: 10px;">
                     <h4>Produtos</h4>
-                    <div class="input-group mb-2">
-                        <input id="searchName" class="form-control border-primary" type="text"
-                            placeholder="Digite o nome do produto">
-                        <select id="searchType" class="form-select border-primary">
-                            <option value="">Todos os Tipos</option>
-                            <option value="drink">Bebida</option>
-                            <option value="savory">Salgado</option>
-                            <option value="lunch">Almoço</option>
-                            <option value="snacks">Lanches</option>
-                            <option value="natural">Natural</option>
-                        </select>
-                    </div>
+
 
                     <ul class="list-group" id="product-list">
                         @foreach($products as $product)

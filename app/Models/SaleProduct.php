@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SaleProduct extends Model
 {
+    use HasFactory;
     protected $fillable = ['sale_id', 'product_id', 'productQuantity'];
 
     public function sale()
