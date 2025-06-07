@@ -15,14 +15,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Receitas e Despesas</h5>
-                        <canvas id="graficoReceitasDespesas"></canvas>
-                    </div>
-                </div>
-            </div>
+            
             <div class="col-md-3">
                 <div class="card text-white bg-primary mb-3">
                     <div class="card-body">
@@ -43,10 +36,10 @@
             </div>
         </div>
         <div class="row g-4 mt-4">
-            <div class="col-12 col-lg-6">
-                <div class="card">
+            <div class="col-md-6">
+                <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Receita</h5>
+                        <h5 class="card-title">Receitas</h5>
                         <canvas id="graficoReceitasDespesas"></canvas>
                     </div>
                 </div>
