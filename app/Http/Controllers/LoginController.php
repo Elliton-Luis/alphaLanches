@@ -22,7 +22,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'email' => 'required|email|max:254',
-            'password' => 'required|string|max:8',
+            'password' => 'required|string|max:20',
         ]);
 
         $dados = $request->except('_token');
@@ -34,13 +34,6 @@ class LoginController extends Controller
     }
     public function storeUser(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email|max:254',
-            'password' => 'required|string|max:8',
-            'cpf' => 'regex:/^\d{11}$/',
-            'telefone' => 'regex:/^\d{10,11}$/',
-        ]);
-
         $dados = $request->except('_token');
         if ($dados['confirmacao'] == 1) {
             if (GR::where('cpf', $dados['cpf'])->exists() || GR::where('email', $dados['email'])->exists() || GR::where('telefone', $dados['telefone'])->exists()) {
