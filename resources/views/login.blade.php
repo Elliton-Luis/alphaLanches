@@ -71,12 +71,12 @@
             @csrf
             <div class="mb-3 position-relative">
                 <i class="bi bi-envelope-fill position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                <input type="email" class="form-control form-control-lg ps-5" name="email" placeholder="Digite seu e-mail" required>
+                <input type="email" class="form-control form-control-lg ps-5" name="email" placeholder="Digite seu e-mail" required maxlength="254">
             </div>
 
             <div class="mb-3 position-relative">
                 <i class="bi bi-lock-fill position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                <input type="password" class="form-control form-control-lg ps-5 pe-5" name="password" id="password" placeholder="Digite sua senha" required>
+                <input type="password" class="form-control form-control-lg ps-5 pe-5" name="password" id="password" placeholder="Digite sua senha" required maxlength="8">
                 <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 text-secondary" id="togglePassword" style="cursor: pointer;"></i>
                 <script>
                     const toggle = document.getElementById('togglePassword');
