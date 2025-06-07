@@ -5,7 +5,7 @@
 @section('content')
     <div class="container mt-4 text">
         <h2 class="text-center mb-5">Painel Financeiro</h2>
-        <div class="row g-4">
+        <div class="row g-4 d-flex justify-content-center">
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card text-white bg-success">
                     <div class="card-body">
@@ -20,7 +20,7 @@
                 <div class="card text-white bg-primary mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Vendas do Dia</h5>
-                        <p class="card-text">Vendas {{ $dailySales }}</p>
+                        <p class="card-text">Quant. de Vendas: {{ $dailySales }}</p>
                         <p class="card-text">R$ {{ number_format($totalDailyValue, 2, ',', '.') }}</p>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="card text-white bg-warning">
                     <div class="card-body">
                         <h5 class="card-title">Vendas do Mês</h5>
-                        <p class="card-text">Vendas {{ $monthlySales }}</p>
+                        <p class="card-text">Quant. de Vendas: {{ $monthlySales }}</p>
                         <p class="card-text">R$ {{ number_format($totalMonthlyValue, 2, ',', '.') }}</p>
                     </div>
                 </div>
@@ -79,6 +79,8 @@
                 </div>
             </div>
         </div>
+
+        <br>
 
         <div class="card shadow-lg border-0 mb-4">
             <div class="card-body">
