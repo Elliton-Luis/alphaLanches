@@ -62,7 +62,9 @@ Route::prefix('recarga')->group(function () {
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
 
 Route::get('/financeiro', [FinanceiroController::class, 'index'])->name('financeiro');
+
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->name('painel.usuarios');
+
 Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])->name('painel.compras');
 
 Route::prefix('pdv')->group(function () {

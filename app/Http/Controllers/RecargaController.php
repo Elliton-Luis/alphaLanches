@@ -17,7 +17,7 @@ class RecargaController extends Controller
     public function process(Request $request)
     {
         $request->validate([
-            'valor' => 'required|numeric|min:0.01',
+            'valor' => 'required|numeric|min:0.01|max:999.99',
             'metodo' => 'required|string'
         ]);
 

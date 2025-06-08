@@ -22,7 +22,8 @@
 
                         <td>R$ {{number_format($user->credit, 2, ',', '.') }}</td>
 
-                        <td>{{ $user->type }}</td>
+                        <td>{{ $user->tipo_traduzido }}</td>
+                        
                         <td>
                             <button class="btn btn-sm btn-primary btn-abrir-modal" data-id="{{ $user->id }}"
                                 data-name="{{ $user->name }}" data-credit="{{ number_format($user->credit, 2, ',', '.') }}">

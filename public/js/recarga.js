@@ -36,6 +36,10 @@ function digitar(tecla) {
         return;
     }
 
+    if (!valorAtual.includes('.') && valorAtual.length >= 3 && tecla !== '.') {
+        return;
+    }
+
     if (valorAtual.includes('.')) {
         let [inteiro, decimal] = valorAtual.split('.');
         if (decimal.length >= 2) {
