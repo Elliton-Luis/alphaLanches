@@ -43,7 +43,7 @@ class User extends Authenticatable
             'student' => 'Estudante',
             'func' => 'Funcionário',
             'admin' => 'Administrador',
-            default => 'Desconhecido',
+            default => ucfirst($this->type),
         };
     }
 }
