@@ -34,7 +34,7 @@
                 <div class="col-md-4 col-12">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}"
+                        <input type="text" class="form-control" id="name" name="name" maxlength="254" value="{{ old('name', $user->name) }}"
                             required>
                         @error('name') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>

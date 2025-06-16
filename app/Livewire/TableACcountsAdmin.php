@@ -76,7 +76,13 @@ class TableACcountsAdmin extends Component
 
     public function updateUser()
     {
+        $this->validate([
+            'editName' => 'required|max:254',
+            'editTelefone' => 'nullable|string|max:15',
+        ]);
+
         $user = User::find($this->editUserId);
+
         if ($user) {
             $user->update([
                 'name' => $this->editName,
@@ -89,5 +95,7 @@ class TableACcountsAdmin extends Component
             $this->reset(['editUserId', 'editName', 'editTelefone', 'editType']);
             $this->dispatch('hideEditModal');
         }
+
+        return redirect()->route('painel.usuarios')->with('success', 'Usuário atualizado com sucesso!');
     }
 }

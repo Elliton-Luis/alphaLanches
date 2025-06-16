@@ -29,7 +29,7 @@
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nome*</label>
                                 <input wire:model="name" type="text" class="form-control" id="name" name="name"
-                                    placeholder="Ex: Lucas Gabriel" required>
+                                    placeholder="Ex: Fulano de Tal" required>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email*</label>
