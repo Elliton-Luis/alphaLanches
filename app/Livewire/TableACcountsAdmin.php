@@ -35,6 +35,8 @@ class TableACcountsAdmin extends Component
     {
         $query = User::query();
 
+        $query->where('id','!=',auth()->id());
+
         if ($this->filterName) {
             $query->where('name', 'like', '%' . $this->filterName . '%');
         }
@@ -55,6 +57,12 @@ class TableACcountsAdmin extends Component
     public function deleteUser($id)
     {
         $user = User::find($id);
+
+        if(auth()->id() == $id){
+            session()->flash('error','Ação Não Autorizada!');
+            return;
+        }
+
         if ($user) {
             $user->delete();
             session()->flash('success', 'Usuário excluído com sucesso!');

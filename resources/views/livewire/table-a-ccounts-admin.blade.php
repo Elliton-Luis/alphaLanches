@@ -1,20 +1,26 @@
 <div class="m-2"">
-    <div class=" accordion" id="accordionTableAccounts">
-    <div class="accordion-item">
-        <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tableOne"
-                aria-expanded="true" aria-controls="collapseOne">
-                Contas Cadastradas
-            </button>
-        </h2>
-        <div id="tableOne" class="accordion-collapse collapse show" data-bs-parent="#accordionTableAccounts">
-            <div class="accordion-body" style="width: 625px;">
-                @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
+    <div class="accordion" id="accordionTableAccounts">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tableOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Contas Cadastradas
+                </button>
+            </h2>
+            <div id="tableOne" class="accordion-collapse collapse show" data-bs-parent="#accordionTableAccounts">
+                <div class="accordion-body" style="width: 625px;">
+                    @if(session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
 
                 <div class="table-responsive mt-4">
 
