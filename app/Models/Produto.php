@@ -24,7 +24,7 @@ class Produto extends Model
             'lunch' => 'Almoço',
             'snacks' => 'Lanches',
             'natural' => 'Natural',
-            default => 'Desconhecido',
+            default => ucfirst($this->type),
         };
     }
 }

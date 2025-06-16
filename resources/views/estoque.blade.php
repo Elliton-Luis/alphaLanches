@@ -65,7 +65,8 @@
                                 step="0.01" required>
                             <input type="number" id="edit-amount" name="amount" placeholder="Quantidade"
                                 class="form-control mb-2" required>
-                            <select id="edit-type" name="type" placeholder="Tipo" class="form-control mb-2" required>
+                            <select id="edit-type" name="type" class="form-control mb-2" required>
+                                <option value="">Selecione... </option>
                                 <option value="drink">Bebida</option>
                                 <option value="savory">Salgado</option>
                                 <option value="lunch">Almoço</option>
@@ -115,7 +116,7 @@
                                 onchange="updateValue({{ $product->id }}, this.value)">
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-warning" onclick="openEditModal({{ $product->id }})">Editar</button>
+                            <button class="btn btn-sm btn-warning">Editar</button>
                             <form action="{{ route('estoque.destroy', $product->id) }}" method="POST"
                                 style="display:inline-block;" onsubmit="return confirm('Deseja realmente excluir?')">
                                 @csrf

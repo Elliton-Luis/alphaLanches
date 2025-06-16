@@ -42,7 +42,7 @@
 
     <x-sidebarHorizontal/>
 
-    <main class="container-fluid p-4 bg-light">
+    <main class="container-fluid p-4 bg-light" style="height: 100vh; overflow: hidden;">
 
         @if(Session::has('error'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -51,10 +51,13 @@
         </div>
         @endif
 
-        <div class="bg-white p-5 shadow h-100">
-            @yield('content')
+        <div class="bg-white p-5 shadow h-100 d-flex flex-column">
+            <div class="content-scrollable flex-grow-1 overflow-auto">
+                @yield('content')
+            </div>
         </div>
     </main>
+
     @livewireScripts
     @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
