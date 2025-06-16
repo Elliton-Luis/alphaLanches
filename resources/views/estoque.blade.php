@@ -106,15 +106,21 @@
                     <tr>
                         <td>{{ $product->name }}</td>
                         <td>
-                            <button class="btn btn-sm btn-danger" onclick="updateStock({{ $product->id }}, -1)">-</button>
-                            <span id="qtd-{{ $product->id }}">{{ $product->amount }}</span>
-                            <button class="btn btn-sm btn-success" onclick="updateStock({{ $product->id }}, 1)">+</button>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-danger btn-sm px-3 py-1 fw-bold" onclick="updateStock({{ $product->id }}, -1)">−</button>
+                                <span id="qtd-{{ $product->id }}" class="mx-2">{{ $product->amount }}</span>
+                                <button class="btn btn-success btn-sm px-3 py-1 fw-bold" onclick="updateStock({{ $product->id }}, 1)">+</button>
+                            </div>
                         </td>
                         <td>{{ ucfirst($product->tipo_traduzido) }}</td>
                         <td>
-                            <input type="number" value="{{ $product->price }}"
+                            <input type="number" 
+                                value="{{ $product->price }}" 
+                                class="form-control form-control-sm text-end" 
+                                style="max-width: 120px;"
                                 onchange="updateValue({{ $product->id }}, this.value)">
                         </td>
+
                         <td>
                             <button class="btn btn-sm btn-warning">Editar</button>
                             <form action="{{ route('estoque.destroy', $product->id) }}" method="POST"
