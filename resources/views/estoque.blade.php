@@ -10,8 +10,6 @@
 
 @section('content')
 
-    <script src="{{ asset('js/estoque.js') }}"></script>
-
     <livewire:table-stock/>
 
 @endsection
