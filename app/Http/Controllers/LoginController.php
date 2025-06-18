@@ -22,7 +22,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'email' => 'required|email|max:254',
-            'password' => 'required|string|max:20',
+            'password' => 'required|string|max:27',
         ]);
 
         $dados = $request->except('_token');
