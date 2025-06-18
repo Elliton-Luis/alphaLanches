@@ -1,26 +1,26 @@
 <div class="m-2"">
-    <div class="accordion" id="accordionTableAccounts">
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tableOne"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    Contas Cadastradas
-                </button>
-            </h2>
-            <div id="tableOne" class="accordion-collapse collapse show" data-bs-parent="#accordionTableAccounts">
-                <div class="accordion-body" style="width: 625px;">
-                    @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-                    @if(session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            {{ session('error') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
+    <div class=" accordion" id="accordionTableAccounts">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#tableOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                Contas Cadastradas
+            </button>
+        </h2>
+        <div id="tableOne" class="accordion-collapse collapse show" data-bs-parent="#accordionTableAccounts">
+            <div class="accordion-body" style="width: 625px;">
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
                 <div class="table-responsive mt-4">
 
@@ -28,8 +28,7 @@
                         <input class="form-control border-primary" type="text" wire:model.lazy="filterName"
                             placeholder="Nome" maxlength="100">
                         <input class="form-control border-primary" type="text" wire:model.lazy="filterTelefone"
-                            placeholder="Telefone" id="filterTelefone" maxlength="11">
-                        </script>
+                            placeholder="Telefone" id="filterTelefone" maxlength="15" oninput="maskTelefone(this)">
                         <select class="form-select border-primary" wire:model.lazy="filterType">
                             <option value="">Selecione um Tipo</option>
                             <option value="admin">Administrador</option>
@@ -112,6 +111,32 @@
     </div>
 </div>
 </div>
+
+<script>
+function maskTelefone(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+
+    if (value.length === 0) {
+        input.value = '';
+        return;
+    }
+
+    if (value.length > 10) {
+        value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+    } else if (value.length > 5) {
+        value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+    } else if (value.length > 2) {
+        value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+    } else {
+        // Se tiver menos que 3 números, não adiciona parêntese incompleto
+        value = value.replace(/^(\d*)/, '$1');
+    }
+
+    input.value = value;
+}
+</script>
+
 
 @push('scripts')
     <script>
