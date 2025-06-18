@@ -7,4 +7,5 @@
     <script src="{{ asset('js/pdv.js') }}"></script>
 
     <livewire:pdv/>
+    
 @endsection
