@@ -29,34 +29,24 @@
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nome*</label>
                                 <input wire:model="name" type="text" class="form-control" id="name" name="name"
-                                    placeholder="Ex: Fulano de Tal" required>
+                                    placeholder="Ex: Fulano de Tal" required maxlength="100">
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email*</label>
                                 <input wire:model="email" type="email" class="form-control" id="email" name="email"
-                                    placeholder="Ex: email@mail.com" required>
+                                    placeholder="Ex: email@mail.com" required maxlength="254">
                             </div>
                         </div>
                         <div class="d-flex flex-wrap justify-content-around">
                             <div class="mb-3">
                                 <label for="telefone" class="form-label">Telefone</label>
-                                <input wire:model="telefone" type="text" class="form-control" id="telefone"
-                                    name="telefone" placeholder="Apenas números" maxlength="16">
-                                <script>
-                                    jQuery(function ($) {
-                                        $("#telefone").mask("(99) 99999-9999");
-                                    });
-                                </script>
+                                <input wire:model="telefone" type="text" class="form-control" id="tel" name="telefone"
+                                    placeholder="Apenas números" maxlength="15">
                             </div>
                             <div class="mb-3">
                                 <label for="cpf" class="form-label">CPF</label>
                                 <input wire:model="cpf" type="text" class="form-control" id="cpf" name="cpf"
-                                    placeholder="Apenas números">
-                                <script>
-                                    jQuery(function ($) {
-                                        $("#cpf").mask("999.999.999-99");
-                                    });
-                                </script>
+                                    placeholder="Apenas números" maxlength="14">
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-2">
@@ -80,17 +70,68 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
+
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        function formatCPF(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        }
 
-<script>
-    function aplicarMascaras() {
-        $('#telefone').mask('(99) 99999-9999');
-        $('#cpf').mask('999.999.999-99');
-    }
+        function formatTelefone(value) {
+            value = value.replace(/\D/g, '');
 
-    document.addEventListener('livewire:load', aplicarMascaras);
-    Livewire.hook('message.processed', aplicarMascaras);
-</script>
+            if (value.length === 0) return '';
+
+            if (value.length <= 2) {
+                return `(${value}`;
+            } else if (value.length <= 7) {
+                return `(${value.slice(0, 2)}) ${value.slice(2)}`;
+            } else if (value.length <= 11) {
+                return `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+            } else {
+                return `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7, 11)}`;
+            }
+        }
+
+        function applyMasks() {
+            const cpfInput = document.getElementById('cpf');
+            const telefoneInput = document.getElementById('tel');
+
+            if (cpfInput) {
+                cpfInput.value = formatCPF(cpfInput.value);
+                cpfInput.addEventListener('input', function () {
+                    this.value = formatCPF(this.value);
+                });
+            }
+
+            if (telefoneInput) {
+                telefoneInput.value = formatTelefone(telefoneInput.value);
+
+                telefoneInput.addEventListener('input', function () {
+                    const pos = this.selectionStart;
+                    const oldLength = this.value.length;
+
+                    const formatted = formatTelefone(this.value);
+                    this.value = formatted;
+
+                    const newLength = this.value.length;
+                    const diff = newLength - oldLength;
+                    this.setSelectionRange(pos + diff, pos + diff);
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', applyMasks);
+
+        document.addEventListener('livewire:load', function () {
+            Livewire.hook('message.processed', () => {
+                applyMasks();
+            });
+        });
+    </script>
 @endpush

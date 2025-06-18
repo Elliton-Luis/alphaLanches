@@ -89,7 +89,7 @@
                 <input type="text" class="form-control form-control-lg form-control-icon" id="telefone" name="telefone" placeholder="Digite seu telefone" />
                 <script>
                 jQuery(function ($) {
-                    $("#telefone").mask("(99) 9 9999-9999");
+                    $("#telefone").mask("(99) 99999-9999");
                 });
                 </script>
             </div>

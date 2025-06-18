@@ -29,35 +29,33 @@ class FormCreateAccount extends Component
         return view('livewire.form-create-account');
     }
 
+    protected $rules = [
+        'name' => 'required|string|max:100',
+        'email' => 'required|email|max:254',
+        'cpf' => 'nullable|string|max:14',
+        'telefone' => 'nullable|string|max:15',
+        'type' => 'required|in:admin,func,guard',
+    ];
+
     public function storeAccount()
     {
+        $this->validate();
 
-        if (User::where('email', $this->email)->exists()) {
-            session()->flash('errorStoreAccount', 'Email já cadastrado');
-        } elseif (!empty($this->cpf) && User::where('cpf', $this->cpf)->exists()) {
-            session()->flash('errorStoreAccount', 'CPF já cadastrado');
-        } elseif (!empty($this->telefone) && User::where('telefone', $this->telefone)->exists()) {
-            session()->flash('errorStoreAccount', 'Telefone já cadastrado');
-        } else {
-            $firstName = strtok($this->name, " ");
-            $password = $this->cpf . "@" . $firstName;
+        $firstName = strtok($this->name, " ");
+        $password = $this->cpf . "@" . $firstName;
 
-            User::create([
-                'name' => $this->name,
-                'email' => $this->email,
-                'cpf' => $this->cpf,
-                'telefone' => $this->telefone,
-                'type' => $this->type,
-                'password' => bcrypt($password)
-            ]);
+        User::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'cpf' => $this->cpf,
+            'telefone' => $this->telefone,
+            'type' => $this->type,
+            'password' => bcrypt($password),
+        ]);
 
-            $this->reset();
-            session()->flash('successStoreAccount', 'Conta criada com sucesso');
-            $this->dispatch('storeAccount');
-        }
+        $this->reset();
 
+        session()->flash('successStoreAccount', 'Conta criada com sucesso');
+        $this->dispatch('storeAccount');
     }
-
-
-
 }

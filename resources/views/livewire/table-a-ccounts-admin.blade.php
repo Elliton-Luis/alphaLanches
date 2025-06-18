@@ -90,7 +90,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="telefone" class="form-label">Telefone</label>
-                    <input wire:model="editTelefone" type="text" class="form-control" id="telefone">
+                    <input wire:model="editTelefone" type="text" class="form-control" id="telefone" oninput="maskTelefone(this)" maxlength="15" required>
                 </div>
                 <div class="mb-3">
                     <label for="type" class="form-label">Tipo</label>
@@ -99,7 +99,6 @@
                         <option value="admin">Administrador</option>
                         <option value="func">Funcionário</option>
                         <option value="guard">Responsável</option>
-                        <option value="student">Aluno</option>
                     </select>
                 </div>
             </div>
@@ -115,25 +114,20 @@
 <script>
 function maskTelefone(input) {
     let value = input.value.replace(/\D/g, '');
+
     if (value.length > 11) value = value.slice(0, 11);
 
     if (value.length === 0) {
         input.value = '';
-        return;
-    }
-
-    if (value.length > 10) {
-        value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
-    } else if (value.length > 5) {
-        value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
-    } else if (value.length > 2) {
-        value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+    } else if (value.length <= 2) {
+        input.value = `(${value}`;
+    } else if (value.length <= 6) {
+        input.value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+    } else if (value.length <= 10) {
+        input.value = `(${value.slice(0, 2)}) ${value.slice(2, 6)}-${value.slice(6)}`;
     } else {
-        // Se tiver menos que 3 números, não adiciona parêntese incompleto
-        value = value.replace(/^(\d*)/, '$1');
+        input.value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
     }
-
-    input.value = value;
 }
 </script>
 
@@ -151,14 +145,6 @@ function maskTelefone(input) {
             if (modal) {
                 modal.hide();
             }
-        });
-
-        window.addEventListener('showEditModal', () => {
-            const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
-            modal.show();
-            setTimeout(() => {
-                $('#telefone').mask('(99) 9 9999-9999');
-            }, 300);
         });
     </script>
 @endpush
