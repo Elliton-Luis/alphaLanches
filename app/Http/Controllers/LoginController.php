@@ -34,31 +34,57 @@ class LoginController extends Controller
     }
     public function storeUser(Request $request)
     {
-        $dados = $request->except('_token');
-        if ($dados['confirmacao'] == 1) {
-            if (GR::where('cpf', $dados['cpf'])->exists() || GR::where('email', $dados['email'])->exists() || GR::where('telefone', $dados['telefone'])->exists()) {
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|max:254',
+            'telefone' => 'string|max:16',
+            'cpf' => 'string|max:14',
+            'confirmacao' => 'required|boolean',
+        ]);
+
+        if ($validated['confirmacao'] == 1) {
+            $existsInGR = GR::where('cpf', $validated['cpf'])
+                ->orWhere('email', $validated['email'])
+                ->orWhere('telefone', $validated['telefone'])
+                ->exists();
+
+            if ($existsInGR) {
                 return redirect()->back()->with('errorAuth', 'Você já tem um pedido em aberto, qualquer dúvida entrar em contato com o administrador');
             }
-            if (User::where('cpf', $dados['cpf'])->exists() || User::where('email', $dados['email'])->exists() || User::where('telefone', $dados['telefone'])->exists()) {
+
+            $existsInUser = User::where('cpf', $validated['cpf'])
+                ->orWhere('email', $validated['email'])
+                ->orWhere('telefone', $validated['telefone'])
+                ->exists();
+
+            if ($existsInUser) {
                 return redirect()->back()->with('errorAuth', 'Usuário já cadastrado, qualquer dúvida entrar em contato com o administrador');
             }
-            GR::create(['name' => $dados['name'], 'email' => $dados['email'], 'telefone' => $dados['telefone'], 'cpf' => $dados['cpf']]);
+
+            GR::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'telefone' => $validated['telefone'],
+                'cpf' => $validated['cpf']
+            ]);
+
             return redirect()->route('login')->with('success', 'Request enviado com sucesso, por favor aguarde confirmação');
         }
-        if ($dados['password'] !== $dados['confirmPassword']) {
-            return redirect()->back()->with('errorAuth', 'As Senhas não são iguais');
-        } else if (User::where('email', $dados['email'])->exists()) {
+
+        $existsUser = User::where('email', $validated['email'])->exists();
+        if ($existsUser) {
             return redirect()->back()->with('errorAuth', 'Email já cadastrado');
-        } else {
-            User::Create([
-                'name' => $dados['name'],
-                'email' => $dados['email'],
-                'password' => bcrypt($dados['password']),
-                'telefone' => $dados['telefone'],
-                'cpf' => $dados['cpf']
-            ]);
-            return redirect()->route('login')->with('success', 'Cadastrado com Sucesso');
         }
+
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'telefone' => $validated['telefone'],
+            'cpf' => $validated['cpf']
+        ]);
+
+        return redirect()->route('login')->with('success', 'Cadastrado com Sucesso');
     }
 
     public function logoutUser(Request $request)
