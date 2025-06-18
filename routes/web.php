@@ -44,9 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
 });
 
-Route::prefix('estoque')->group(function () {
+Route::middleware(['auth'])->prefix('estoque')->group(function () {
     Route::get('/', [EstoqueController::class, 'index'])->name('estoque.index');
-    Route::post('/store', [EstoqueController::class, 'store'])->name('estoque.store');
     Route::post('/update-stock/{id}', [EstoqueController::class, 'updateStock'])->name('estoque.updateStock');
     Route::post('/update-value/{id}', [EstoqueController::class, 'updateValue'])->name('estoque.updateValue');
     Route::get('/edit/{id}', [EstoqueController::class, 'edit'])->name('estoque.edit');
