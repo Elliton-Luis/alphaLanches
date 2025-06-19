@@ -25,43 +25,39 @@
             @csrf
 
             <div class="row">
-                <div class="col-md-6 border border-primary rounded" style="padding-top: 10px;">
-                    <h4>Produtos</h4>
+                <div class="col-md-6 rounded p-3 shadow-sm bg-white">
+    <h4 class="mb-4">Produtos</h4>
 
-                    <ul class="list-group" id="product-list">
+        <div class="mb-3">
+            <input type="text" id="filterName" wire:model.lazy="filterName" 
+                class="form-control form-control-sm" placeholder="Digite o nome do produto...">
+        </div>
 
-                        <div class="mb-3">
-                            <input type="text" id="filterName" wire:model.lazy="filterName" class="form-control" placeholder="Digite o nome do produto...">
-                        </div>
+                <ul class="list-group list-group-flush" id="product-list" style="max-height: 500px; overflow-y: auto;">
+                    @foreach($products as $product)
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-2 py-2">
+                            <div>
+                                <strong>{{ $product->name }}</strong><br>
+                                <small class="text-muted" style="font-size: 0.85rem;">
+                                    {{ $product->tipo_traduzido }} - {{ $product->describe ?? 'Sem descrição' }}
+                                </small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge rounded-pill bg-primary px-3 py-1 fs-6">
+                                    R$ {{ number_format($product->price, 2, ',', '.') }}
+                                </span>
+                                <br>
+                                <small class="badge bg-secondary" style="font-size: 0.75rem;">Estoque: {{ $product->amount }}</small>
+                            </div>
 
-                        @foreach($products as $product)
-                            <li class="list-group-item product-item" data-id="{{ $product->id }}"
-                                data-name="{{ $product->name }}" data-price="{{ $product->price }}"
-                                data-amount="{{ $product->amount }}" data-type="{{ $product->type }}"
-                                data-describe="{{ $product->describe }}">
+                        </li>
+                    @endforeach
+                </ul>
 
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <strong>{{ $product->name }}</strong>
-                                        <br>
-                                        <small class="text-muted">
-                                            {{ $product->tipo_traduzido }} - {{ $product->describe ?? 'Sem descrição' }}
-                                        </small>
-                                    </div>
-                                    <div>
-                                        <span
-                                            class="badge bg-primary">R${{ number_format($product->price, 2, ',', '.') }}</span>
-                                        <br>
-                                        <span class="badge bg-secondary">Estoque: {{ $product->amount }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
-                    <br>
-                    {{ $products->links('vendor.livewire.bootstrap',['scrollTo'=>false]) }}
-                </div>
-
+            <div class="mt-3">
+                {{ $products->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
+            </div>
+        </div>
                 <div class="col-md-6">
                     <h4>Carrinho</h4>
                     <ul class="list-group mb-3" id="cart-list"></ul>

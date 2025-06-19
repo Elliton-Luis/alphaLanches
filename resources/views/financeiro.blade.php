@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-lg-3">   
-                <div class="card text-white bg-warning">
+                <div class="card text-white bg-secondary">
                     <div class="card-body">
                         <h5 class="card-title">Vendas do Mês</h5>
                         <p class="card-text">Quant. de Vendas: {{ $monthlySales }}</p>
