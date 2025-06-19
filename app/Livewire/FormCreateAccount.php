@@ -31,11 +31,19 @@ class FormCreateAccount extends Component
 
     protected $rules = [
         'name' => 'required|string|max:100',
-        'email' => 'required|email|max:254',
-        'cpf' => 'nullable|string|max:14',
+        'email' => 'required|email|max:254|unique:users,email',
+        'cpf' => 'nullable|string|max:14|unique:users,cpf',
         'telefone' => 'nullable|string|max:15',
         'type' => 'required|in:admin,func,guard',
     ];
+
+    protected function messages()
+    {
+        return [
+            'cpf.unique' => 'CPF já existe!',
+            'email.unique' => 'Email já existe!',
+        ];
+    }
 
     public function storeAccount()
     {

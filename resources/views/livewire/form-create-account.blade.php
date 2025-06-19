@@ -33,8 +33,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email*</label>
-                                <input wire:model="email" type="email" class="form-control" id="email" name="email"
+                                <input wire:model="email" type="email"
+                                    class="form-control @error('email') is-invalid @enderror" id="email" name="email"
                                     placeholder="Ex: email@mail.com" required maxlength="254">
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="d-flex flex-wrap justify-content-around">
@@ -45,8 +49,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="cpf" class="form-label">CPF</label>
-                                <input wire:model="cpf" type="text" class="form-control" id="cpf" name="cpf"
+                                <input wire:model="cpf" type="text"
+                                    class="form-control @error('cpf') is-invalid @enderror" id="cpf" name="cpf"
                                     placeholder="Apenas números" maxlength="14">
+                                @error('cpf')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-2">
