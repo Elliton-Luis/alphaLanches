@@ -18,7 +18,7 @@ class RecargaController extends Controller
     {
         $request->validate([
             'valor' => 'required|numeric|min:0.01|max:999.99',
-            'metodo' => 'required|string'
+            'metodo' => 'required|string|in:pix,func,guard'
         ]);
 
         $user = User::find($request->user_id);

@@ -1,6 +1,19 @@
 <div class="container mt-4">
     <h2 class="text-center mb-5">Recarga de Créditos</h2>
 
+    @script
+    <script>
+        window.addEventListener('abrirModalRecarga', () => {
+            new bootstrap.Modal(document.getElementById('modalRecarga')).show();
+        });
+
+        window.addEventListener('fecharModalRecarga', () => {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalRecarga'));
+            modal.hide();
+        });
+    </script>
+    @endscript
+
     <table class="table table-striped table-hover">
         <thead class="table-dark">
             <tr class="text-center">
@@ -94,16 +107,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-<script>
-    window.addEventListener('abrirModalRecarga', () => {
-        new bootstrap.Modal(document.getElementById('modalRecarga')).show();
-    });
-
-    window.addEventListener('fecharModalRecarga', () => {
-        const modal = bootstrap.Modal.getInstance(document.getElementById('modalRecarga'));
-        modal.hide();
-    });
-</script>
-@endpush

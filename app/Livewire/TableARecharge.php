@@ -27,7 +27,7 @@ class TableARecharge extends Component
         $this->metodo = '';
         $this->mostrarInfo = false;
 
-        $this->dispatchBrowserEvent('abrirModalRecarga');
+        $this->dispatch('abrirModalRecarga');
     }
 
     public function digitar($tecla)
@@ -76,7 +76,7 @@ class TableARecharge extends Component
 
         session()->flash('mensagem', 'Recarga realizada com sucesso!');
 
-        $this->dispatchBrowserEvent('fecharModalRecarga');
+        $this->dispatch('fecharModalRecarga');
     }
     public function render()
     {
