@@ -128,9 +128,9 @@
                         <td>{{ $product->name }}</td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
-                                <button class="btn btn-danger btn-sm px-3 py-1 fw-bold" onclick="updateStock({{ $product->id }}, -1)">−</button>
+                                <button class="btn btn-danger btn-sm px-3 py-1 fw-bold" wire:click="reduceProduct({{ $product->id}})">−</button>
                                 <span id="qtd-{{ $product->id }}" class="mx-2">{{ $product->amount }}</span>
-                                <button class="btn btn-success btn-sm px-3 py-1 fw-bold" wire:click="addProduct">+</button>
+                                <button class="btn btn-success btn-sm px-3 py-1 fw-bold" wire:click="addProduct({{ $product->id}})">+</button>
                             </div>
                         </td>
                         <td>{{ ucfirst($product->tipo_traduzido) }}</td>
