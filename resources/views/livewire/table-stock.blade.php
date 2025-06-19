@@ -11,6 +11,7 @@
         });
     </script>
     @endscript
+
     <h2 class="text-center mb-5">Controle de Estoque</h2>
     <div id="modal-add" class="modal fade" tabindex="-1" role="dialog" wire:ignore.self>
         <div class="modal-dialog" role="document">
@@ -40,7 +41,7 @@
                             <small class="text-danger">{{$message}}</small>
                         @enderror
                         <input type="number" id="amount" name="amount" placeholder="Quantidade"
-                            class="form-control mb-3" wire:model="amount" maxlength="4" step="1" max="999" min="0">
+                            class="form-control mb-3" wire:model="amount" step="1" max="999" min="0">
                         @error('type')
                             <small class="text-danger">{{$message}}</small>
                         @enderror
@@ -60,45 +61,10 @@
         </div>
     </div>
 
-    <div id="modal-edit" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <form id="form-edit" method="POST">
-                @csrf
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar Produto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="text" id="edit-name" name="name" placeholder="Nome" class="form-control mb-2"
-                            required maxlength="100">
-                        <input type="text" id="edit-describe" name="describe" placeholder="Descrição"
-                            class="form-control mb-2" maxlength="100">
-                        <input type="number" id="edit-price" name="price" placeholder="Valor" class="form-control mb-2"
-                            step="0.01" required max="999.99" min="0">
-                        <input type="number" id="edit-amount" name="amount" placeholder="Quantidade"
-                            class="form-control mb-2" required maxlength="4" step="0" max="999" min="0">
-                        <select id="edit-type" name="type" class="form-control mb-2" required>
-                            <option value="">Selecione... </option>
-                            <option value="drink">Bebida</option>
-                            <option value="savory">Salgado</option>
-                            <option value="lunch">Almoço</option>
-                            <option value="snacks">Lanches</option>
-                            <option value="natural">Natural</option>
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Salvar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <div class="d-flex flex-wrap gap-2 my-3">
 
         <input type="text" class="form-control border border-3 shadow-sm" placeholder="Pesquisar por nome..."
-            maxlength="100" wire:model.lazy="filterName" style="max-width: 250px; border-color: #0d6efd;">
+            wire:model.lazy="filterName" style="max-width: 250px; border-color: #0d6efd;" maxlength="100">
 
         <select id="filter-type" class="form-control border border-3 shadow-sm" wire:model.lazy="filterType"
             style="max-width: 220px; border-color: #0d6efd;">
@@ -138,13 +104,13 @@
                     </td>
                     <td>{{ ucfirst($product->tipo_traduzido) }}</td>
                     <td>
-                        <input type="number" value="{{ $product->price }}" class="form-control form-control-sm text-end"
-                            step="0.01" max="999.99" min="0" style="max-width: 120px;"
-                            onchange="updateValue({{ $product->id }}, this.value)">
+                        <input type="text" value="{{ $product->price }}" class="form-control form-control-sm text-end"
+                            style="max-width: 120px;" disabled step="0.01" max="999.99" min="0">
                     </td>
 
                     <td>
-                        <button class="btn btn-sm btn-warning">Editar</button>
+                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#modal-edit{{$loop->index}}">Editar</button>
                         <form action="{{ route('estoque.destroy', $product->id) }}" method="POST"
                             style="display:inline-block;" onsubmit="return confirm('Deseja realmente excluir?')">
                             @csrf
@@ -153,6 +119,12 @@
                         </form>
                     </td>
                 </tr>
+
+                <div wire:ignore id="modal-edit{{$loop->index}}" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <livewire:modal-edit :id="$product->id" />
+                    </div>
+                </div>
             @endforeach
         </tbody>
     </table>

@@ -3,7 +3,9 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
+
 use App\Models\Produto;
 
 class TableStock extends Component
@@ -29,6 +31,13 @@ class TableStock extends Component
 
     public function render()
     {
+        $products = $this->getProducts();
+        return view('livewire.table-stock',['products'=>$products]);
+    }
+
+    #[On('alteredProduct')]
+    public function getProducts()
+    {
         $query = Produto::query();
         if($this->filterType){
             $query->where('type',$this->filterType);
@@ -38,8 +47,7 @@ class TableStock extends Component
             $query->where('name','like',"%" . $this->filterName . "%");
         }
 
-        $products = $query->paginate(10);
-        return view('livewire.table-stock',['products'=>$products]);
+        return $query->paginate(10);
     }
 
     public function storeProduct(){
@@ -75,11 +83,13 @@ class TableStock extends Component
         $product = Produto::find($id);
         $product->amount+=1;
         $product->save();
+        $this->dispatch('alteredProduct');
     }
 
     public function reduceProduct($id){
         $product = Produto::find($id);
         $product->amount-=1;
         $product->save();
+        $this->dispatch('alteredProduct');
     }
 }
