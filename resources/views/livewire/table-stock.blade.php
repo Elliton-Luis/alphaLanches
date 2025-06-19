@@ -93,15 +93,25 @@
             </div>
         </div>
 
-        <select id="filter-type" class="form-control my-3 border border-3" wire:model.lazy="filterType">
-            <option value="">Filtrar Produtos</option>
-            <option value="drink">Bebidas</option>
-            <option value="savory">Salgados</option>
-            <option value="lunch">Almoço</option>
-            <option value="snacks">Lanches</option>
-            <option value="natural">Natural</option>
-            <option value="">Todos</option>
-        </select>
+        <div class="d-flex flex-wrap gap-2 my-3">
+
+            <input type="text" class="form-control border border-3 shadow-sm"
+                placeholder="Pesquisar por nome..." wire:model.lazy="filterName"
+                style="max-width: 250px; border-color: #0d6efd;">
+
+            <select id="filter-type" class="form-control border border-3 shadow-sm"
+                wire:model.lazy="filterType" style="max-width: 220px; border-color: #0d6efd;">
+                <option value="">Filtrar Produtos</option>
+                <option value="drink">Bebidas</option>
+                <option value="savory">Salgados</option>
+                <option value="lunch">Almoço</option>
+                <option value="snacks">Lanches</option>
+                <option value="natural">Natural</option>
+                <option value="">Todos</option>
+            </select>
+
+        </div>
+
 
         <table class="table table-striped mt-3 border border-3">
             <thead>

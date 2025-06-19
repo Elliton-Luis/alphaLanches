@@ -10,6 +10,7 @@ class TableStock extends Component
 {
     use WithPagination;
     public $filterType;
+    public $filterName;
     public $name;
     public $describe;
     public $price;
@@ -18,6 +19,7 @@ class TableStock extends Component
     
     public function mount(){
         $this->filterType = null;
+        $this->filterName = null;
         $this->name = null;
         $this->describe = null;
         $this->price = null;
@@ -31,6 +33,11 @@ class TableStock extends Component
         if($this->filterType){
             $query->where('type',$this->filterType);
         }
+
+        if($this->filterName){
+            $query->where('name','like',"%" . $this->filterName . "%");
+        }
+
         $products = $query->paginate(10);
         return view('livewire.table-stock',['products'=>$products]);
     }
