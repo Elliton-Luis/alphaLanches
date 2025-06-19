@@ -93,7 +93,7 @@
             </div>
         </div>
 
-        <select id="filter-type" class="form-control my-3 border border-3" onchange="filterByType()">
+        <select id="filter-type" class="form-control my-3 border border-3" wire:model.lazy="filterType">
             <option value="">Filtrar Produtos</option>
             <option value="drink">Bebidas</option>
             <option value="savory">Salgados</option>
