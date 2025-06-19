@@ -28,4 +28,8 @@ class Pdv extends Component
 
         return view('livewire.pdv',['products'=>$products]);
     }
+
+    public function fillCart($id){
+        
+    }
 }

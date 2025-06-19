@@ -71,7 +71,15 @@ class TableStock extends Component
         $this->dispatch("closeModal");
     }
 
-    public function darDD(){
-        dd("Funfando");
+    public function addProduct($id){
+        $product = Produto::find($id);
+        $product->amount+=1;
+        $product->save();
+    }
+
+    public function reduceProduct($id){
+        $product = Produto::find($id);
+        $product->amount-=1;
+        $product->save();
     }
 }
