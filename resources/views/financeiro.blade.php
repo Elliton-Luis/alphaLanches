@@ -4,43 +4,49 @@
 
 @section('content')
 <div class="container my-5">
-  <h2 class="text-center fw-bold mb-4">Painel Financeiro</h2>
+  <h2 class="text-center fw-bold mb-4 display-6">📊 Painel Financeiro</h2>
 
-  <div class="row g-3">
-    <div class="col-12 col-md-4 d-flex flex-column gap-2">
-      <div class="card border-0 shadow-sm text-white bg-success">
-        <div class="card-body text-center py-2">
-          <h6 class="fw-semibold mb-0 small">Receita Atual</h6>
-          <h5 class="mb-0">R$ {{ number_format($totalSalesValue, 2, ',', '.') }}</h5>
+  <div class="row g-4">
+    <div class="col-12 col-md-4 d-flex flex-column gap-3">
+      <!-- Receita Atual -->
+      <div class="card border-0 shadow-lg text-white bg-success rounded-4">
+        <div class="card-body text-center py-4">
+          <h3 class="fw-light text-uppercase mb-2">Receita Atual</h3>
+          <h3 class="fw-bold mb-0">R$ {{ number_format($totalSalesValue, 2, ',', '.') }}</h3>
         </div>
       </div>
 
-      <div class="card border-0 shadow-sm text-white bg-primary">
-        <div class="card-body text-center py-2">
-          <h6 class="fw-semibold mb-0 small">Vendas do Dia</h6>
-          <p class="mb-0 small">{{ $dailySales }} vendas</p>
-          <h6 class="mb-0">R$ {{ number_format($totalDailyValue, 2, ',', '.') }}</h6>
+      <!-- Vendas do Dia -->
+      <div class="card border-0 shadow-lg text-white bg-primary rounded-4">
+        <div class="card-body text-center py-4">
+          <h3 class="fw-light text-uppercase mb-2">Vendas do Dia</h3>
+          <h4 class="fw-bold mb-1">{{ $dailySales }} vendas</h4>
+          <p class="mb-0 fs-5">R$ {{ number_format($totalDailyValue, 2, ',', '.') }}</p>
         </div>
       </div>
 
-      <div class="card border-0 shadow-sm text-white bg-secondary">
-        <div class="card-body text-center py-2">
-          <h6 class="fw-semibold mb-0 small">Vendas do Mês</h6>
-          <p class="mb-0 small">{{ $monthlySales }} vendas</p>
-          <h6 class="mb-0">R$ {{ number_format($totalMonthlyValue, 2, ',', '.') }}</h6>
+      <!-- Vendas do Mês -->
+      <div class="card border-0 shadow-lg text-white bg-dark rounded-4">
+        <div class="card-body text-center py-4">
+          <h3 class="fw-light text-uppercase mb-2">Vendas do Mês</h3>
+          <h4 class="fw-bold mb-1">{{ $monthlySales }} vendas</h4>
+          <p class="mb-0 fs-5">R$ {{ number_format($totalMonthlyValue, 2, ',', '.') }}</p>
         </div>
       </div>
     </div>
 
+    <!-- Gráfico -->
     <div class="col-12 col-md-8">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h6 class="fw-bold mb-2">Receitas e Despesas</h6>
-          <canvas id="graficoReceitasDespesas" height="180"></canvas>
+      <div class="card border-0 shadow-lg rounded-4 h-100">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-4">📈 Receita dos Últimos Meses</h5>
+          <canvas id="graficoReceitasDespesas" height="200"></canvas>
         </div>
       </div>
     </div>
   </div>
+</div>
+
 
   <div class="card shadow-sm border-0 my-4">
     <div class="card-body">
