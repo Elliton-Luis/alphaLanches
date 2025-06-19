@@ -47,7 +47,7 @@
                                                         @csrf
                                                         <div>
                                                             <label for="" class="form-label">Motivo da Rejeição</label>
-                                                            <textarea name="MRejeitar" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                            <textarea name="MRejeitar" class="form-control" id="" cols="30" rows="10" maxlength="600"></textarea>
                                                         </div>
                                                         <div class="d-flex justify-content-end mt-2">
                                                             <button type="submit" class="btn btn-danger">Rejeitar Pedido</button>
