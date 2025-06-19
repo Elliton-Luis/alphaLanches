@@ -37,8 +37,8 @@ class LoginController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email|max:254',
-            'telefone' => 'string|max:16',
-            'cpf' => 'string|max:14',
+            'telefone' => 'string|max:16|nullable',
+            'cpf' => 'string|max:14|nullable',
             'confirmacao' => 'required|boolean',
         ]);
 
@@ -52,10 +52,17 @@ class LoginController extends Controller
                 return redirect()->back()->with('errorAuth', 'Você já tem um pedido em aberto, qualquer dúvida entrar em contato com o administrador');
             }
 
-            $existsInUser = User::where('cpf', $validated['cpf'])
-                ->orWhere('email', $validated['email'])
-                ->orWhere('telefone', $validated['telefone'])
-                ->exists();
+            $existsInUser = User::where(function ($query) use ($validated) {
+                if (!empty($validated['cpf'])) {
+                    $query->orWhere('cpf', $validated['cpf']);
+                }
+                if (!empty($validated['email'])) {
+                    $query->orWhere('email', $validated['email']);
+                }
+                if (!empty($validated['telefone'])) {
+                    $query->orWhere('telefone', $validated['telefone']);
+                }
+            })->exists();
 
             if ($existsInUser) {
                 return redirect()->back()->with('errorAuth', 'Usuário já cadastrado, qualquer dúvida entrar em contato com o administrador');
