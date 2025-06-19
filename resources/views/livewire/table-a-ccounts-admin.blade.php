@@ -98,11 +98,11 @@
                 <div class="modal-body bg-light">
                     <div class="mb-3">
                         <label class="form-label">Nome</label>
-                        <input wire:model="editName" type="text" class="form-control rounded-2" required>
+                        <input wire:model="editName" type="text" class="form-control rounded-2" required maxlength="100">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Telefone</label>
-                        <input wire:model="editTelefone" type="text" class="form-control rounded-2 telefone">
+                        <input wire:model="editTelefone" type="text" class="form-control rounded-2 telefone" maxlength="15">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tipo</label>
