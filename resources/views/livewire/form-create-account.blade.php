@@ -34,28 +34,28 @@
                                     <label for="name" class="form-label text-secondary fw-semibold small">Nome*</label>
                                     <input wire:model="name" type="text"
                                         class="form-control rounded-2 shadow-sm"
-                                        id="name" placeholder="Ex: Lucas Gabriel" required>
+                                        id="name" placeholder="Ex: Fulano de Tal" required maxlength="100">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="email" class="form-label text-secondary fw-semibold small">Email*</label>
                                     <input wire:model="email" type="email"
                                         class="form-control rounded-2 shadow-sm"
-                                        id="email" placeholder="Ex: email@mail.com" required>
+                                        id="email" placeholder="Ex: email@mail.com" required maxlength="254">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="telefone" class="form-label text-secondary fw-semibold small">Telefone</label>
                                     <input wire:model="telefone" type="text"
                                         class="form-control rounded-2 shadow-sm"
-                                        id="telefone" placeholder="(99) 99999-9999" maxlength="16">
+                                        id="telefone" placeholder="(99) 99999-9999" maxlength="15">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="cpf" class="form-label text-secondary fw-semibold small">CPF</label>
                                     <input wire:model="cpf" type="text"
                                         class="form-control rounded-2 shadow-sm"
-                                        id="cpf" placeholder="999.999.999-99">
+                                        id="cpf" placeholder="999.999.999-99" maxlength="14">
                                 </div>
 
                                 <div class="col-12">
