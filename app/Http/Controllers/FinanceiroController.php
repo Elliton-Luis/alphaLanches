@@ -41,6 +41,8 @@ class FinanceiroController extends Controller
         $monthlySales = $monthlySalesQuery->count();
         $totalMonthlyValue = $calcTotal($monthlySalesQuery);
 
+        
+
         // 📦 Ranking de produtos mais vendidos
         $products = SaleProduct::with('product')->get();
         $grouped = $products->groupBy('product_id')->map(function ($items) {
@@ -54,7 +56,7 @@ class FinanceiroController extends Controller
         $ranking = $grouped->map(function ($item) use ($totalQuantity) {
             $item['percentage'] = $totalQuantity > 0 ? round($item['quantity'] / $totalQuantity * 100) : 0;
             return $item;
-        })->sortByDesc('quantity')->values();
+        })->sortByDesc('quantity')->take(5)->values();
 
         // 📊 Gráfico de receita por mês (últimos 6 meses)
         $monthlyRevenueRaw = Sale::select(
