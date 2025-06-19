@@ -11,6 +11,7 @@
         });
     </script>
     @endscript
+    
         <h2 class="text-center mb-5">Controle de Estoque</h2>
         <div id="modal-add" class="modal fade" tabindex="-1" role="dialog" wire:ignore.self>
             <div class="modal-dialog" role="document">
@@ -58,41 +59,6 @@
             </div>
         </div>
 
-        <div id="modal-edit" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <form id="form-edit" method="POST">
-                    @csrf
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Editar Produto</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="text" id="edit-name" name="name" placeholder="Nome" class="form-control mb-2"
-                                required>
-                            <input type="text" id="edit-describe" name="describe" placeholder="Descrição"
-                                class="form-control mb-2">
-                            <input type="number" id="edit-price" name="price" placeholder="Valor" class="form-control mb-2"
-                                step="0.01" required>
-                            <input type="number" id="edit-amount" name="amount" placeholder="Quantidade"
-                                class="form-control mb-2" required>
-                            <select id="edit-type" name="type" class="form-control mb-2" required>
-                                <option value="">Selecione... </option>
-                                <option value="drink">Bebida</option>
-                                <option value="savory">Salgado</option>
-                                <option value="lunch">Almoço</option>
-                                <option value="snacks">Lanches</option>
-                                <option value="natural">Natural</option>
-                            </select>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Salvar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
         <div class="d-flex flex-wrap gap-2 my-3">
 
             <input type="text" class="form-control border border-3 shadow-sm"
@@ -135,15 +101,15 @@
                         </td>
                         <td>{{ ucfirst($product->tipo_traduzido) }}</td>
                         <td>
-                            <input type="number" 
+                            <input type="text" 
                                 value="{{ $product->price }}" 
                                 class="form-control form-control-sm text-end" 
                                 style="max-width: 120px;"
-                                onchange="updateValue({{ $product->id }}, this.value)">
+                                disabled>
                         </td>
 
                         <td>
-                            <button class="btn btn-sm btn-warning">Editar</button>
+                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modal-edit{{$loop->index}}">Editar</button>
                             <form action="{{ route('estoque.destroy', $product->id) }}" method="POST"
                                 style="display:inline-block;" onsubmit="return confirm('Deseja realmente excluir?')">
                                 @csrf
@@ -152,6 +118,12 @@
                             </form>
                         </td>
                     </tr>
+
+                    <div wire:ignore id="modal-edit{{$loop->index}}" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <livewire:modal-edit :id="$product->id" />
+                        </div>
+                    </div>
                 @endforeach
             </tbody>
         </table>
