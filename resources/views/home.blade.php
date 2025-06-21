@@ -17,11 +17,10 @@
                         href="{{ url($button['route']) }}"
                         onclick="redirectTo(this)"
                         onmouseover="this.classList.add('shadow-lg')"
-                        onmouseout="this.classList.remove('shadow-lg')"
-                    >
+                        onmouseout="this.classList.remove('shadow-lg')">
                         <i class="bi bi-{{ $button['icon'] }} fs-1 mb-2"></i>
                         <div class="fw-semibold fs-5">{{ $button['label'] }}</div>
-</a>
+                    </a>
                 </div>
             @endforeach
         </div>
