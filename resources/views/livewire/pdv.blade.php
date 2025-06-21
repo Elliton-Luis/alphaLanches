@@ -35,7 +35,7 @@
 
                 <ul class="list-group list-group-flush" id="product-list" style="max-height: 500px; overflow-y: auto;">
                     @foreach($products as $product)
-                        <li class="list-group-item d-flex justify-content-between align-items-center px-2 py-2" wire:click="doSomething">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-2 py-2" wire:click="fillCart( {{$product}} )">
                             <div>
                                 <strong>{{ $product->name }}</strong><br>
                                 <small class="text-muted" style="font-size: 0.85rem;">

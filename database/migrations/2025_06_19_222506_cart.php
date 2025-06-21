@@ -9,9 +9,11 @@ return new class extends Migration
 
     public function up(): void
     {
+        Schema::create('carts', function (Blueprint $table) {
         $table->id();
         $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // caixa dono do carrinho
         $table->timestamps();
+    });
     }
     public function down(): void
     {

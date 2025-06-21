@@ -11,17 +11,17 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             @foreach ($buttons as $button)
                 <div class="col">
-                    <button
+                    <a
                         class="btn btn-light d-flex flex-column justify-content-center align-items-center p-4 border rounded-4 shadow-sm w-100 h-100"
                         style="aspect-ratio: 1 / 1; transition: all 0.3s ease;"
-                        data-route="{{ url($button['route']) }}"
+                        href="{{ url($button['route']) }}"
                         onclick="redirectTo(this)"
                         onmouseover="this.classList.add('shadow-lg')"
                         onmouseout="this.classList.remove('shadow-lg')"
                     >
                         <i class="bi bi-{{ $button['icon'] }} fs-1 mb-2"></i>
                         <div class="fw-semibold fs-5">{{ $button['label'] }}</div>
-                    </button>
+</a>
                 </div>
             @endforeach
         </div>
