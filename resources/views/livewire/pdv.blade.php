@@ -35,7 +35,7 @@
 
                 <ul class="list-group list-group-flush" id="product-list" style="max-height: 500px; overflow-y: auto;">
                     @foreach($products as $product)
-                        <li class="list-group-item d-flex justify-content-between align-items-center px-2 py-2" wire:click="doSomething">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-2 py-2" wire:click="fillCart( {{$product->id}} )">
                             <div>
                                 <strong>{{ $product->name }}</strong><br>
                                 <small class="text-muted" style="font-size: 0.85rem;">
@@ -60,6 +60,18 @@
         </div>
                 <div class="col-md-6">
                     <h4>Carrinho</h4>
+
+                    <div class="list-group">
+                    @foreach ($cartItems as $item)
+                        <div class="d-flex align-items-center py-2 border-bottom">
+                            <small class="text-body-secondary flex-grow-1" style="min-width: 160px;">{{ $item->name }}</small>
+                            <small class="text-body-secondary text-end" style="width: 90px;">R$ {{ number_format($item->price, 2, ',', '.') }}</small>
+                            <small class="text-body-secondary text-end" style="width: 60px;">x{{ $item->quantity }}</small>
+                        </div>
+
+                        @php $total += $item->price * $item->quantity; @endphp
+                    @endforeach
+
                     <ul class="list-group mb-3" id="cart-list"></ul>
 
                     <input type="hidden" name="items_json" id="items_json">
@@ -74,12 +86,12 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-success">Finalizar Venda</button>
+                    <button type="submit" class="btn btn-success" wire:click="emptyCart()">Finalizar Venda</button>
 
                     <div class="mb-3">
                         <br>
 
-                        <h5>Total: <span id="total_price" class="text-success fw-bold">R$ 0,00</span></h5>
+                        <h5>Total: <span id="total_price" class="text-success fw-bold">R$ {{ number_format($total, 2, ',', '.') }}</span></h5>
                     </div>
                 </div>
             </div>
