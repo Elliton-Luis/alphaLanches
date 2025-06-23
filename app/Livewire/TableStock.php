@@ -54,9 +54,9 @@ class TableStock extends Component
         $this->validate([
             'name' => 'required|unique:products,name',
             'describe' => 'required|max:255',
-            'price' => 'required',
+            'price' => 'required|min:0|max:999',
             'type' => 'required',
-            'amount' => 'required'
+            'amount' => 'required|integer|min:0|max:999'
         ],[
             'name.required' => 'É Necessário Informar um Nome',
             'name.unique' => 'Produto Já Cadastrado',
