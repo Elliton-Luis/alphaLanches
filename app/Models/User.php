@@ -46,4 +46,12 @@ class User extends Authenticatable
             default => ucfirst($this->type),
         };
     }
+    public function responsavel()
+    {
+        return $this->belongsTo(User::class, 'responsavel_id');
+    }
+    public function dependentes()
+    {
+        return $this->hasMany(User::class, 'responsavel_id');
+    }
 }
