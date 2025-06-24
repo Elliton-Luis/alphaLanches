@@ -11,7 +11,8 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
         $table->id();
-        $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // caixa dono do carrinho
+        $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+        $table->enum('status',['open','completed'])->default('open');
         $table->timestamps();
     });
     }

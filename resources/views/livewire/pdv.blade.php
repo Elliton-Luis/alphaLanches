@@ -62,14 +62,14 @@
                     <h4>Carrinho</h4>
 
                     <div class="list-group">
-                    @foreach ($cartItems as $item)
+
+                    @foreach ($items as $item)
                         <div class="d-flex align-items-center py-2 border-bottom">
                             <small class="text-body-secondary flex-grow-1" style="min-width: 160px;">{{ $item->name }}</small>
                             <small class="text-body-secondary text-end" style="width: 90px;">R$ {{ number_format($item->price, 2, ',', '.') }}</small>
-                            <small class="text-body-secondary text-end" style="width: 60px;">x{{ $item->quantity }}</small>
+                            <small class="text-body-secondary text-end" style="width: 60px;">x{{ $quantities[$item->id]}}</small>
                         </div>
-
-                        @php $total += $item->price * $item->quantity; @endphp
+                        @php $total += $item->price*$quantities[$item->id] @endphp
                     @endforeach
 
                     <ul class="list-group mb-3" id="cart-list"></ul>

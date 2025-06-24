@@ -22,7 +22,7 @@ Route::prefix('responsaveis')->middleware(VerifyAuthAdmin::class)->group(functio
     Route::post('/rejeitado/{id}', [GuardRequestController::class, 'rejectRequest'])->name('guardRequests.reject');
 });
 
-Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware();
+Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware('auth');
 
 Route::get('/', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/auth', [LoginController::class, 'authUser'])->name('login.auth');
@@ -53,18 +53,16 @@ Route::middleware(['auth'])->prefix('estoque')->group(function () {
     Route::delete('/delete/{id}', [EstoqueController::class, 'destroy'])->name('estoque.destroy');
 });
 
-Route::prefix('recarga')->group(function () {
+Route::middleware(['auth'])->prefix('recarga')->group(function () {
     Route::get('/', [RecargaController::class, 'index'])->name('recarga.index');
     Route::post('/process', [RecargaController::class, 'process'])->name('recarga.process');
 });
 
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
 
-Route::get('/financeiro', [FinanceiroController::class, 'index'])->name('financeiro');
-
-Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->name('painel.usuarios');
-
-Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])->name('painel.compras');
+Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(['auth'])->name('financeiro');
+Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(['auth'])->name('painel.usuarios');
+Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])->middleware(['auth'])->name('painel.compras');
 
 Route::middleware(['auth'])->prefix('pdv')->group(function () {
     Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
