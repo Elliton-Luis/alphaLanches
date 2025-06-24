@@ -23,7 +23,7 @@
                     <td class="fw-semibold text-success">R$ {{ number_format($user->credit, 2, ',', '.') }}</td>
                     <td>{{ ucfirst($user->type) }}</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary shadow-sm rounded-2 btn-abrir-modal"
+                        <button class="btn btn-sm btn-outline-primary shadow-sm rounded-2 w-100 w-sm-auto mb-1 mb-sm-0 btn-abrir-modal"
                             data-id="{{ $user->id }}" data-name="{{ $user->name }}"
                             data-credit="{{ number_format($user->credit, 2, ',', '.') }}">
                             <i class="bi bi-cash-coin"></i> Recarga
@@ -60,8 +60,8 @@
 
                     <div class="d-flex flex-wrap justify-content-center gap-2 p-2 bg-body-tertiary rounded-2">
                         @foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 'C', '.'] as $tecla)
-                        <button class="btn btn-outline-secondary shadow-sm"
-                            style="width: 60px; height: 60px; font-size: 1.25rem;"
+                        <button class="btn btn-outline-secondary shadow-sm flex-fill"
+                            style="min-width: 60px; height: 60px; font-size: 1.25rem;"
                             onclick="digitar('{{ $tecla }}')">
                             {{ $tecla }}
                         </button>
@@ -73,19 +73,19 @@
                         <div class="col-12 col-md-4">
                             <button class="btn btn-outline-primary w-100 py-2 shadow-sm"
                                 onclick="selecionarPagamento('pix')">
-                                <i class="bi bi-qr-code fs-4"></i><br>Pix
+                                <i class="bi bi-qr-code fs-5"></i><br>Pix
                             </button>
                         </div>
                         <div class="col-12 col-md-4">
                             <button class="btn btn-outline-success w-100 py-2 shadow-sm"
                                 onclick="selecionarPagamento('cartao')">
-                                <i class="bi bi-credit-card fs-4"></i><br>Cartão
+                                <i class="bi bi-credit-card fs-5"></i><br>Cartão
                             </button>
                         </div>
                         <div class="col-12 col-md-4">
                             <button class="btn btn-outline-warning w-100 py-2 shadow-sm"
                                 onclick="selecionarPagamento('boleto')">
-                                <i class="bi bi-file-earmark-text fs-4"></i><br>Boleto
+                                <i class="bi bi-file-earmark-text fs-5"></i><br>Boleto
                             </button>
                         </div>
                     </div>

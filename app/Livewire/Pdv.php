@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Produto;
 use Livewire\WithPagination;
 use App\Models\CartItem;
+use App\Models\Cart;
 
 class Pdv extends Component
 {
@@ -31,35 +32,61 @@ class Pdv extends Component
 
         $products = $query->paginate(6);
 
-        $cartItems = CartItem::all();
+        $cart = Cart::where('user_id',auth()->id())->where('status','open')->first();
+
+        $cartItems = [];
+
+        $items = [];
+
+        if ($cart) {
+            $cartItems = CartItem::where('cart_id', $cart->id)->get();
+
+            $productIds = $cartItems->pluck('product_id');
+            
+            $items = Produto::whereIn('id', $productIds)->get();
+        }
+        $quantities = CartItem::where('cart_id', $cart->id)->pluck('quantity', 'product_id');
+
+
 
         return view('livewire.pdv', [
             'products' => $products,
-            'cartItems' => $cartItems,
+            'items' => $items,
+            'quantities' => $quantities,
             'total' => $this->total
         ]);
     }
 
+    public function checkCart(){
+        $cart = Cart::where('user_id',auth()->id())->where('status','open')->first();
+        
+        if(!$cart){
+            $cart = Cart::create([
+            'user_id' => auth()->user()->id,
+            ]);
+        }
+        return $cart;
+    }
     public function fillCart($id)
     {
-        $product = Produto::find($id);
+        $cart = $this->checkCart();
 
-        $cartItem = CartItem::where('name', $product->name)->first();
+        $cartItem = CartItem::where('cart_id',$cart->id)->where('product_id', $id)->first();;
 
-    if ($cartItem) {
-
-        $cartItem->quantity++;
-        $cartItem->save();
-    } else {
-        CartItem::create([
-            'name' => $product->name,
-            'price' => $product->price,
-            'quantity' => 1
+        if(!$cartItem){
+            CartItem::create([
+            'cart_id' => $cart->id,
+            'product_id' => $id,
         ]);
+
+        } else {
+             $cartItem->increment('quantity');
+            }
+
         }
-    }
 
     public function emptyCart(){
         CartItem::truncate();
+
     }
 }
