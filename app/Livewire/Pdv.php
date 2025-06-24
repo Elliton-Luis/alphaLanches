@@ -36,6 +36,8 @@ class Pdv extends Component
 
         $cartItems = [];
 
+        $quantities = [];
+
         $items = [];
 
         if ($cart) {
@@ -44,11 +46,10 @@ class Pdv extends Component
             $productIds = $cartItems->pluck('product_id');
             
             $items = Produto::whereIn('id', $productIds)->get();
+
+            $quantities = CartItem::where('cart_id', $cart->id)->pluck('quantity', 'product_id');
         }
-        $quantities = CartItem::where('cart_id', $cart->id)->pluck('quantity', 'product_id');
-
-
-
+        
         return view('livewire.pdv', [
             'products' => $products,
             'items' => $items,
@@ -86,7 +87,10 @@ class Pdv extends Component
         }
 
     public function emptyCart(){
-        CartItem::truncate();
+
+        $cart = Cart::where('user_id',auth()->id())->where('status','open')->first();
+        $cart->status = 'completed';
+        $cart->save();
 
     }
 }
