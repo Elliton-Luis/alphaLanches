@@ -14,7 +14,10 @@ use App\Http\Controllers\GuardRequestController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\PDVController;
 use App\Http\Controllers\AgendamentoController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Middleware\VerifyAuthAdmin;
+
+Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware('auth');
 
 Route::prefix('responsaveis')->middleware(VerifyAuthAdmin::class)->group(function () {
     Route::get('/', [GuardRequestController::class, 'guardConfirm'])->name('guardRequests.index');
@@ -62,7 +65,7 @@ Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('cr
 
 Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(['auth'])->name('financeiro');
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(['auth'])->name('painel.usuarios');
-Route::get('/painelCompras', [CreateUserController::class, 'showPainelCompras'])->middleware(['auth'])->name('painel.compras');
+Route::get('/HistoricoDeCompras', [HistoryController::class, 'showHistory'])->middleware(['auth'])->name('index.historic');
 
 Route::middleware(['auth'])->prefix('pdv')->group(function () {
     Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
