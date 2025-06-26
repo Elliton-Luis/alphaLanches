@@ -65,6 +65,7 @@ Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('cr
 
 Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(['auth'])->name('financeiro');
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(['auth'])->name('painel.usuarios');
+Route::get('/painelStudents', [CreateUserController::class, 'showPainelStudents'])->middleware(['auth'])->name('painel.students');
 Route::get('/HistoricoDeCompras', [HistoryController::class, 'showHistory'])->middleware(['auth'])->name('index.historic');
 
 Route::middleware(['auth'])->prefix('pdv')->group(function () {
