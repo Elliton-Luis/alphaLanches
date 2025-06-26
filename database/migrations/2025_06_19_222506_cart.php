@@ -13,6 +13,7 @@ return new class extends Migration
         $table->id();
         $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         $table->enum('status',['open','completed'])->default('open');
+        $table->decimal('total')->default(0);
         $table->timestamps();
     });
     }

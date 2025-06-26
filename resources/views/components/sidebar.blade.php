@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/painelCompras" class="nav-link text-white btn btn-secondary text-start">
+                <a href="/HistoricoDeCompras" class="nav-link text-white btn btn-secondary text-start">
                     <i class="bi bi-basket3 fs-5 me-2"></i> Histórico de Compras
                 </a>
             </li>
@@ -43,7 +43,7 @@
 
         @if (in_array(auth()->user()->type, ['guard']))
             <li class="nav-item">
-                <a href="/painelCompras" class="nav-link text-white btn btn-secondary text-start">
+                <a href="/HistoricoDeCompras" class="nav-link text-white btn btn-secondary text-start">
                     <i class="bi bi-basket3 fs-5 me-2"></i> Histórico de Compras
                 </a>
             </li>
