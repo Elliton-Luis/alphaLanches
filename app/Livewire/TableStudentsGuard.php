@@ -15,19 +15,16 @@ class TableStudentsGuard extends Component
 
     public $filterName;
     public $filterTelefone;
-    public $filterType;
 
     public $editUserId;
     public $editName;
     public $editTelefone;
-    public $editType;
     protected $paginationTheme = 'bootstrap';
 
     public function mount()
     {
         $this->filterName = null;
         $this->filterTelefone = null;
-        $this->filterType = null;
     }
 
     public function render()
@@ -83,7 +80,6 @@ class TableStudentsGuard extends Component
         $this->editUserId = $user->id;
         $this->editName = $user->name;
         $this->editTelefone = $user->telefone;
-        $this->editType = $user->type;
 
         $this->dispatch('showEditModal');
     }
@@ -101,12 +97,11 @@ class TableStudentsGuard extends Component
             $user->update([
                 'name' => $this->editName,
                 'telefone' => $this->editTelefone,
-                'type' => $this->editType,
             ]);
 
             session()->flash('success', 'Usuário atualizado com sucesso!');
 
-            $this->reset(['editUserId', 'editName', 'editTelefone', 'editType']);
+            $this->reset(['editUserId', 'editName', 'editTelefone']);
             $this->dispatch('hideEditModal');
         }
 
