@@ -35,7 +35,7 @@ class TableACcountsAdmin extends Component
     {
         $query = User::query();
 
-        $query->where('id','!=',auth()->id());
+        $query->where('id', '!=', auth()->id());
 
         if ($this->filterName) {
             $query->where('name', 'like', '%' . $this->filterName . '%');
@@ -58,9 +58,17 @@ class TableACcountsAdmin extends Component
     {
         $user = User::find($id);
 
-        if(auth()->id() == $id){
-            session()->flash('error','Ação Não Autorizada!');
+        if (auth()->id() == $id) {
+            session()->flash('error', 'Ação Não Autorizada!');
             return;
+        }
+
+        if ($user->type === 'student') {
+            $user->responsaveis()->detach();
+        }
+
+        if ($user->type === 'guard') {
+            $user->alunos()->detach();
         }
 
         if ($user) {
