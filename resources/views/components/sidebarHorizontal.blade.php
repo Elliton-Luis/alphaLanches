@@ -53,7 +53,7 @@
                         </li>
 
                         <li>
-                            <a href="/painelUsuarios" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
+                            <a href="/painelStudents" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
                                 <i class="bi bi-people me-2"></i> Alunos
                             </a>
                         </li>

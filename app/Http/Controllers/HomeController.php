@@ -37,7 +37,7 @@ class HomeController extends Controller
         } elseif (auth()->user()->type == 'guard') {
             return [
                 ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
-                ['route' => 'painelUsuarios', 'icon' => 'people', 'label' => 'Alunos'],
+                ['route' => 'painelStudents', 'icon' => 'people', 'label' => 'Alunos'],
                 ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
                 ['route' => 'agendamento', 'icon' => 'calendar-event', 'label' => 'Agendamento'],
                 ['route' => 'painel.compras', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],

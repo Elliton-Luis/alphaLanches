@@ -50,7 +50,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="/painelUsuarios" class="nav-link text-white btn btn-secondary text-start">
+                <a href="/painelStudents" class="nav-link text-white btn btn-secondary text-start">
                     <i class="bi bi-people fs-5 me-2"></i> Alunos
                 </a>
             </li>
