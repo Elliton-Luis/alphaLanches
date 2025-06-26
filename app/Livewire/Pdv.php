@@ -81,8 +81,9 @@ class Pdv extends Component
             'product_id' => $id,
             ]);
 
-        return ;
+            return ;
         }
+
         $stock = Produto::where('id',$id)->first();
 
         if($cartItem->quantity >= $stock->amount){
