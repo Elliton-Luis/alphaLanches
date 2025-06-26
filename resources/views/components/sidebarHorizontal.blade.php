@@ -51,6 +51,12 @@
                                 <i class="bi bi-basket3 me-2"></i> Histórico
                             </a>
                         </li>
+
+                        <li>
+                            <a href="/painelUsuarios" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
+                                <i class="bi bi-people me-2"></i> Alunos
+                            </a>
+                        </li>
                     @endif
 
                     @if (in_array(auth()->user()->type, ['admin', 'func', 'guard', 'student']))
@@ -65,11 +71,6 @@
                         <li>
                             <a href="/recarga" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
                                 <i class="bi bi-wallet me-2"></i> Recarga
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/painelUsuarios" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-people me-2"></i> Usuários
                             </a>
                         </li>
                     @endif
