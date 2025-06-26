@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
-    <div class="container">
+    <div class="container mt-4 text">
         <h2 class="mb-5 text-center">Meu Perfil</h2>
 
         @if(session('success'))
@@ -34,14 +34,14 @@
                 <div class="col-md-4 col-12">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}"
+                        <input type="text" class="form-control" id="name" name="name" maxlength="100" value="{{ old('name', $user->name) }}"
                             required>
                         @error('name') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="cpf" class="form-label">CPF</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" value="{{ old('cpf', $user->cpf) }}">
+                        <input type="text" class="form-control" id="cpf" name="cpf" maxlength="14" value="{{ old('cpf', $user->cpf) }}">
                         <script>
                             jQuery(function ($) {
                                 $("#cpf").mask("999.999.999-99");
@@ -52,7 +52,7 @@
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email"
+                        <input type="email" class="form-control" id="email" name="email" maxlength="254"
                             value="{{ old('email', $user->email) }}" required>
                         @error('email') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
@@ -62,7 +62,7 @@
                     <div class="mb-3">
                         <label for="telefone" class="form-label">Telefone</label>
                         <input type="text" class="form-control" id="telefone" name="telefone"
-                            value="{{ old('telefone', $user->telefone) }}" maxlength="16">
+                            value="{{ old('telefone', $user->telefone) }}" maxlength="15">
                         <script>
                             jQuery(function ($) {
                                 $("#telefone").mask("(99) 99999-9999");
@@ -73,13 +73,13 @@
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Nova Senha (opcional)</label>
-                        <input type="password" class="form-control" id="password" name="password">
+                        <input type="password" class="form-control" id="password" name="password" maxlength="27">
                         @error('password') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="password_confirmation" class="form-label">Confirmar Senha</label>
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" maxlength="27">
                     </div>
                 </div>
             </div>

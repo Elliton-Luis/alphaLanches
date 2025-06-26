@@ -3,11 +3,15 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-class FormCreateAccount extends Component
+class FormCreateStudent extends Component
 {
+    public function render()
+    {
+        return view('livewire.form-create-student');
+    }
 
     public $name;
     public $email;
@@ -24,17 +28,11 @@ class FormCreateAccount extends Component
         $this->type = null;
     }
 
-    public function render()
-    {
-        return view('livewire.form-create-account');
-    }
-
     protected $rules = [
         'name' => 'required|string|max:100',
         'email' => 'required|email|max:254|unique:users,email',
         'cpf' => 'nullable|string|max:14|unique:users,cpf',
         'telefone' => 'nullable|string|max:15',
-        'type' => 'required|in:admin,func,guard',
     ];
 
     protected function messages()
@@ -52,14 +50,16 @@ class FormCreateAccount extends Component
         $firstName = strtok($this->name, " ");
         $password = $this->cpf . "@" . $firstName;
 
-        User::create([
+        $student = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'cpf' => $this->cpf,
             'telefone' => $this->telefone,
-            'type' => $this->type,
+            'type' => 'student',
             'password' => bcrypt($password),
         ]);
+
+        Auth::user()->alunos()->attach($student->id);
 
         $this->reset();
 

@@ -4,71 +4,62 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-class TableACcountsAdmin extends Component
+class TableStudentsGuard extends Component
 {
-
     use WithPagination;
 
     protected $listeners = ['storeAccount' => 'render'];
 
     public $filterName;
     public $filterTelefone;
-    public $filterType;
 
     public $editUserId;
     public $editName;
     public $editTelefone;
-    public $editType;
     protected $paginationTheme = 'bootstrap';
 
     public function mount()
     {
         $this->filterName = null;
         $this->filterTelefone = null;
-        $this->filterType = null;
     }
 
     public function render()
     {
-        $query = User::query();
-
-        $query->where('id', '!=', auth()->id());
+        $query = Auth::User()->alunos();
 
         if ($this->filterName) {
-            $query->where('name', 'like', '%' . $this->filterName . '%');
+            $query->where('users.name', 'like', '%' . $this->filterName . '%');
         }
 
         if ($this->filterTelefone) {
-            $query->where('telefone', 'like', '%' . $this->filterTelefone . '%');
-        }
-
-        if ($this->filterType) {
-            $query->where('type', $this->filterType);
+            $query->where('users.telefone', 'like', '%' . $this->filterTelefone . '%');
         }
 
         $users = $query->paginate(5);
 
-        return view('livewire.table-a-ccounts-admin', ['users' => $users]);
+        return view('livewire.table-students-guard', ['users' => $users]);
     }
 
     public function deleteUser($id)
     {
+        $guard = Auth::user();
+
+        if (!$guard->alunos()->where('users.id', $id)->exists()) {
+            session()->flash('error', 'Ação não autorizada!');
+            return;
+        }
+
+        $guard->alunos()->detach($id);
+
         $user = User::find($id);
 
         if (auth()->id() == $id) {
             session()->flash('error', 'Ação Não Autorizada!');
             return;
-        }
-
-        if ($user->type === 'student') {
-            $user->responsaveis()->detach();
-        }
-
-        if ($user->type === 'guard') {
-            $user->alunos()->detach();
         }
 
         if ($user) {
@@ -79,15 +70,18 @@ class TableACcountsAdmin extends Component
 
     public function editUser($id)
     {
-        $user = User::find($id);
-        if ($user) {
-            $this->editUserId = $user->id;
-            $this->editName = $user->name;
-            $this->editTelefone = $user->telefone;
-            $this->editType = $user->type;
+        $user = Auth::user()->alunos()->find($id);
 
-            $this->dispatch('showEditModal');
+        if (!$user) {
+            session()->flash('error', 'Ação não autorizada!');
+            return;
         }
+
+        $this->editUserId = $user->id;
+        $this->editName = $user->name;
+        $this->editTelefone = $user->telefone;
+
+        $this->dispatch('showEditModal');
     }
 
     public function updateUser()
@@ -103,12 +97,11 @@ class TableACcountsAdmin extends Component
             $user->update([
                 'name' => $this->editName,
                 'telefone' => $this->editTelefone,
-                'type' => $this->editType,
             ]);
 
             session()->flash('success', 'Usuário atualizado com sucesso!');
 
-            $this->reset(['editUserId', 'editName', 'editTelefone', 'editType']);
+            $this->reset(['editUserId', 'editName', 'editTelefone']);
             $this->dispatch('hideEditModal');
         }
 

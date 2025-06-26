@@ -17,19 +17,19 @@
                 <div>
 
                     <div>
-                        <input wire:model="name" type="text" placeholder="Nome" class="form-control mb-2">
+                        <input wire:model="name" type="text" placeholder="Nome" class="form-control mb-2" maxlength="100">
                     </div>
 
                     <div>
-                        <input wire:model="describe" type="text" placeholder="Descrição" class="form-control mb-2">
+                        <input wire:model="describe" type="text" placeholder="Descrição" class="form-control mb-2" maxlength="100">
                     </div>
 
                     <div>
-                        <input wire:model="price" type="number" placeholder="Valor" class="form-control mb-2" step="0.01">
+                        <input wire:model="price" type="number" placeholder="Valor" class="form-control mb-2" step="0.01" max="999.99" min="0">
                     </div>
 
                     <div>
-                        <input wire:model="amount" type="number" placeholder="Quantidade" class="form-control mb-2">
+                        <input wire:model="amount" type="number" placeholder="Quantidade" class="form-control mb-2" step="1" max="999" min="0">
                     </div>
 
                     <div class="d-flex justify-content-center gap-2">

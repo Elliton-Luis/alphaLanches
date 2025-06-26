@@ -20,11 +20,11 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'telefone' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/',
-            'cpf' => 'nullable|regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/|unique:users,cpf,' . $user->id,
-            'password' => 'nullable|min:6|confirmed',
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|max:254|unique:users,email,' . $user->id,
+            'telefone' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/|max:15',
+            'cpf' => 'nullable|regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/|max:14|unique:users,cpf,' . $user->id,
+            'password' => 'nullable|min:6|max:27|confirmed',
             'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
@@ -71,5 +71,5 @@ class ProfileController extends Controller
         $user->delete();
         return redirect('/')->with('success', 'Conta excluída com sucesso!');
     }
-    
+
 }

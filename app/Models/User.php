@@ -46,4 +46,15 @@ class User extends Authenticatable
             default => ucfirst($this->type),
         };
     }
+    // Alunos que um responsável cadastrou
+    public function alunos()
+    {
+        return $this->belongsToMany(User::class, 'guard_students', 'guard_id', 'student_id');
+    }
+
+    // Responsáveis de um aluno
+    public function responsaveis()
+    {
+        return $this->belongsToMany(User::class, 'guard_students', 'student_id', 'guard_id');
+    }
 }

@@ -1,11 +1,12 @@
 <div id="sidebar" class="collapse d-none d-md-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 240px;">
     <div id="image" style="margin-left: 15%">
-    <a href="{{ route('home') }}"><img src="{{ asset('images/AlphaLanches-Logo.png') }}" height="78px" alt="Logo Alpha"></a>
+        <a href="{{ route('home') }}"><img src="{{ asset('images/AlphaLanches-Logo.png') }}" height="78px"
+                alt="Logo Alpha"></a>
     </div>
 
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
-            @if (auth()->user()->type === 'admin')
+        @if (auth()->user()->type === 'admin')
             <li class="nav-item">
                 <a href="/financeiro" class="nav-link text-white btn btn-secondary text-start">
                     <i class="bi bi-cash-coin fs-5 me-2"></i> Financeiro
@@ -21,9 +22,9 @@
                     <i class="bi bi-journal-plus fs-5 me-2"></i> Pedidos de Responsáveis
                 </a>
             </li>
-            @endif
+        @endif
 
-            @if (in_array(auth()->user()->type, ['admin', 'func']))
+        @if (in_array(auth()->user()->type, ['admin', 'func']))
             <li class="nav-item">
                 <a href="/estoque" class="nav-link text-white btn btn-secondary text-start">
                     <i class="bi bi-box fs-5 me-2"></i> Estoque
@@ -45,6 +46,12 @@
             <li class="nav-item">
                 <a href="/HistoricoDeCompras" class="nav-link text-white btn btn-secondary text-start">
                     <i class="bi bi-basket3 fs-5 me-2"></i> Histórico de Compras
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/painelStudents" class="nav-link text-white btn btn-secondary text-start">
+                    <i class="bi bi-people fs-5 me-2"></i> Alunos
                 </a>
             </li>
         @endif

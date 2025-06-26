@@ -76,12 +76,12 @@
 
             <div class="mb-3 form-group">
                 <i class="fas fa-user icon"></i>
-                <input type="text" class="form-control form-control-lg form-control-icon" name="name" placeholder="Digite seu nome*" required>
+                <input type="text" class="form-control form-control-lg form-control-icon" name="name" placeholder="Digite seu nome*" required maxlength="100">
             </div>
 
             <div class="mb-3 form-group">
                 <i class="fas fa-envelope icon"></i>
-                <input type="email" class="form-control form-control-lg form-control-icon" name="email" placeholder="Digite seu e-mail*" required>
+                <input type="email" class="form-control form-control-lg form-control-icon" name="email" placeholder="Digite seu e-mail*" required maxlength="254">
             </div>
 
             <div class="mb-3 form-group">
@@ -89,7 +89,7 @@
                 <input type="text" class="form-control form-control-lg form-control-icon" id="telefone" name="telefone" placeholder="Digite seu telefone" />
                 <script>
                 jQuery(function ($) {
-                    $("#telefone").mask("(99) 9 9999-9999");
+                    $("#telefone").mask("(99) 99999-9999");
                 });
                 </script>
             </div>

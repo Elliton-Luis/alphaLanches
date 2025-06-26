@@ -63,7 +63,7 @@
                 <i
                     class="bi bi-envelope-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"></i>
                 <input type="email" class="form-control form-control-lg ps-5" name="email"
-                    placeholder="Digite seu e-mail" required>
+                    placeholder="Digite seu e-mail" required maxlength="254">
             </div>
             <button type="submit" class="btn btn-primary w-100">Enviar link de redefinição</button>
         </form>

@@ -36,26 +36,46 @@ class ModalEdit extends Component
 
     public function alterProduct()
     {
+        $this->validate([
+            'name' => 'required|string|max:100|unique:products,name',
+            'describe' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0|max:999.99',
+            'type' => 'required|in:drink,savory,lunch,snacks,natural',
+            'amount' => 'required|integer|min:0|max:999'
+        ], [
+            'name.required' => 'É Necessário Informar um Nome',
+            'name.unique' => 'Produto Já Cadastrado',
+            'describe.required' => 'É Necessário Informar uma Descrição',
+            'describe.max' => 'Máximo de 255 caracteres',
+            'price.required' => 'É Necessário Informar um Preço',
+            'type.required' => 'É Necessário Selecionar um Tipo',
+            'amount.required' => 'É Necessário Informar a Quantidade',
+            'price.min' => 'O valor mínimo permitido é 0.',
+            'price.max' => 'O valor máximo permitido é 999.99.',
+            'amount.min' => 'O valor mínimo permitido é 0.',
+            'amount.max' => 'O valor máximo permitido é 999.',
+        ]);
+
         $product = Produto::find($this->id);
 
-        if($this->name != $product->name){
+        if ($this->name != $product->name) {
             $product->name = $this->name;
         }
-        if($this->describe != $product->describe){
+        if ($this->describe != $product->describe) {
             $product->describe = $this->describe;
         }
-        if($this->price != $product->price){
+        if ($this->price != $product->price) {
             $product->price = $this->price;
         }
-        if($this->amount != $product->amount){
+        if ($this->amount != $product->amount) {
             $product->amount = $this->amount;
         }
-        if($this->type != $product->type){
+        if ($this->type != $product->type) {
             $product->type = $this->type;
         }
 
         $product->save();
-        session()->flash('success','Produto alterado com sucesso');
+        session()->flash('success', 'Produto alterado com sucesso');
         $this->dispatch('alteredProduct');
     }
 }

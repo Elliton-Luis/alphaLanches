@@ -57,18 +57,6 @@
                                         class="form-control rounded-2 shadow-sm"
                                         id="cpf" placeholder="999.999.999-99" maxlength="14">
                                 </div>
-
-                                <div class="col-12">
-                                    <label for="type" class="form-label text-secondary fw-semibold small">Tipo de conta*</label>
-                                    <select wire:model="type" id="type"
-                                        class="form-select rounded-2 shadow-sm" required>
-                                        <option value="">Selecione um tipo</option>
-                                        <option value="admin">Administrador</option>
-                                        <option value="func">Funcionário</option>
-                                        <option value="guard">Responsável</option>
-                                    </select>
-                                </div>
-
                             </div>
 
                             <div class="d-flex justify-content-end mt-4">
@@ -78,7 +66,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>

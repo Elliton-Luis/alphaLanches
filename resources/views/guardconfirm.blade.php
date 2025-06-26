@@ -57,7 +57,7 @@
                                                         @csrf
                                                         <div class="mb-3">
                                                             <label class="form-label">Motivo da Rejeição</label>
-                                                            <textarea name="MRejeitar" class="form-control rounded-3" rows="4"></textarea>
+                                                            <textarea name="MRejeitar" class="form-control rounded-3" maxlength="300" rows="4"></textarea>
                                                         </div>
                                                         <div class="d-flex justify-content-end">
                                                             <button type="submit" class="btn btn-danger rounded-pill px-4">Confirmar Rejeição</button>

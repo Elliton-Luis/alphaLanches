@@ -4,7 +4,7 @@
             <h2 class="accordion-header">
                 <button class="accordion-button rounded-3 bg-body-tertiary" type="button" data-bs-toggle="collapse"
                     data-bs-target="#tableOne" aria-expanded="true" aria-controls="collapseOne">
-                    📑 Contas Cadastradas
+                    📑 Seus Alunos
                 </button>
             </h2>
 
@@ -33,14 +33,6 @@
 
                             <input class="form-control border-primary rounded-2 shadow-sm telefone" type="text"
                                 wire:model.lazy="filterTelefone" placeholder="Telefone" maxlength="15">
-
-                            <select class="form-select border-primary rounded-2 shadow-sm" wire:model.lazy="filterType">
-                                <option value="">Tipo</option>
-                                <option value="admin">Administrador</option>
-                                <option value="func">Funcionário</option>
-                                <option value="guard">Responsável</option>
-                                <option value="student">Aluno</option>
-                            </select>
                         </div>
 
                         <!-- Tabela -->
@@ -49,7 +41,6 @@
                                 <tr class="text-center">
                                     <th>Nome</th>
                                     <th>Telefone</th>
-                                    <th>Tipo</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -62,7 +53,6 @@
                                             {{ $user->telefone ?? 'Sem telefone' }}
                                         </td>
 
-                                        <td>{{ $user->tipo_traduzido }}</td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-2">
                                                 <button class="btn btn-outline-primary btn-sm rounded-2 px-3"

@@ -13,7 +13,7 @@
 
         <div class="mb-3">
             <input type="text" id="filterName" wire:model.lazy="filterName" 
-                class="form-control form-control-sm" placeholder="Digite o nome do produto...">
+                class="form-control form-control-sm" placeholder="Digite o nome do produto..." maxlength="100">
         </div>
 
                 <ul class="list-group list-group-flush" id="product-list" style="max-height: 500px; overflow-y: auto;">

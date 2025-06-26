@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\verifyAdmin;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CreateUserController;
+use App\Http\Controllers\CreateStudentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EstoqueController;
@@ -65,6 +66,7 @@ Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('cr
 
 Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(['auth'])->name('financeiro');
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(['auth'])->name('painel.usuarios');
+Route::get('/painelStudents', [CreateStudentController::class, 'showPainelStudents'])->middleware(['auth'])->name('painel.students');
 Route::get('/HistoricoDeCompras', [HistoryController::class, 'showHistory'])->middleware(['auth'])->name('index.historic');
 
 Route::middleware(['auth'])->prefix('pdv')->group(function () {
