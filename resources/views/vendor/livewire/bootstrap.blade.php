@@ -42,13 +42,13 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
             <div class="d-none flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
                 <div>
                     <p class="small text-muted">
-                        {!! __('Mostrando de') !!}
+                        {!! __('Mostrando') !!}
                         <span class="fw-semibold">{{ $paginator->firstItem() }}</span>
                         {!! __('a') !!}
                         <span class="fw-semibold">{{ $paginator->lastItem() }}</span>
                         {!! __('de') !!}
                         <span class="fw-semibold">{{ $paginator->total() }}</span>
-                        {!! __('resultados') !!}
+                        {!! __('Resultados') !!}
                     </p>
                 </div>
 

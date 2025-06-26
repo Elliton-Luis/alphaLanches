@@ -2,24 +2,7 @@
     <div class="container mt-4 text">
         <h2 class="text-center mb-5">Painel PDV</h2>
 
-        @if(isset($todayTotal))
-            <div class="alert alert-info text-center">
-                Total de Vendas Hoje: <strong>R$ {{ number_format($todayTotal, 2, ',', '.') }}</strong>
-            </div>
-        @endif
-
         <div id="alert-container"></div>
-
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
-        @if(Session::has('errorAuth'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ Session::get('errorAuth') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
 
         <form id="pdv-form">
             @csrf
@@ -61,16 +44,44 @@
                 <div class="col-md-6">
                     <h4>Carrinho</h4>
 
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger" role="alert">
+                        {{session('error')}}
+                        </div>
+                    @endif
+
+                    @if (session()->has('success'))
+                        <div class="alert alert-success" role="alert">
+                        {{session('success')}}
+                        </div>
+                    @endif
                     <div class="list-group">
 
                     @foreach ($items as $item)
                         <div class="d-flex align-items-center py-2 border-bottom">
-                            <small class="text-body-secondary flex-grow-1" style="min-width: 160px;">{{ $item->name }}</small>
-                            <small class="text-body-secondary text-end" style="width: 90px;">R$ {{ number_format($item->price, 2, ',', '.') }}</small>
-                            <small class="text-body-secondary text-end" style="width: 60px;">x{{ $quantities[$item->id]}}</small>
+                            <small class="text-body-secondary flex-grow-1" style="min-width: 160px;">
+                                {{ $item->name }}
+                            </small>
+
+                            <small class="text-body-secondary text-end" style="width: 90px;">
+                                R$ {{ number_format($item->price, 2, ',', '.') }}
+                            </small>
+
+                            <div class="d-flex align-items-center justify-content-end" style="width: 90px;">
+                                <button type="button" class="btn btn-sm btn-danger px-2 py-0 me-2"
+                                    wire:click="removeItem({{ $item->id }})">−</button>
+
+                                <small class="text-body-secondary text-end">
+                                    x{{ $quantities[$item->id] }}
+                                </small>
+                            </div>
                         </div>
-                        @php $total += $item->price*$quantities[$item->id] @endphp
+
+                        @php
+                            $total += $item->price * $quantities[$item->id];
+                        @endphp
                     @endforeach
+
 
                     <ul class="list-group mb-3" id="cart-list"></ul>
 
@@ -86,7 +97,7 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-success" wire:click="emptyCart()">Finalizar Venda</button>
+                    <button type="submit" class="btn btn-success" wire:click="emptyCart({{$total}})">Finalizar Venda</button>
 
                     <div class="mb-3">
                         <br>
