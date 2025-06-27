@@ -25,7 +25,6 @@
                 </div>
                 <div class="modal-body">
                     <div>
-
                         @foreach (['name' => 'Nome', 'describe' => 'Descrição', 'price' => 'Valor', 'amount' => 'Quantidade'] as $field => $label)
                             @error($field)
                                 <small class="text-danger">{{ $message }}</small>
@@ -36,7 +35,6 @@
                                 {{ $field === 'price' ? 'step=0.01 max=999.99 min=0' : ($field === 'amount' ? 'step=1 max=999 min=0' : 'maxlength=100') }}>
                         @endforeach
 
-                        {{-- Select --}}
                         @error('type')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -80,6 +78,7 @@
     <table class="table table-hover table-bordered align-middle shadow-sm">
         <thead class="table-primary">
             <tr>
+                <th class="text-start">Imagem</th>
                 <th class="text-start">Nome</th>
                 <th class="text-start">Quantidade</th>
                 <th class="text-start">Tipo</th>
@@ -90,25 +89,29 @@
         <tbody>
             @foreach($products as $product)
                 <tr>
+                    <td class="text-start">
+                        <img src="https://via.placeholder.com/50x50.png?text=Img" alt="Produto"
+                             class="rounded border" style="width:50px; height:50px; object-fit:cover;">
+                    </td>
                     <td class="fw-semibold text-start">{{ $product->name }}</td>
-                        <td class="text-start">
-                                <div class="d-flex align-items-center gap-2">
-                                    <button class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
-                                        style="width: 38px; height: 38px;"
-                                        wire:click="reduceProduct({{ $product->id }})">
-                                        −
-                                    </button>
+                    <td class="text-start">
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
+                                style="width: 38px; height: 38px;"
+                                wire:click="reduceProduct({{ $product->id }})">
+                                −
+                            </button>
 
-                                    <span class="mx-2 fw-bold">{{ $product->amount }}</span>
+                            <span class="mx-2 fw-bold">{{ $product->amount }}</span>
 
-                                    <button class="btn btn-success btn-sm d-flex align-items-center justify-content-center"
-                                        style="width: 38px; height: 38px;"
-                                        wire:click="addProduct({{ $product->id }})">
-                                        +
-                                    </button>
-                                </div>
-                            </td>
-                        <td class="text-start">{{ ucfirst($product->tipo_traduzido) }}</td>
+                            <button class="btn btn-success btn-sm d-flex align-items-center justify-content-center"
+                                style="width: 38px; height: 38px;"
+                                wire:click="addProduct({{ $product->id }})">
+                                +
+                            </button>
+                        </div>
+                    </td>
+                    <td class="text-start">{{ ucfirst($product->tipo_traduzido) }}</td>
                     <td class="text-start">
                         <div class="border rounded bg-light px-2 py-1 text-end" style="max-width: 100px;">
                             {{ number_format($product->price, 2, ',', '.') }}
@@ -145,7 +148,6 @@
             @endforeach
         </tbody>
     </table>
-
 
     <div class="my-3">
         {{ $products->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
