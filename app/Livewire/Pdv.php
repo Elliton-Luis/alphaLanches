@@ -81,31 +81,32 @@ class Pdv extends Component
     {
         $this->cart = $this->checkCart();
 
-        $cartItem = CartItem::where('cart_id',$this->cart->id)->where('product_id', $id)->first();
-        
+        $stock = Produto::find($id);
 
-        if(!$cartItem){
+        $cartItem = CartItem::where('cart_id', $this->cart->id)
+                            ->where('product_id', $id)
+                            ->first();
+
+        if (!$cartItem) {
             CartItem::create([
-            'cart_id' => $this->cart->id,
-            'product_id' => $id,
+                'cart_id' => $this->cart->id,
+                'product_id' => $id,
+                'quantity' => 1
             ]);
 
-            return ;
+            $this->total += $stock->price;
+            return;
         }
 
-        $stock = Produto::where('id',$id)->first();
-
-        if($cartItem->quantity >= $stock->amount){
-            session()->flash('error','Quantidade Indisponível no Estoque');
+        if ($cartItem->quantity >= $stock->amount) {
+            session()->flash('error', 'Quantidade Indisponível no Estoque');
             return;
-        }else{
-            $price = Produto::where('id', $id)->value('price');
-            $this->total += $price;
         }
 
         $cartItem->increment('quantity');
-        
+        $this->total += $stock->price;
     }
+
 
     public function emptyCart(){
 
