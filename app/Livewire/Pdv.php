@@ -83,6 +83,11 @@ class Pdv extends Component
 
         $stock = Produto::find($id);
 
+        if (!$stock || $stock->amount <= 0) {
+            session()->flash('error', 'Produto indisponível no estoque');
+            return;
+        }
+
         $cartItem = CartItem::where('cart_id', $this->cart->id)
                             ->where('product_id', $id)
                             ->first();
@@ -99,7 +104,7 @@ class Pdv extends Component
         }
 
         if ($cartItem->quantity >= $stock->amount) {
-            session()->flash('error', 'Quantidade Indisponível no Estoque');
+            session()->flash('error', 'Quantidade indisponível no estoque');
             return;
         }
 
