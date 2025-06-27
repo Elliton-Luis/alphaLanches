@@ -4,85 +4,78 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sale;
+use App\Models\Cart;
 use App\Models\SaleProduct;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon; 
+use Carbon\Carbon;
 
 class FinanceiroController extends Controller
 {
     public function index()
     {
+        // 📦 Todas as vendas
         $sales = Sale::with(['user', 'saleProducts.product'])->orderByDesc('saleDate')->get();
 
-        // 🔁 Função para calcular valor total de uma venda
-        $calcTotal = function ($sales) {
-            return $sales->sum(function ($sale) {
-                return $sale->saleProducts->sum(function ($product) {
-                    return $product->productQuantity * $product->product->price;
-                });
-            });
-        };
+        // 📊 Totais usando Carts
+        $totalSalesValue = Cart::where('status', 'completed')->sum('total');
 
-        // 🔢 Totais gerais
-        $totalSalesValue = $calcTotal($sales);
+        $today = Carbon::today();
+        $totalDailyValue = Cart::where('status', 'completed')
+                                ->whereDate('created_at', $today)
+                                ->sum('total');
+        $dailySales = Sale::whereDate('saleDate', $today)->count();
 
-        // 📅 Hoje
-        $today = Carbon::today()->toDateString();
-        $dailySalesQuery = Sale::whereDate('saleDate', $today)->with('saleProducts.product')->get();
-        $dailySales = $dailySalesQuery->count();
-        $totalDailyValue = $calcTotal($dailySalesQuery);
-
-        // 📆 Mês atual
         $now = now();
-        $monthlySalesQuery = Sale::whereMonth('saleDate', $now->month)
-                                ->whereYear('saleDate', $now->year)
-                                ->with('saleProducts.product')
-                                ->get();
-        $monthlySales = $monthlySalesQuery->count();
-        $totalMonthlyValue = $calcTotal($monthlySalesQuery);
+        $totalMonthlyValue = Cart::where('status', 'completed')
+                                ->whereMonth('created_at', $now->month)
+                                ->whereYear('created_at', $now->year)
+                                ->sum('total');
+        $monthlySales = Sale::whereMonth('saleDate', $now->month)
+                            ->whereYear('saleDate', $now->year)
+                            ->count();
 
-        
+        // 🥇 Ranking de produtos mais vendidos
+        $ranking = SaleProduct::with('product')
+            ->select('product_id', DB::raw('SUM(productQuantity) as quantity'))
+            ->groupBy('product_id')
+            ->orderByDesc('quantity')
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'name' => $item->product->name,
+                    'quantity' => $item->quantity,
+                ];
+            });
 
-        // 📦 Ranking de produtos mais vendidos
-        $products = SaleProduct::with('product')->get();
-        $grouped = $products->groupBy('product_id')->map(function ($items) {
-            return [
-                'name' => $items->first()->product->name,
-                'quantity' => $items->sum('productQuantity'),
-            ];
-        });
-
-        $totalQuantity = $grouped->sum('quantity');
-        $ranking = $grouped->map(function ($item) use ($totalQuantity) {
+        $totalQuantity = $ranking->sum('quantity');
+        $ranking->transform(function ($item) use ($totalQuantity) {
             $item['percentage'] = $totalQuantity > 0 ? round($item['quantity'] / $totalQuantity * 100) : 0;
             return $item;
-        })->sortByDesc('quantity')->take(5)->values();
+        });
 
-        // 📊 Gráfico de receita por mês (últimos 6 meses)
-        $monthlyRevenueRaw = Sale::select(
-                DB::raw('MONTH(saleDate) as month'),
-                DB::raw('YEAR(saleDate) as year'),
-                DB::raw('SUM(sale_products.productQuantity * products.price) as total')
+        // 📈 Receita dos últimos 6 meses via Carts
+        $monthlyRevenue = Cart::select(
+                DB::raw('MONTH(created_at) as month'),
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('SUM(total) as total')
             )
-            ->join('sale_products', 'sales.id', '=', 'sale_products.sale_id')
-            ->join('products', 'sale_products.product_id', '=', 'products.id')
-            ->where('saleDate', '>=', now()->subMonths(5)->startOfMonth())
-            ->groupBy(DB::raw('YEAR(saleDate)'), DB::raw('MONTH(saleDate)'))
-            ->orderBy(DB::raw('YEAR(saleDate)'))
-            ->orderBy(DB::raw('MONTH(saleDate)'))
+            ->where('status', 'completed')
+            ->where('created_at', '>=', now()->subMonths(5)->startOfMonth())
+            ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))
+            ->orderBy(DB::raw('YEAR(created_at)'))
+            ->orderBy(DB::raw('MONTH(created_at)'))
             ->get()
-            ->keyBy(function ($item) {
-                return $item->month . '-' . $item->year;
-            });
+            ->keyBy(fn ($item) => $item->month . '-' . $item->year);
 
         $months = [];
         $revenues = [];
 
         for ($i = 5; $i >= 0; $i--) {
             $date = now()->subMonths($i);
-            $monthKey = $date->month . '-' . $date->year;
-            $months[] = $date->format('M'); // Jan, Fev, Mar...
-            $revenues[] = isset($monthlyRevenueRaw[$monthKey]) ? round($monthlyRevenueRaw[$monthKey]->total, 2) : 0;
+            $key = $date->month . '-' . $date->year;
+            $months[] = $date->format('M');
+            $revenues[] = $monthlyRevenue[$key]->total ?? 0;
         }
 
         return view('financeiro', compact(

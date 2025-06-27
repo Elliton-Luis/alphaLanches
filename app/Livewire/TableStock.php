@@ -42,10 +42,12 @@ class TableStock extends Component
         $query = Produto::query();
         if ($this->filterType) {
             $query->where('type', $this->filterType);
+            $this->resetPage();
         }
 
         if ($this->filterName) {
             $query->where('name', 'like', "%" . $this->filterName . "%");
+            $this->resetPage();
         }
 
         return $query->paginate(10);

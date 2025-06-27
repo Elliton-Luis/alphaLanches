@@ -4,17 +4,17 @@
 
         <div id="alert-container"></div>
 
-        <form id="pdv-form">
+        <div id="pdv-form">
             @csrf
 
             <div class="row">
                 <div class="col-md-6 rounded p-3 shadow-sm bg-white">
-    <h4 class="mb-4">Produtos</h4>
+                <h4 class="mb-4">Produtos</h4>
 
-        <div class="mb-3">
-            <input type="text" id="filterName" wire:model.lazy="filterName" 
-                class="form-control form-control-sm" placeholder="Digite o nome do produto..." maxlength="100">
-        </div>
+                <div class="mb-3">
+                    <input type="text" id="filterName" wire:model.lazy="filterName" 
+                        class="form-control form-control-sm" placeholder="Digite o nome do produto..." maxlength="100">
+                </div>
 
                 <ul class="list-group list-group-flush" id="product-list" style="max-height: 500px; overflow-y: auto;">
                     @foreach($products as $product)
@@ -37,24 +37,25 @@
                     @endforeach
                 </ul>
 
-            <div class="mt-3">
-                {{ $products->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
+                <div class="mt-3">
+                    {{ $products->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
+                </div>
             </div>
-        </div>
                 <div class="col-md-6">
                     <h4>Carrinho</h4>
 
-                    @if (session()->has('error'))
+                    @if (Session::has('error'))
                         <div class="alert alert-danger" role="alert">
-                        {{session('error')}}
+                        {{Session('error')}}
                         </div>
                     @endif
 
-                    @if (session()->has('success'))
+                    @if (Session::has('success'))
                         <div class="alert alert-success" role="alert">
-                        {{session('success')}}
+                        {{Session('success')}}
                         </div>
                     @endif
+
                     <div class="list-group">
 
                     @foreach ($items as $item)
@@ -76,28 +77,24 @@
                                 </small>
                             </div>
                         </div>
-
-                        @php
-                            $total += $item->price * $quantities[$item->id];
-                        @endphp
                     @endforeach
 
 
                     <ul class="list-group mb-3" id="cart-list"></ul>
 
                     <input type="hidden" name="items_json" id="items_json">
-
+                
                     <div class="mb-3">
+
                         <label for="payment_method">Forma de Pagamento:</label>
-                        <select name="payment_method" id="payment_method" class="form-select" required>
+                        <select name="paymentMethod" wire:model="paymentMethod" class="form-select" required>
                             <option value="">Selecione</option>
-                            <option value="dinheiro">Dinheiro</option>
-                            <option value="cartao">Cartão</option>
+                            <option value="cash">Dinheiro</option>
+                            <option value="card">Cartão</option>
                             <option value="pix">PIX</option>
                         </select>
                     </div>
-
-                    <button type="submit" class="btn btn-success" wire:click="emptyCart({{$total}})">Finalizar Venda</button>
+                    <button class="btn btn-success" wire:click="emptyCart()">Finalizar Venda</button>
 
                     <div class="mb-3">
                         <br>
@@ -106,7 +103,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
         <div class="col-md-6" style="margin-top: 10px;">
             <h5>Reposição Rápida</h5>
             <form method="POST" action="{{ route('repor') }}">
@@ -129,7 +126,7 @@
         }
 
         .list-group-item:hover {
-            background-color: #91b6ee;
+            background-color: #51BAE0;
             cursor: pointer;
         }
     </style>
