@@ -14,6 +14,7 @@ return new class extends Migration
         $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         $table->enum('status',['open','completed'])->default('open');
         $table->decimal('total')->default(0);
+        $table->enum('paymentMethod',['cash','pix','card'])->nullable();
         $table->timestamps();
     });
     }

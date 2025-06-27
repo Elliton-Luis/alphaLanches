@@ -16,15 +16,25 @@ class Pdv extends Component
     public $quantity;
     public $total;
     public $cart;
+    public $paymentMethod;
 
     public function mount(){
         $this->filterName = null;
         $this->quantity = 1;
         $this->total = 0;
-        $this->cart = [];
-        $this->cartItems = [];
-        $this->quantities = [];
-        $this->items = [];
+
+        $this->cart = Cart::where('user_id',auth()->id())->where('status','open')->first();       
+        
+        if($this->cart){
+            $items = CartItem::where('cart_id',$this->cart->id)->get();
+
+            foreach($items as $item){
+                $this->total += $item->product->price * $item->quantity;
+            }
+        }
+
+        $this->paymentMethod = null;
+
     }
 
     public function render()
@@ -38,8 +48,6 @@ class Pdv extends Component
         }
 
         $products = $query->paginate(6);
-
-        $this->cart = Cart::where('user_id',auth()->id())->where('status','open')->first();
 
         $this->checkCart();
 
@@ -74,6 +82,7 @@ class Pdv extends Component
         $this->cart = $this->checkCart();
 
         $cartItem = CartItem::where('cart_id',$this->cart->id)->where('product_id', $id)->first();
+        
 
         if(!$cartItem){
             CartItem::create([
@@ -88,30 +97,54 @@ class Pdv extends Component
 
         if($cartItem->quantity >= $stock->amount){
             session()->flash('error','Quantidade Indisponível no Estoque');
-            return ;
+            return;
+        }else{
+            $price = Produto::where('id', $id)->value('price');
+            $this->total += $price;
         }
-        $cartItem->increment('quantity');
 
+        $cartItem->increment('quantity');
+        
     }
 
-    public function emptyCart($total){
+    public function emptyCart(){
 
-        if($total > 0){
+        if($this->total > 0 && $this->paymentMethod){
+            $cartItems = CartItem::where('cart_id', $this->cart->id)->get();
+            $ids = $cartItems->pluck('product_id');
+            $stock = Produto::whereIn('id',$ids)->get();
+
+            foreach ($cartItems as $cartItem) {
+                $product = $stock->firstWhere('id', $cartItem->product_id);
+                if ($product) {
+                    $product->amount -= $cartItem->quantity;
+                    $product->save();
+                }
+            }
+
             $this->cart->status = 'completed';
-            $this->cart->total = $total;
+            $this->cart->paymentMethod = $this->paymentMethod;
+            $this->cart->total = $this->total;
             $this->cart->save();
+            $this->reset();
 
-            return session()->flash('success','Compra Feita Com Sucesso!!');
+            session()->flash('success','Compra Feita Com Sucesso!!');
+        }else{
+            if($this->total <= 0){
+                session()->flash('error','O Carrinho Está Vazio!!');
+            }else if($this->paymentMethod == null){
+                session()->flash('error','Selecione um metodo de pagamento!!');
+            }
         }
-        return session()->flash('error','O Carrinho Está Vazio!!');
-
     }
 
     public function removeItem($id){
         $cartItem = CartItem::where('cart_id',$this->cart->id)->where('product_id', $id)->first();
+        $price = Produto::where('id', $id)->value('price');
 
         if($cartItem->quantity > 0){
             $cartItem->decrement('quantity');
+            $this->total -= $price;
         }
         
         if($cartItem->quantity == 0){
