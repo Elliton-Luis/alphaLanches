@@ -64,8 +64,8 @@ Route::middleware(['auth'])->prefix('recarga')->group(function () {
 
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
 
-Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(['auth'])->name('financeiro');
-Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(['auth'])->name('painel.usuarios');
+Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(VerifyAuthAdmin::class)->name('financeiro');
+Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(VerifyAuthAdmin::class)->name('painel.usuarios');
 Route::get('/painelStudents', [CreateStudentController::class, 'showPainelStudents'])->middleware(['auth'])->name('painel.students');
 Route::get('/HistoricoDeCompras', [HistoryController::class, 'showHistory'])->middleware(['auth'])->name('index.historic');
 
