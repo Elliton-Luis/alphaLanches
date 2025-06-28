@@ -32,6 +32,10 @@
         <button id="btn-add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
             Adicionar Produto
         </button>
+
+        <button id="btn-add" class="btn btn-danger" wire:click="resetFilters()">
+            Resetar
+        </button>
     </div>
 
     <!-- Tabela de produtos -->

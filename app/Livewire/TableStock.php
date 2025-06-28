@@ -139,6 +139,7 @@ class TableStock extends Component
     {
         $this->filterType = null;
         $this->filterName = null;
+        $this->resetPage();
     }
 
     public function resetForm()
