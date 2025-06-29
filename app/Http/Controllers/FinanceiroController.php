@@ -13,28 +13,28 @@ class FinanceiroController extends Controller
 {
     public function index()
     {
-        // 📦 Todas as vendas
         $sales = Sale::with(['user', 'saleProducts.product'])->orderByDesc('saleDate')->get();
 
-        // 📊 Totais usando Carts
         $totalSalesValue = Cart::where('status', 'completed')->sum('total');
 
         $today = Carbon::today();
         $totalDailyValue = Cart::where('status', 'completed')
                                 ->whereDate('created_at', $today)
                                 ->sum('total');
-        $dailySales = Sale::whereDate('saleDate', $today)->count();
+        $dailySales = Cart::where('status', 'completed')
+                            ->whereDate('created_at', $today)
+                            ->count();
 
         $now = now();
         $totalMonthlyValue = Cart::where('status', 'completed')
                                 ->whereMonth('created_at', $now->month)
                                 ->whereYear('created_at', $now->year)
                                 ->sum('total');
-        $monthlySales = Sale::whereMonth('saleDate', $now->month)
-                            ->whereYear('saleDate', $now->year)
+        $monthlySales = Cart::where('status', 'completed')
+                            ->whereMonth('created_at', $now->month)
+                            ->whereYear('created_at', $now->year)
                             ->count();
 
-        // 🥇 Ranking de produtos mais vendidos
         $ranking = SaleProduct::with('product')
             ->select('product_id', DB::raw('SUM(productQuantity) as quantity'))
             ->groupBy('product_id')
@@ -54,7 +54,6 @@ class FinanceiroController extends Controller
             return $item;
         });
 
-        // 📈 Receita dos últimos 6 meses via Carts
         $monthlyRevenue = Cart::select(
                 DB::raw('MONTH(created_at) as month'),
                 DB::raw('YEAR(created_at) as year'),

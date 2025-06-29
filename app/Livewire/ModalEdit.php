@@ -37,7 +37,7 @@ class ModalEdit extends Component
     public function alterProduct()
     {
         $this->validate([
-            'name' => 'required|string|max:100|unique:products,name',
+            'name' => 'required|string|max:100|unique:products,name,' . $this->id,
             'describe' => 'required|string|max:255',
             'price' => 'required|numeric|min:0|max:999.99',
             'type' => 'required|in:drink,savory,lunch,snacks,natural',
@@ -58,24 +58,15 @@ class ModalEdit extends Component
 
         $product = Produto::find($this->id);
 
-        if ($this->name != $product->name) {
-            $product->name = $this->name;
-        }
-        if ($this->describe != $product->describe) {
-            $product->describe = $this->describe;
-        }
-        if ($this->price != $product->price) {
-            $product->price = $this->price;
-        }
-        if ($this->amount != $product->amount) {
-            $product->amount = $this->amount;
-        }
-        if ($this->type != $product->type) {
-            $product->type = $this->type;
-        }
+        $product->name = $this->name;
+        $product->describe = $this->describe;
+        $product->price = $this->price;
+        $product->amount = $this->amount;
+        $product->type = $this->type;
 
         $product->save();
-        session()->flash('success', 'Produto alterado com sucesso');
+
         $this->dispatch('alteredProduct');
+        session()->flash('success', 'Produto alterado com sucesso');
     }
 }

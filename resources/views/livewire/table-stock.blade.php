@@ -1,5 +1,4 @@
-<div class="container my-5">
-
+<div class="container">
     @script
     <script>
         $wire.on('closeModal', () => {
@@ -13,58 +12,14 @@
     </script>
     @endscript
 
-    <h2 class="text-center mb-4 fw-bold text-primary">Controle de Estoque</h2>
+    <h2 class="text-center my-5 fw-bold">Controle de Estoque</h2>
 
-    <div id="modal-add" class="modal fade" tabindex="-1" role="dialog" wire:ignore.self>
-        <div class="modal-dialog" role="document">
-            <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Adicionar Produto</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        @foreach (['name' => 'Nome', 'describe' => 'Descrição', 'price' => 'Valor', 'amount' => 'Quantidade'] as $field => $label)
-                            @error($field)
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                            <input type="{{ $field === 'price' || $field === 'amount' ? 'number' : 'text' }}"
-                                id="{{ $field }}" name="{{ $field }}" placeholder="{{ $label }}"
-                                class="form-control mb-3" wire:model="{{ $field }}"
-                                {{ $field === 'price' ? 'step=0.01 max=999.99 min=0' : ($field === 'amount' ? 'step=1 max=999 min=0' : 'maxlength=100') }}>
-                        @endforeach
+    <!-- Filtro -->
+    <div class="d-flex flex-wrap gap-3 mb-4 justify-content-center">
+        <input type="text" class="form-control border-primary shadow-sm" placeholder="Pesquisar por nome..."
+            wire:model.lazy="filterName" style="max-width: 250px;" maxlength="100">
 
-                        @error('type')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                        <select id="type" name="type" class="form-select mb-3" wire:model="type">
-                            <option selected value="">Selecione Um Tipo</option>
-                            <option value="drink">Bebida</option>
-                            <option value="savory">Salgado</option>
-                            <option value="lunch">Almoço</option>
-                            <option value="snacks">Lanches</option>
-                            <option value="natural">Natural</option>
-                        </select>
-
-                        <div class="d-grid">
-                            <button type="button" class="btn btn-success fw-bold" wire:click="storeProduct">
-                                Salvar Produto
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="d-flex flex-wrap gap-3 mb-4">
-        <input type="text" class="form-control border-primary shadow-sm"
-            placeholder="Pesquisar por nome..." wire:model.lazy="filterName"
-            style="max-width: 250px;" maxlength="100">
-
-        <select class="form-select border-primary shadow-sm" wire:model.lazy="filterType"
-            style="max-width: 220px;">
+        <select class="form-control border-primary shadow-sm" wire:model.lazy="filterType" style="max-width: 220px;">
             <option value="">Filtrar Produtos</option>
             <option value="drink">Bebidas</option>
             <option value="savory">Salgados</option>
@@ -73,90 +28,127 @@
             <option value="natural">Natural</option>
             <option value="">Todos</option>
         </select>
-    </div>
 
-    <table class="table table-hover table-bordered align-middle shadow-sm">
-        <thead class="table-primary">
-            <tr>
-                <th class="text-start">Imagem</th>
-                <th class="text-start">Nome</th>
-                <th class="text-start">Quantidade</th>
-                <th class="text-start">Tipo</th>
-                <th class="text-start">Valor (R$)</th>
-                <th class="text-start">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($products as $product)
-                <tr>
-                    <td class="text-start">
-                        <img src="https://via.placeholder.com/50x50.png?text=Img" alt="Produto"
-                             class="rounded border" style="width:50px; height:50px; object-fit:cover;">
-                    </td>
-                    <td class="fw-semibold text-start">{{ $product->name }}</td>
-                    <td class="text-start">
-                        <div class="d-flex align-items-center gap-2">
-                            <button class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
-                                style="width: 38px; height: 38px;"
-                                wire:click="reduceProduct({{ $product->id }})">
-                                −
-                            </button>
+        <button id="btn-add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
+            Adicionar Produto
+        </button>
 
-                            <span class="mx-2 fw-bold">{{ $product->amount }}</span>
-
-                            <button class="btn btn-success btn-sm d-flex align-items-center justify-content-center"
-                                style="width: 38px; height: 38px;"
-                                wire:click="addProduct({{ $product->id }})">
-                                +
-                            </button>
-                        </div>
-                    </td>
-                    <td class="text-start">{{ ucfirst($product->tipo_traduzido) }}</td>
-                    <td class="text-start">
-                        <div class="border rounded bg-light px-2 py-1 text-end" style="max-width: 100px;">
-                            {{ number_format($product->price, 2, ',', '.') }}
-                        </div>
-                    </td>
-                    <td class="text-start">
-                        <div class="d-flex align-items-stretch gap-2">
-                            <button class="btn btn-warning btn-sm d-flex align-items-center justify-content-center"
-                                style="width: 40%; height: 38px;"
-                                data-bs-toggle="modal" data-bs-target="#modal-edit{{$loop->index}}">
-                                Editar
-                            </button>
-
-                            <form action="{{ route('estoque.destroy', $product->id) }}" method="POST"
-                                onsubmit="return confirm('Deseja realmente excluir?')"
-                                style="width: 40%; height: 38px;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="btn btn-danger btn-sm d-flex align-items-center justify-content-center w-100 h-100">
-                                    Excluir
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-
-                {{-- Modal editar --}}
-                <div wire:ignore id="modal-edit{{$loop->index}}" class="modal fade" tabindex="-1">
-                    <div class="modal-dialog">
-                        <livewire:modal-edit :id="$product->id" />
-                    </div>
-                </div>
-            @endforeach
-        </tbody>
-    </table>
-
-    <div class="my-3">
-        {{ $products->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
-    </div>
-
-    <div class="text-start">
-        <button class="btn btn-primary btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#modal-add">
-            + Adicionar Produto
+        <button id="btn-add" class="btn btn-danger" wire:click="resetFilters()">
+            Resetar
         </button>
     </div>
 
+    <!-- Tabela de produtos -->
+    <div class="table-responsive rounded-3 shadow-sm">
+        <table class="table table-striped border border-3 align-middle text-center">
+            <thead class="table-primary">
+                <tr>
+                    <th>Foto</th>
+                    <th>Nome</th>
+                    <th>Quantidade</th>
+                    <th>Tipo</th>
+                    <th>Valor (R$)</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="product-list">
+                @foreach($products as $product)
+                    <tr>
+                        <td>
+                            <img src="{{ $product->image_url ?? 'https://via.placeholder.com/60x60.png?text=Sem+Foto' }}"
+                                alt="Foto" class="rounded-2 border" style="width:60px; height:60px; object-fit:cover;">
+                        </td>
+                        <td class="fw-semibold">{{ $product->name }}</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <button class="btn btn-danger btn-sm fw-bold px-3 py-1"
+                                    wire:click="reduceProduct({{ $product->id }})">−</button>
+                                <span id="qtd-{{ $product->id }}" class="mx-2">{{ $product->amount }}</span>
+                                <button class="btn btn-success btn-sm fw-bold px-3 py-1"
+                                    wire:click="addProduct({{ $product->id }})">+</button>
+                            </div>
+                        </td>
+                        <td>{{ ucfirst($product->tipo_traduzido) }}</td>
+                        <td>
+                            <span class="fw-semibold">R$ {{ number_format($product->price, 2, ',', '.') }}</span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2 justify-content-center">
+                                <button class="btn btn-warning fw-semibold py-2"
+                                    style="width: 100px;"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal-edit{{$loop->index}}">Editar</button>
+
+                                <form action="{{ route('estoque.destroy', $product->id) }}" method="POST"
+                                    onsubmit="return confirm('Deseja realmente excluir?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger fw-semibold py-2"
+                                        style="width: 100px;">Excluir</button>
+                                </form>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <div wire:ignore id="modal-edit{{$loop->index}}" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <livewire:modal-edit :id="$product->id" />
+                        </div>
+                    </div>
+                @endforeach
+            </tbody>
+
+        </table>
+    </div>
+
+    {{ $products->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
+
+    <!-- Modal de Adição -->
+    <div id="modal-add" class="modal fade" tabindex="-1" role="dialog" wire:ignore.self>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content shadow-sm">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Adicionar Produto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        @error('name') <small class="text-danger">{{ $message }}</small> @enderror
+                        <input type="text" name="name" placeholder="Nome" class="form-control mb-3"
+                            wire:model="name" maxlength="100">
+
+                        @error('describe') <small class="text-danger">{{ $message }}</small> @enderror
+                        <input type="text" name="describe" placeholder="Descrição" class="form-control mb-3"
+                            wire:model="describe" maxlength="100">
+
+                        @error('price') <small class="text-danger">{{ $message }}</small> @enderror
+                        <input type="number" name="price" placeholder="Valor" class="form-control mb-3"
+                            wire:model="price" step="0.01" max="999.99" min="0">
+
+                        @error('amount') <small class="text-danger">{{ $message }}</small> @enderror
+                        <input type="number" name="amount" placeholder="Quantidade" class="form-control mb-3"
+                            wire:model="amount" step="1" max="999" min="0">
+
+                        @error('type') <small class="text-danger">{{ $message }}</small> @enderror
+                        <select name="type" class="form-control mb-3" wire:model="type">
+                            <option value="">Selecione um Tipo</option>
+                            <option value="drink">Bebida</option>
+                            <option value="savory">Salgado</option>
+                            <option value="lunch">Almoço</option>
+                            <option value="snacks">Lanches</option>
+                            <option value="natural">Natural</option>
+                        </select>
+
+                        @error('image_url') <small class="text-danger">{{ $message }}</small> @enderror
+                        <input type="text" name="image_url" placeholder="URL da Imagem (opcional)"
+                            class="form-control mb-3" wire:model="image_url">
+
+                        <button type="button" class="btn btn-success w-100 fw-semibold"
+                            wire:click="storeProduct">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
