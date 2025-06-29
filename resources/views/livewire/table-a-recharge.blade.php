@@ -1,17 +1,4 @@
 <div class="container mt-4">
-    @script
-    <script>
-        $wire.on('closeModal', () => {
-            let modalElement = document.getElementById('modal-add');
-            let modalInstance = bootstrap.Modal.getInstance(modalElement);
-            if (modalInstance) modalInstance.hide();
-            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-            document.body.classList.remove('modal-open');
-            document.body.style = '';
-        });
-    </script>
-    @endscript
-
     <h2 class="text-center mb-5">Recarga de Créditos</h2>
 
     <table class="table table-striped table-hover">
@@ -34,11 +21,21 @@
                             data-bs-target="#modal-edit{{$loop->index}}">
                             Recarga
                         </button>
+                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#modal-edit-negativo{{$loop->index}}">
+                            Retirar
+                        </button>
                     </td>
                 </tr>
                 <div wire:ignore id="modal-edit{{$loop->index}}" class="modal fade" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <livewire:modal-edit-recarga :user-id="$user->id" :nome="$user->name"
+                            :saldo-atual="$user->credit" />
+                    </div>
+                </div>
+                <div wire:ignore id="modal-edit-negativo{{$loop->index}}" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <livewire:modal-edit-recarga-negativo :user-id="$user->id" :nome="$user->name"
                             :saldo-atual="$user->credit" />
                     </div>
                 </div>

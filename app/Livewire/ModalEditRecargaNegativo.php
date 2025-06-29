@@ -5,7 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\User;
 
-class ModalEditRecarga extends Component
+class ModalEditRecargaNegativo extends Component
 {
     public $userId;
     public $nome;
@@ -13,21 +13,10 @@ class ModalEditRecarga extends Component
     public $valor = '';
     public $metodo = '';
     public $mostrarInfo = false;
-    public $mensagem = '';
-
-    public function mount($userId)
-    {
-        $user = User::find($userId);
-        if ($user) {
-            $this->userId = $user->id;
-            $this->nome = $user->name;
-            $this->saldoAtual = $user->credit;
-        }
-    }
 
     public function render()
     {
-        return view('livewire.modal-edit-recarga');
+        return view('livewire.modal-edit-recarga-negativo');
     }
 
     public function digitar($tecla)
@@ -55,18 +44,12 @@ class ModalEditRecarga extends Component
         $this->valor .= $tecla;
     }
 
-    public function selecionarMetodo($metodo)
-    {
-        $this->metodo = $metodo;
-        $this->mostrarInfo = true;
-    }
-
-    public function realizarRecarga()
+    public function realizarRetirada()
     {
         $valorFloat = floatval($this->valor);
 
-        if ($valorFloat <= 0 || !$this->metodo) {
-            $this->addError('valor', 'Preencha valor e método.');
+        if ($valorFloat <= 0) {
+            $this->addError('valor', 'Preencha o valor.');
             return;
         }
 
@@ -77,12 +60,16 @@ class ModalEditRecarga extends Component
             return;
         }
 
-        $user->credit += $valorFloat;
+        $user->credit -= $valorFloat;
+
+        if($user->credit < 0) $user->credit = 0;
+
         $user->save();
 
         $this->saldoAtual = $user->credit;
-        $this->mensagem = 'Recarga realizada com sucesso!';
 
-        $this->reset(['valor', 'metodo', 'mostrarInfo', 'mensagem']);
+        session()->flash('mensagem', 'Recarga realizada com sucesso!');
+
+        $this->dispatch('fecharModalRecarga');
     }
 }
