@@ -39,14 +39,17 @@ class TableACcountsAdmin extends Component
 
         if ($this->filterName) {
             $query->where('name', 'like', '%' . $this->filterName . '%');
+            $this->resetPage();
         }
 
         if ($this->filterTelefone) {
             $query->where('telefone', 'like', '%' . $this->filterTelefone . '%');
+            $this->resetPage();
         }
 
         if ($this->filterType) {
             $query->where('type', $this->filterType);
+            $this->resetPage();
         }
 
         $users = $query->paginate(5);

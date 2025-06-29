@@ -27,4 +27,6 @@ class Produto extends Model
             default => ucfirst($this->type),
         };
     }
+
+    
 }
