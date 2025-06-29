@@ -62,14 +62,13 @@ class ModalEditRecargaNegativo extends Component
 
         $user->credit -= $valorFloat;
 
-        if($user->credit < 0) $user->credit = 0;
+        if ($user->credit < 0)
+            $user->credit = 0;
 
         $user->save();
 
         $this->saldoAtual = $user->credit;
 
-        session()->flash('mensagem', 'Recarga realizada com sucesso!');
-
-        $this->dispatch('fecharModalRecarga');
+        $this->reset(['valor', 'metodo', 'mostrarInfo']);
     }
 }

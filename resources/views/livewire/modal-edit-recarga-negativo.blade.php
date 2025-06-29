@@ -19,14 +19,14 @@
 
                     <div class="card p-4 shadow-lg border-0">
                         <h5 class="text-secondary">Saldo Atual:
-                            <span class="fw-bold text-success">R$ {{ number_format($saldoAtual, 2, ',', '.') }}</span>
+                            <span class="fw-bold text-danger">R$ {{ number_format($saldoAtual, 2, ',', '.') }}</span>
                         </h5>
 
                         <label class="form-label mt-3 fw-bold">Valor da Retirada:</label>
                         <div class="input-group p-2 rounded shadow-sm">
-                            <span class="input-group-text bg-success text-white fw-bold">R$</span>
+                            <span class="input-group-text bg-danger text-white fw-bold">R$</span>
                             <input type="text" class="form-control text-center border-0"
-                                style="background-color: rgb(199, 248, 203); font-weight: bold;" readonly
+                                style="background-color: rgb(248, 199, 199); font-weight: bold;" readonly
                                 wire:model="valor">
                         </div>
 
@@ -40,8 +40,10 @@
                             @endforeach
                         </div>
 
+                        <br>
+
                         <div class="d-flex justify-content-center w-100 p-1">
-                            <button type="submit" class="btn btn-success">Confirmar Retirada de Crédito</button>
+                            <button type="submit" class="btn btn-danger">Confirmar Retirada de Crédito</button>
                         </div>
                     </div>
                 </div>

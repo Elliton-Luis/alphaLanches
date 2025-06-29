@@ -81,8 +81,6 @@ class ModalEditRecarga extends Component
         $user->save();
 
         $this->saldoAtual = $user->credit;
-        $this->mensagem = 'Recarga realizada com sucesso!';
-
         $this->reset(['valor', 'metodo', 'mostrarInfo', 'mensagem']);
     }
 }
