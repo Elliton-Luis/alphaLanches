@@ -12,16 +12,25 @@ class AgendamentoController extends Controller
 {
     public function index()
     {
-        $reservas = Sale::where('customer_id', auth()->id())
+        $pedidosEspera = Sale::where('customer_id', auth()->id())
+            ->where('status', 'em espera')
             ->orderBy('scheduled_date', 'desc')
             ->get();
+
+        $pedidosCancelados = Sale::where('customer_id', auth()->id())
+            ->where('status', 'cancelado')
+            ->orderBy('scheduled_date', 'desc')
+            ->get();
+
         $products = Produto::all();
         $todayTotal = Sale::whereDate('saleDate', today())->sum('value');
-        return view('agendamento', compact('products', 'todayTotal'));
+        return view('agendamento', compact('products', 'todayTotal', 'pedidosEspera', 'pedidosCancelados'));
     }
 
     public function store(Request $request)
     {
+        $request->merge(['customer_id' => auth()->id()]);
+
         $request->validate([
             'customer_id' => 'required|exists:users,id',
             'items_json' => 'required|string',
@@ -71,6 +80,20 @@ class AgendamentoController extends Controller
         }
 
         return redirect()->route('agendamento.index')->with('success', 'Venda realizada com sucesso!');
+    }
+
+    public function cancelar($id)
+    {
+    $pedido = Sale::findOrFail($id);
+
+    if ($pedido->customer_id !== auth()->id()) {
+        return redirect()->route('agendamento.index')->with('errorAuth', 'Ação não autorizada.');
+    }
+
+    $pedido->status = 'cancelado';
+    $pedido->save();
+
+    return redirect()->route('agendamento.index')->with('success', 'Pedido cancelado com sucesso.');
     }
 
     public function searchUser(Request $request)

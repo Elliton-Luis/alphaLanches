@@ -64,6 +64,13 @@ Route::middleware(['auth'])->prefix('recarga')->group(function () {
 
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/agendamento', [AgendamentoController::class, 'index'])->name('agendamento.index');
+    Route::post('/agendamento', [AgendamentoController::class, 'store'])->name('agendamento.store');
+    Route::get('/agendamento/search-user', [AgendamentoController::class, 'searchUser'])->name('agendamento.searchUser');
+    Route::patch('/agendamento/{id}/cancelar', [AgendamentoController::class, 'cancelar'])->name('agendamento.cancelar');
+});
+
 Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(['auth'])->name('financeiro');
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(['auth'])->name('painel.usuarios');
 Route::get('/painelStudents', [CreateStudentController::class, 'showPainelStudents'])->middleware(['auth'])->name('painel.students');

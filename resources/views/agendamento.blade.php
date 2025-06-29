@@ -107,11 +107,12 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Minhas Pedido</h5>
+                    <h5 class="modal-title">Meus Pedidos</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
-                    @foreach($pedidos as $pedido)
+                    <h5>Pedidos em Espera</h5>
+                    @forelse($pedidosEspera as $pedido)
                         <div class="border p-2 mb-2">
                             <p><strong>Data:</strong> {{ $pedido->scheduled_date }}</p>
                             <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
@@ -121,7 +122,22 @@
                                 <button class="btn btn-sm btn-danger">Cancelar Pedido</button>
                             </form>
                         </div>
-                    @endforeach
+                    @empty
+                        <p class="text-muted">Nenhum pedido em espera.</p>
+                    @endforelse
+
+                    <hr>
+
+                    <h5>Pedidos Cancelados</h5>
+                    @forelse($pedidosCancelados as $pedido)
+                        <div class="border p-2 mb-2">
+                            <p><strong>Data:</strong> {{ $pedido->scheduled_date }}</p>
+                            <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
+                            <span class="badge bg-danger">Cancelado</span>
+                        </div>
+                    @empty
+                        <p class="text-muted">Nenhum pedido cancelado.</p>
+                    @endforelse
                 </div>
             </div>
         </div>
