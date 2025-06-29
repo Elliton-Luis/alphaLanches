@@ -25,6 +25,10 @@
                             data-bs-target="#modal-edit-negativo{{$loop->index}}">
                             Retirar
                         </button>
+                        <button class="btn btn-sm btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#modal-historico{{$loop->index}}">
+                            Histórico
+                        </button>
                     </td>
                 </tr>
                 <div wire:ignore id="modal-edit{{$loop->index}}" class="modal fade" tabindex="-1" role="dialog">
@@ -37,6 +41,11 @@
                     <div class="modal-dialog" role="document">
                         <livewire:modal-edit-recarga-negativo :user-id="$user->id" :nome="$user->name"
                             :saldo-atual="$user->credit" />
+                    </div>
+                </div>
+                <div wire:ignore id="modal-historico{{$loop->index}}" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <livewire:modal-historico-creditos :user-id="$user->id" :nome="$user->name" />
                     </div>
                 </div>
             @endforeach
