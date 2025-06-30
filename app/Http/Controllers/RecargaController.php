@@ -13,23 +13,4 @@ class RecargaController extends Controller
         $users = User::all();
         return view('recarga', compact('users'));
     }
-
-    public function process(Request $request)
-    {
-        $request->validate([
-            'valor' => 'required|numeric|min:0.01|max:999.99',
-            'metodo' => 'required|string|in:pix,func,guard'
-        ]);
-
-        $user = User::find($request->user_id);
-        $valor = floatval($request->valor);
-
-        $user->credit += $valor;
-        $user->save();
-
-        return response()->json([
-            'sucesso' => true,
-            'novo_saldo' => $user->credit
-        ]);
-    }
 }
