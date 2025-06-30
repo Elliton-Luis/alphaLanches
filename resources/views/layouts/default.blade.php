@@ -9,33 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
     @livewireStyles
-    <style>
-        .square-btn {
-            width: 175px;
-            height: 175px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            font-weight: bold;
-            box-shadow: 2px 10px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .square-btn:hover {
-            background-color: #22D8E6;
-        }
-
-        .icon-size {
-            font-size: 2.5rem;
-        }
-
-        .label-size {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-    </style>
 </head>
 <body class="d-block d-md-flex flex-nowrap min-vh-100">
     <x-sidebar/>

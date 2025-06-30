@@ -14,7 +14,6 @@
 
     <h2 class="text-center my-5 fw-bold">Controle de Estoque</h2>
 
-    <!-- Filtro -->
     <div class="d-flex flex-wrap gap-3 mb-4 justify-content-center">
         <input type="text" class="form-control border-primary shadow-sm" placeholder="Pesquisar por nome..."
             wire:model.lazy="filterName" style="max-width: 250px;" maxlength="100">
@@ -33,17 +32,15 @@
             Adicionar Produto
         </button>
 
-        <button id="btn-add" class="btn btn-danger" wire:click="resetFilters()">
+        <button id="btn-reset" class="btn btn-danger" type="button" onclick="location.reload();">
             Resetar
         </button>
     </div>
 
-    <!-- Tabela de produtos -->
     <div class="table-responsive rounded-3 shadow-sm">
         <table class="table table-striped border border-3 align-middle text-center">
             <thead class="table-primary">
                 <tr>
-                    <th>Foto</th>
                     <th>Nome</th>
                     <th>Quantidade</th>
                     <th>Tipo</th>
@@ -54,10 +51,6 @@
             <tbody id="product-list">
                 @foreach($products as $product)
                     <tr>
-                        <td>
-                            <img src="{{ $product->image_url ?? 'https://via.placeholder.com/60x60.png?text=Sem+Foto' }}"
-                                alt="Foto" class="rounded-2 border" style="width:60px; height:60px; object-fit:cover;">
-                        </td>
                         <td class="fw-semibold">{{ $product->name }}</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-center gap-2">
@@ -88,7 +81,6 @@
                                 </form>
                             </div>
                         </td>
-
                     </tr>
 
                     <div wire:ignore id="modal-edit{{$loop->index}}" class="modal fade" tabindex="-1" role="dialog">
@@ -98,13 +90,11 @@
                     </div>
                 @endforeach
             </tbody>
-
         </table>
     </div>
 
     {{ $products->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
 
-    <!-- Modal de Adição -->
     <div id="modal-add" class="modal fade" tabindex="-1" role="dialog" wire:ignore.self>
         <div class="modal-dialog" role="document">
             <div class="modal-content shadow-sm">
@@ -141,8 +131,6 @@
                         </select>
 
                         @error('image_url') <small class="text-danger">{{ $message }}</small> @enderror
-                        <input type="text" name="image_url" placeholder="URL da Imagem (opcional)"
-                            class="form-control mb-3" wire:model="image_url">
 
                         <button type="button" class="btn btn-success w-100 fw-semibold"
                             wire:click="storeProduct">Salvar</button>

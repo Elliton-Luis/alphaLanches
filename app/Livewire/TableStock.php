@@ -12,8 +12,8 @@ class TableStock extends Component
 {
     use WithPagination;
 
-    public $filterType;
-    public $filterName;
+    public $filterType = null;
+    public $filterName = null;
 
     public $name;
     public $describe;
@@ -36,21 +36,34 @@ class TableStock extends Component
     }
 
     #[On('alteredProduct')]
+    public function refreshProducts()
+    {
+        // Apenas um método para disparar refresh da view via evento
+    }
+
     public function getProducts()
     {
         $query = Produto::query();
 
         if ($this->filterType) {
             $query->where('type', $this->filterType);
-            $this->resetPage();
         }
 
         if ($this->filterName) {
             $query->where('name', 'like', "%" . $this->filterName . "%");
-            $this->resetPage();
         }
 
         return $query->paginate(10);
+    }
+
+    public function updatingFilterType()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterName()
+    {
+        $this->resetPage();
     }
 
     public function storeProduct()
