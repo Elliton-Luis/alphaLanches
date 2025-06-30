@@ -16,11 +16,6 @@ class FinanceiroController extends Controller
         // Definir locale para português
         Carbon::setLocale('pt_BR');
 
-        // Vendas com relacionamento de usuário e produtos
-        $sales = Sale::with(['user', 'saleProducts.product'])
-                    ->orderByDesc('saleDate')
-                    ->get();
-
         // Total de vendas
         $totalSalesValue = Cart::where('status', 'completed')->sum('total');
 
@@ -97,9 +92,8 @@ class FinanceiroController extends Controller
             $revenues[] = $monthlyRevenue[$key]->total ?? 0;
         }
 
-        // Envia os dados para a view
+        // Envia os dados para a view (sem $sales)
         return view('financeiro', compact(
-            'sales',
             'totalSalesValue',
             'dailySales',
             'monthlySales',

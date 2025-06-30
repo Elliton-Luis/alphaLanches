@@ -76,39 +76,6 @@
       </ul>
     </div>
     </div>
-
-    <div class="col-12 mx-auto">
-    <div class="card">
-      <div class="card-body">
-      <h5 class="card-title text-center">Últimas Transações</h5>
-      <div class="table-responsive" style="max-height: 280px; overflow-y: auto;">
-        <table class="table table-striped">
-        <thead>
-          <tr>
-          <th>Cliente</th>
-          <th>Produto</th>
-          <th>Quantidade</th>
-          <th>Valor</th>
-          <th>Data</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($sales as $sale)
-        @foreach($sale->saleProducts as $saleProduct)
-        <tr>
-        <td>{{ $sale->user->name }}</td>
-        <td>{{ $saleProduct->product->name }}</td>
-        <td>{{ $saleProduct->productQuantity }}</td>
-        <td>R$ {{ number_format($saleProduct->productQuantity * $saleProduct->product->price, 2, ',', '.') }}
-        </td>
-        <td>{{ \Carbon\Carbon::parse($sale->saleDate)->format('d/m/Y') }}</td>
-        </tr>
-      @endforeach
-      @endforeach
-        </tbody>
-        </table>
-      </div>
-      </div>
     </div>
     </div>
   </div>
