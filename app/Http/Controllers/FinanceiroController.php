@@ -13,28 +13,40 @@ class FinanceiroController extends Controller
 {
     public function index()
     {
-        $sales = Sale::with(['user', 'saleProducts.product'])->orderByDesc('saleDate')->get();
+        // Definir locale para português
+        Carbon::setLocale('pt_BR');
 
+        // Vendas com relacionamento de usuário e produtos
+        $sales = Sale::with(['user', 'saleProducts.product'])
+                    ->orderByDesc('saleDate')
+                    ->get();
+
+        // Total de vendas
         $totalSalesValue = Cart::where('status', 'completed')->sum('total');
 
+        // Total e quantidade de vendas diárias
         $today = Carbon::today();
         $totalDailyValue = Cart::where('status', 'completed')
                                 ->whereDate('created_at', $today)
                                 ->sum('total');
+
         $dailySales = Cart::where('status', 'completed')
                             ->whereDate('created_at', $today)
                             ->count();
 
+        // Total e quantidade de vendas mensais
         $now = now();
         $totalMonthlyValue = Cart::where('status', 'completed')
                                 ->whereMonth('created_at', $now->month)
                                 ->whereYear('created_at', $now->year)
                                 ->sum('total');
+
         $monthlySales = Cart::where('status', 'completed')
                             ->whereMonth('created_at', $now->month)
                             ->whereYear('created_at', $now->year)
                             ->count();
 
+        // Ranking de produtos mais vendidos
         $ranking = SaleProduct::with('product')
             ->select('product_id', DB::raw('SUM(productQuantity) as quantity'))
             ->groupBy('product_id')
@@ -48,12 +60,16 @@ class FinanceiroController extends Controller
                 ];
             });
 
+        // Calcular porcentagem de participação no ranking
         $totalQuantity = $ranking->sum('quantity');
         $ranking->transform(function ($item) use ($totalQuantity) {
-            $item['percentage'] = $totalQuantity > 0 ? round($item['quantity'] / $totalQuantity * 100) : 0;
+            $item['percentage'] = $totalQuantity > 0
+                ? round($item['quantity'] / $totalQuantity * 100)
+                : 0;
             return $item;
         });
 
+        // Receita agrupada por mês dos últimos 6 meses
         $monthlyRevenue = Cart::select(
                 DB::raw('MONTH(created_at) as month'),
                 DB::raw('YEAR(created_at) as year'),
@@ -67,16 +83,21 @@ class FinanceiroController extends Controller
             ->get()
             ->keyBy(fn ($item) => $item->month . '-' . $item->year);
 
+        // Data base fixa para garantir meses corretos
+        $referenceDate = now()->startOfMonth();
+
         $months = [];
         $revenues = [];
 
         for ($i = 5; $i >= 0; $i--) {
-            $date = now()->subMonths($i);
+            $date = $referenceDate->copy()->subMonths($i);
             $key = $date->month . '-' . $date->year;
-            $months[] = $date->format('M');
+
+            $months[] = ucfirst($date->translatedFormat('F Y'));
             $revenues[] = $monthlyRevenue[$key]->total ?? 0;
         }
 
+        // Envia os dados para a view
         return view('financeiro', compact(
             'sales',
             'totalSalesValue',
