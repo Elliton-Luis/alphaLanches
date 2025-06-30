@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\CreditLog;
 
 class ModalEditRecarga extends Component
 {
@@ -79,6 +80,14 @@ class ModalEditRecarga extends Component
 
         $user->credit += $valorFloat;
         $user->save();
+
+        CreditLog::create([
+            'user_id' => $user->id,
+            'valor' => $valorFloat,
+            'tipo' => 'entrada',
+            'metodo_pagamento' => $this->metodo,
+            'executado_por' => auth()->id(),
+        ]);
 
         $this->saldoAtual = $user->credit;
         $this->reset(['valor', 'metodo', 'mostrarInfo', 'mensagem']);
