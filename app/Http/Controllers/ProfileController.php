@@ -25,7 +25,6 @@ class ProfileController extends Controller
             'telefone' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/|max:15',
             'cpf' => 'nullable|regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/|max:14|unique:users,cpf,' . $user->id,
             'password' => 'nullable|min:6|max:27|confirmed',
-            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $user->name = $request->name;
@@ -37,28 +36,9 @@ class ProfileController extends Controller
             $user->password = Hash::make($request->password);
         }
 
-        if ($request->hasFile('profile_picture')) {
-            if ($user->profile_picture) {
-                Storage::delete($user->profile_picture);
-            }
-            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-            $user->profile_picture = $path;
-        }
-
         $user->save();
 
         return redirect()->route('profile.index')->with('success', 'Perfil atualizado com sucesso!');
-    }
-
-    public function removePicture()
-    {
-        $user = Auth::user();
-        if ($user->profile_picture) {
-            Storage::disk('public')->delete($user->profile_picture);
-            $user->profile_picture = null;
-            $user->save();
-        }
-        return redirect()->route('profile.index')->with('success', 'Foto de perfil removida com sucesso!');
     }
 
     public function delete()
