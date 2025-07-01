@@ -26,8 +26,6 @@ Route::prefix('responsaveis')->middleware(VerifyAuthAdmin::class)->group(functio
     Route::post('/rejeitado/{id}', [GuardRequestController::class, 'rejectRequest'])->name('guardRequests.reject');
 });
 
-Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware('auth');
-
 Route::get('/', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/auth', [LoginController::class, 'authUser'])->name('login.auth');
 Route::post('/logout', [LoginController::class, 'logoutUser'])->name('login.logout');
