@@ -1,4 +1,4 @@
-<div class="w-100 w-md-50 m-2">
+<div class="w-50 w-md-50 m-2">
     <div class="accordion" id="accordionForm">
         <div class="accordion-item border-0 shadow-sm rounded-3 bg-white">
             <h2 class="accordion-header">
