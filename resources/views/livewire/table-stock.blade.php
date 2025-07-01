@@ -1,10 +1,15 @@
 <div class="container">
     @script
     <script>
-        $wire.on('closeModal', () => {
-            let modalElement = document.getElementById('modal-add');
-            let modalInstance = bootstrap.Modal.getInstance(modalElement);
-            if (modalInstance) modalInstance.hide();
+        window.addEventListener('closeModal', () => {
+            const modals = ['modal-add', 'modal-edit'];
+
+            modals.forEach(id => {
+                const modalEl = document.getElementById(id);
+                const instance = bootstrap.Modal.getInstance(modalEl);
+                if (instance) instance.hide();
+            });
+
             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
             document.body.classList.remove('modal-open');
             document.body.style = '';
@@ -67,10 +72,9 @@
                         </td>
                         <td>
                             <div class="d-flex gap-2 justify-content-center">
-                                <button class="btn btn-warning fw-semibold py-2"
-                                    style="width: 100px;"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modal-edit{{$loop->index}}">Editar</button>
+                                <button class="btn btn-warning fw-semibold py-2" style="width: 100px;"
+                                    wire:click="editProduct({{ $product->id }})" data-bs-toggle="modal"
+                                    data-bs-target="#modal-edit">Editar</button>
 
                                 <form action="{{ route('estoque.destroy', $product->id) }}" method="POST"
                                     onsubmit="return confirm('Deseja realmente excluir?')">
@@ -82,18 +86,55 @@
                             </div>
                         </td>
                     </tr>
-
-                    <div wire:ignore id="modal-edit{{$loop->index}}" class="modal fade" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <livewire:modal-edit :id="$product->id" />
-                        </div>
-                    </div>
                 @endforeach
             </tbody>
         </table>
     </div>
 
     {{ $products->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
+
+    <div id="modal-edit" class="modal fade" tabindex="-1" role="dialog" wire:ignore.self>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content shadow-sm">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Editar Produto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        @error('name') <small class="text-danger">{{ $message }}</small> @enderror
+                        <input type="text" name="name" placeholder="Nome" class="form-control mb-3"
+                            wire:model.defer="name" maxlength="100">
+
+                        @error('describe') <small class="text-danger">{{ $message }}</small> @enderror
+                        <input type="text" name="describe" placeholder="Descrição" class="form-control mb-3"
+                            wire:model.defer="describe" maxlength="100">
+
+                        @error('price') <small class="text-danger">{{ $message }}</small> @enderror
+                        <input type="number" name="price" placeholder="Valor" class="form-control mb-3"
+                            wire:model.defer="price" step="0.01" max="999.99" min="0">
+
+                        @error('amount') <small class="text-danger">{{ $message }}</small> @enderror
+                        <input type="number" name="amount" placeholder="Quantidade" class="form-control mb-3"
+                            wire:model.defer="amount" step="1" max="999" min="0">
+
+                        @error('type') <small class="text-danger">{{ $message }}</small> @enderror
+                        <select name="type" class="form-control mb-3" wire:model.defer="type">
+                            <option value="">Selecione um Tipo</option>
+                            <option value="drink">Bebida</option>
+                            <option value="savory">Salgado</option>
+                            <option value="lunch">Almoço</option>
+                            <option value="snacks">Lanches</option>
+                            <option value="natural">Natural</option>
+                        </select>
+
+                        <button type="button" class="btn btn-success w-100 fw-semibold"
+                            wire:click="updateProduct">Atualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="modal-add" class="modal fade" tabindex="-1" role="dialog" wire:ignore.self>
         <div class="modal-dialog" role="document">
@@ -105,8 +146,8 @@
                 <div class="modal-body">
                     <div>
                         @error('name') <small class="text-danger">{{ $message }}</small> @enderror
-                        <input type="text" name="name" placeholder="Nome" class="form-control mb-3"
-                            wire:model="name" maxlength="100">
+                        <input type="text" name="name" placeholder="Nome" class="form-control mb-3" wire:model="name"
+                            maxlength="100">
 
                         @error('describe') <small class="text-danger">{{ $message }}</small> @enderror
                         <input type="text" name="describe" placeholder="Descrição" class="form-control mb-3"

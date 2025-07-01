@@ -60,7 +60,7 @@
                                                     Editar
                                                 </button>
                                                 <button class="btn btn-outline-danger btn-sm rounded-2 px-3"
-                                                    wire:click="deleteUser({{ $user->id }})">
+                                                    onclick="if (confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) @this.call('deleteUser', {{ $user->id }})">
                                                     Excluir
                                                 </button>
                                             </div>
@@ -88,11 +88,13 @@
                 <div class="modal-body bg-light">
                     <div class="mb-3">
                         <label class="form-label">Nome</label>
-                        <input wire:model="editName" type="text" class="form-control rounded-2" required maxlength="100">
+                        <input wire:model="editName" type="text" class="form-control rounded-2" required
+                            maxlength="100">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Telefone</label>
-                        <input wire:model="editTelefone" type="text" class="form-control rounded-2 telefone" maxlength="15">
+                        <input wire:model="editTelefone" type="text" class="form-control rounded-2 telefone"
+                            maxlength="15">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tipo</label>
