@@ -13,7 +13,6 @@ class FinanceiroController extends Controller
 {
     public function index()
     {
-        // Definir locale para português
         Carbon::setLocale('pt_BR');
 
         // Total de vendas
@@ -55,7 +54,6 @@ class FinanceiroController extends Controller
                 ];
             });
 
-        // Calcular porcentagem de participação no ranking
         $totalQuantity = $ranking->sum('quantity');
         $ranking->transform(function ($item) use ($totalQuantity) {
             $item['percentage'] = $totalQuantity > 0
@@ -64,7 +62,7 @@ class FinanceiroController extends Controller
             return $item;
         });
 
-        // Receita agrupada por mês dos últimos 6 meses
+        // Receita agrupada por mês
         $monthlyRevenue = Cart::select(
                 DB::raw('MONTH(created_at) as month'),
                 DB::raw('YEAR(created_at) as year'),
@@ -78,9 +76,7 @@ class FinanceiroController extends Controller
             ->get()
             ->keyBy(fn ($item) => $item->month . '-' . $item->year);
 
-        // Data base fixa para garantir meses corretos
         $referenceDate = now()->startOfMonth();
-
         $months = [];
         $revenues = [];
 
@@ -92,7 +88,9 @@ class FinanceiroController extends Controller
             $revenues[] = $monthlyRevenue[$key]->total ?? 0;
         }
 
-        // Envia os dados para a view (sem $sales)
+        // ✅ Total de itens vendidos (somatório geral)
+        $totalItemsSold = Cart::sum('total');
+
         return view('financeiro', compact(
             'totalSalesValue',
             'dailySales',
@@ -101,7 +99,8 @@ class FinanceiroController extends Controller
             'totalMonthlyValue',
             'ranking',
             'months',
-            'revenues'
+            'revenues',
+            'totalItemsSold'
         ));
     }
 }
