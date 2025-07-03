@@ -15,11 +15,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 }]
             },
             options: {
-                responsive: true, 
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true 
+                        beginAtZero: true
                     }
+                },
+                layout: {
+                    padding: 8
                 }
             }
         });

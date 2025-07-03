@@ -19,6 +19,8 @@ class TableStudentsGuard extends Component
     public $editUserId;
     public $editName;
     public $editTelefone;
+    public $editEmail;
+    public $editCPF;
     protected $paginationTheme = 'bootstrap';
 
     public function mount()
@@ -80,6 +82,8 @@ class TableStudentsGuard extends Component
         $this->editUserId = $user->id;
         $this->editName = $user->name;
         $this->editTelefone = $user->telefone;
+        $this->editEmail = $user->email;
+        $this->editCPF = $user->cpf;
 
         $this->dispatch('showEditModal');
     }
@@ -89,22 +93,27 @@ class TableStudentsGuard extends Component
         $this->validate([
             'editName' => 'required|max:254',
             'editTelefone' => 'nullable|string|max:15',
+            'editEmail' => 'required|email|max:70',
+            'editCPF' => 'nullable|string|max:14',
         ]);
 
         $user = User::find($this->editUserId);
 
         if ($user) {
             $user->update([
-                'name' => $this->editName,
+                'name'     => $this->editName,
                 'telefone' => $this->editTelefone,
+                'email'    => $this->editEmail,
+                'cpf'      => $this->editCPF,
             ]);
 
             session()->flash('success', 'Usuário atualizado com sucesso!');
 
-            $this->reset(['editUserId', 'editName', 'editTelefone']);
-            $this->dispatch('hideEditModal');
-        }
+            // Emite o evento correto para o JS
+            $this->dispatch('closeModal');
 
-        return redirect()->route('painel.usuarios')->with('success', 'Usuário atualizado com sucesso!');
+            // Limpa os campos do modal
+            $this->reset(['editUserId', 'editName', 'editTelefone', 'editEmail', 'editCPF']);
+        }
     }
 }

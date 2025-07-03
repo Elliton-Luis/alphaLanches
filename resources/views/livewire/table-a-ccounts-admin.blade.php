@@ -1,4 +1,22 @@
 <div class="m-3">
+    @script
+    <script>
+        window.addEventListener('closeModal', () => {
+            const modals = ['modal-edit-user'];
+
+            modals.forEach(id => {
+                const modalEl = document.getElementById(id);
+                const instance = bootstrap.Modal.getInstance(modalEl);
+                if (instance) instance.hide();
+            });
+
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style = '';
+        });
+    </script>
+    @endscript
+
     <div class="accordion" id="accordionTableAccounts">
         <div class="accordion-item border-0 shadow-sm rounded-3 bg-white">
             <h2 class="accordion-header">
@@ -66,7 +84,8 @@
                                         <td>
                                             <div class="d-flex justify-content-center gap-2">
                                                 <button class="btn btn-outline-primary btn-sm rounded-2 px-3"
-                                                    wire:click="editUser({{ $user->id }})">
+                                                    wire:click="editUser({{ $user->id }})" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-edit-user">
                                                     Editar
                                                 </button>
                                                 <button class="btn btn-outline-danger btn-sm rounded-2 px-3"
@@ -87,8 +106,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true"
-        wire:ignore.self>
+    <div id="modal-edit-user" class="modal fade" tabindex="-1" role="dialog" wire:ignore.self>
         <div class="modal-dialog">
             <form wire:submit.prevent="updateUser" class="modal-content border-0 rounded-3 shadow-sm">
                 <div class="modal-header bg-body-tertiary border-0">
@@ -127,49 +145,23 @@
 </div>
 
 @push('scripts')
-    <script>
-        function formatTelefone(value) {
-            value = value.replace(/\D/g, '');
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
+<script>
+  function applyMasks() {
+    document.querySelectorAll('.telefone').forEach(input => {
+      Inputmask({
+        mask: '(99) 99999-9999',
+        clearIncomplete: true,
+        showMaskOnHover: false,
+        showMaskOnFocus: true,
+      }).mask(input);
+    });
+  }
 
-            if (value.length === 0) return '';
+  document.addEventListener('DOMContentLoaded', applyMasks);
 
-            if (value.length <= 2) {
-                return `(${value}`;
-            } else if (value.length <= 7) {
-                return `(${value.slice(0, 2)}) ${value.slice(2)}`;
-            } else if (value.length <= 11) {
-                return `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
-            } else {
-                return `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7, 11)}`;
-            }
-        }
-
-        function applyMasks() {
-            const telefoneInputs = document.querySelectorAll('.telefone');
-
-            telefoneInputs.forEach(input => {
-                input.value = formatTelefone(input.value);
-
-                input.addEventListener('input', function () {
-                    const pos = this.selectionStart;
-                    const oldLength = this.value.length;
-
-                    const formatted = formatTelefone(this.value);
-                    this.value = formatted;
-
-                    const newLength = this.value.length;
-                    const diff = newLength - oldLength;
-                    this.setSelectionRange(pos + diff, pos + diff);
-                });
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', applyMasks);
-
-        document.addEventListener('livewire:load', function () {
-            Livewire.hook('message.processed', () => {
-                applyMasks();
-            });
-        });
-    </script>
+  document.addEventListener('livewire:load', () => {
+    Livewire.hook('message.processed', applyMasks);
+  });
+</script>
 @endpush

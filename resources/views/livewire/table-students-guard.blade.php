@@ -1,4 +1,21 @@
 <div class="m-3">
+    @script
+    <script>
+        window.addEventListener('closeModal', () => {
+            const modals = ['modal-edit-student'];
+
+            modals.forEach(id => {
+                const modalEl = document.getElementById(id);
+                const instance = bootstrap.Modal.getInstance(modalEl);
+                if (instance) instance.hide();
+            });
+
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style = '';
+        });
+    </script>
+    @endscript
     <div class="accordion" id="accordionTableAccounts">
         <div class="accordion-item border-0 shadow-sm rounded-3 bg-white">
             <h2 class="accordion-header">
@@ -41,6 +58,8 @@
                                 <tr class="text-center">
                                     <th>Nome</th>
                                     <th>Telefone</th>
+                                    <th>Email</th>
+                                    <th>CPF</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -52,11 +71,18 @@
                                         <td>
                                             {{ $user->telefone ?? 'Sem telefone' }}
                                         </td>
+                                        <td>
+                                            {{ $user->email ?? 'Sem Email' }}
+                                        </td>
+                                        <td>
+                                            {{ $user->cpf ?? 'Sem CPF' }}
+                                        </td>
 
                                         <td>
                                             <div class="d-flex justify-content-center gap-2">
                                                 <button class="btn btn-outline-primary btn-sm rounded-2 px-3"
-                                                    wire:click="editUser({{ $user->id }})">
+                                                    wire:click="editUser({{ $user->id }})" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-edit-student">
                                                     Editar
                                                 </button>
                                                 <button class="btn btn-outline-danger btn-sm rounded-2 px-3"
@@ -77,7 +103,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true"
+    <div class="modal fade" id="modal-edit-student" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true"
         wire:ignore.self>
         <div class="modal-dialog">
             <form wire:submit.prevent="updateUser" class="modal-content border-0 rounded-3 shadow-sm">
@@ -97,14 +123,14 @@
                             maxlength="15">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Tipo</label>
-                        <select wire:model="editType" class="form-select rounded-2" required>
-                            <option value="">Selecione</option>
-                            <option value="admin">Administrador</option>
-                            <option value="func">Funcionário</option>
-                            <option value="guard">Responsável</option>
-                            <option value="student">Aluno</option>
-                        </select>
+                        <label class="form-label">Email</label>
+                        <input wire:model="editEmail" type="email" class="form-control rounded-2 telefone"
+                            maxlength="15">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">CPF</label>
+                        <input wire:model="editCPF" type="text" class="form-control rounded-2 telefone"
+                            maxlength="15">
                     </div>
                 </div>
                 <div class="modal-footer bg-body-tertiary border-0">
