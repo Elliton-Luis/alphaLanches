@@ -16,6 +16,55 @@
         });
     </script>
     @endscript
+
+    <style>
+        @media (max-width: 767.98px) {
+            .input-group input.form-control {
+                font-size: 1.1rem;
+            }
+
+            .lista-alunos-pequena {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid #dee2e6;
+                padding: 0.5rem 0;
+            }
+
+            .lista-alunos-pequena .nome-aluno {
+                flex-grow: 1;
+                text-align: center;
+                overflow-wrap: break-word;
+                margin-right: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                color: #000; /* preto */
+                background: transparent;
+                border: 1px solid #ced4da; /* outline clara */
+                padding: 0.25rem 0.5rem;
+                border-radius: 0.25rem;
+                font-size: 1rem;
+                transition: background-color 0.2s ease;
+            }
+
+            .lista-alunos-pequena .nome-aluno:hover,
+            .lista-alunos-pequena .nome-aluno:focus {
+                background-color: #e9ecef; /* leve hover */
+                outline: none;
+            }
+
+            .modal-footer .btn-outline-danger {
+                display: inline-block;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .modal-footer .btn-outline-danger {
+                display: none !important;
+            }
+        }
+    </style>
+
     <div class="accordion" id="accordionTableAccounts">
         <div class="accordion-item border-0 shadow-sm rounded-3 bg-white">
             <h2 class="accordion-header">
@@ -42,20 +91,19 @@
                         </div>
                     @endif
 
-                    <div class="table-responsive mt-3 bg-white p-3 rounded-3 shadow-sm">
+                    <div class="input-group mb-3 gap-2">
+                        <input class="form-control border-primary rounded-2 shadow-sm" type="text"
+                            wire:model.lazy="filterName" placeholder="Nome" maxlength="100">
 
-                        <div class="input-group mb-3 gap-2">
-                            <input class="form-control border-primary rounded-2 shadow-sm" type="text"
-                                wire:model.lazy="filterName" placeholder="Nome" maxlength="100">
+                        <input class="form-control border-primary rounded-2 shadow-sm telefone" type="text"
+                            wire:model.lazy="filterTelefone" placeholder="Telefone" maxlength="15">
+                    </div>
 
-                            <input class="form-control border-primary rounded-2 shadow-sm telefone" type="text"
-                                wire:model.lazy="filterTelefone" placeholder="Telefone" maxlength="15">
-                        </div>
-
-                        <!-- Tabela -->
+                    <!-- Tabela para md+ -->
+                    <div class="table-responsive d-none d-md-block mt-3 bg-white p-3 rounded-3 shadow-sm">
                         <table class="table table-hover align-middle mb-0">
-                            <thead class="table-primary">
-                                <tr class="text-center">
+                            <thead class="table-primary text-center">
+                                <tr>
                                     <th>Nome</th>
                                     <th>Telefone</th>
                                     <th>Email</th>
@@ -63,21 +111,13 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-center">
                                 @foreach ($users as $user)
-                                    <tr class="text-center">
-                                        <td class="fw-semibold">{{ $user->name }}</td>
-
-                                        <td>
-                                            {{ $user->telefone ?? 'Sem telefone' }}
-                                        </td>
-                                        <td>
-                                            {{ $user->email ?? 'Sem Email' }}
-                                        </td>
-                                        <td>
-                                            {{ $user->cpf ?? 'Sem CPF' }}
-                                        </td>
-
+                                    <tr>
+                                        <td class="fw-semibold text-start">{{ $user->name }}</td>
+                                        <td>{{ $user->telefone ?? 'Sem telefone' }}</td>
+                                        <td>{{ $user->email ?? 'Sem Email' }}</td>
+                                        <td>{{ $user->cpf ?? 'Sem CPF' }}</td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-2">
                                                 <button class="btn btn-outline-primary btn-sm rounded-2 px-3"
@@ -86,7 +126,7 @@
                                                     Editar
                                                 </button>
                                                 <button class="btn btn-outline-danger btn-sm rounded-2 px-3"
-                                                    onclick="if (confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) @this.call('deleteUser', {{ $user->id }})">
+                                                    onclick="if(confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) @this.call('deleteUser', {{ $user->id }})">
                                                     Excluir
                                                 </button>
                                             </div>
@@ -95,9 +135,25 @@
                                 @endforeach
                             </tbody>
                         </table>
-
                         {{ $users->links('vendor.livewire.bootstrap') }}
                     </div>
+
+                    <!-- Lista simplificada para sm- -->
+                    <div class="d-block d-md-none mt-3 bg-white p-3 rounded-3 shadow-sm">
+                        @foreach ($users as $user)
+                            <div class="lista-alunos-pequena">
+                                <button class="nome-aluno"
+                                    wire:click="editUser({{ $user->id }})" data-bs-toggle="modal"
+                                    data-bs-target="#modal-edit-student"
+                                    type="button"
+                                    >
+                                    {{ $user->name }}
+                                </button>
+                            </div>
+                        @endforeach
+                        {{ $users->links('vendor.livewire.bootstrap') }}
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -133,8 +189,19 @@
                             maxlength="15">
                     </div>
                 </div>
-                <div class="modal-footer bg-body-tertiary border-0">
+                <div class="modal-footer bg-body-tertiary border-0 d-flex justify-content-between">
                     <button type="button" class="btn btn-secondary rounded-2" data-bs-dismiss="modal">Cancelar</button>
+
+                    <!-- Botão excluir só visível em telas pequenas -->
+                    <button
+                        type="button"
+                        class="btn btn-outline-danger rounded-2 d-md-none"
+                        onclick="if(confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) @this.call('deleteUser', {{ $selectedUserId ?? 'null' }})"
+                        data-bs-dismiss="modal"
+                    >
+                        Excluir
+                    </button>
+
                     <button type="submit" class="btn btn-primary rounded-2 px-4">Salvar</button>
                 </div>
             </form>
@@ -143,49 +210,49 @@
 </div>
 
 @push('scripts')
-    <script>
-        function formatTelefone(value) {
-            value = value.replace(/\D/g, '');
+<script>
+    function formatTelefone(value) {
+        value = value.replace(/\D/g, '');
 
-            if (value.length === 0) return '';
+        if (value.length === 0) return '';
 
-            if (value.length <= 2) {
-                return `(${value}`;
-            } else if (value.length <= 7) {
-                return `(${value.slice(0, 2)}) ${value.slice(2)}`;
-            } else if (value.length <= 11) {
-                return `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
-            } else {
-                return `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7, 11)}`;
-            }
+        if (value.length <= 2) {
+            return `(${value}`;
+        } else if (value.length <= 7) {
+            return `(${value.slice(0, 2)}) ${value.slice(2)}`;
+        } else if (value.length <= 11) {
+            return `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+        } else {
+            return `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7, 11)}`;
         }
+    }
 
-        function applyMasks() {
-            const telefoneInputs = document.querySelectorAll('.telefone');
+    function applyMasks() {
+        const telefoneInputs = document.querySelectorAll('.telefone');
 
-            telefoneInputs.forEach(input => {
-                input.value = formatTelefone(input.value);
+        telefoneInputs.forEach(input => {
+            input.value = formatTelefone(input.value);
 
-                input.addEventListener('input', function () {
-                    const pos = this.selectionStart;
-                    const oldLength = this.value.length;
+            input.addEventListener('input', function () {
+                const pos = this.selectionStart;
+                const oldLength = this.value.length;
 
-                    const formatted = formatTelefone(this.value);
-                    this.value = formatted;
+                const formatted = formatTelefone(this.value);
+                this.value = formatted;
 
-                    const newLength = this.value.length;
-                    const diff = newLength - oldLength;
-                    this.setSelectionRange(pos + diff, pos + diff);
-                });
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', applyMasks);
-
-        document.addEventListener('livewire:load', function () {
-            Livewire.hook('message.processed', () => {
-                applyMasks();
+                const newLength = this.value.length;
+                const diff = newLength - oldLength;
+                this.setSelectionRange(pos + diff, pos + diff);
             });
         });
-    </script>
+    }
+
+    document.addEventListener('DOMContentLoaded', applyMasks);
+
+    document.addEventListener('livewire:load', function () {
+        Livewire.hook('message.processed', () => {
+            applyMasks();
+        });
+    });
+</script>
 @endpush

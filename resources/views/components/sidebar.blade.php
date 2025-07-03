@@ -91,13 +91,13 @@
 
     <hr>
 
-    <div class="d-flex align-items-center">
+    <div class="d-flex justify-content-center">
         <strong style="font-size: 19px; color: white; margin-right: 15px;">
             {{ auth()->user()->name ?? 'Usuário' }}
         </strong>
         <form id="logout-form" action="{{ route('login.logout') }}" method="POST" class="m-0 p-0">
             @csrf
-            <button type="submit" class="btn btn-outline-light btn-sm" style="font-weight: 600;">
+            <button type="submit" class="btn btn-outline-light btn-sm bi bi-box-arrow-in-right" style="font-weight: 600;">
                 Sair
             </button>
         </form>
