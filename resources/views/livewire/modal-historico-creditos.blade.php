@@ -4,7 +4,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
     </div>
 
-    <div class="modal-body">
+    <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
         @if ($creditsLogs->isEmpty())
             <div class="alert alert-warning">Nenhum registro encontrado.</div>
         @else
@@ -35,7 +35,7 @@
                 </tbody>
             </table>
 
-            <div class="mt-3 d-flex justify-content-center">
+            <div class="d-flex justify-content-center mt-4">
                 {{ $creditsLogs->links() }}
             </div>
         @endif

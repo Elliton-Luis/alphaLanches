@@ -13,14 +13,6 @@ class ModalHistoricoCreditos extends Component
     public $userId;
     public $nome;
 
-    protected $listeners = ['abrirHistorico'];
-    public function abrirHistorico($userId, $nome)
-    {
-        $this->userId = $userId;
-        $this->nome = $nome;
-        $this->resetPage();
-    }
-
     public function render()
     {
         $query = CreditLog::query();
