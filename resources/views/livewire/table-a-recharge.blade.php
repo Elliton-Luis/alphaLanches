@@ -25,8 +25,8 @@
                             data-bs-target="#modal-edit-negativo{{$loop->index}}">
                             Retirar
                         </button>
-                        <button class="btn btn-sm btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#modal-historico{{$loop->index}}">
+                        <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modalHistorico"
+                            onclick="Livewire.emit('abrirHistorico', {{ $user->id }}, '{{ addslashes($user->name) }}')">
                             Histórico
                         </button>
                     </td>
@@ -43,12 +43,19 @@
                             :saldo-atual="$user->credit" />
                     </div>
                 </div>
-                <div wire:ignore id="modal-historico{{$loop->index}}" class="modal fade" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <livewire:modal-historico-creditos :user-id="$user->id" :nome="$user->name" />
-                    </div>
-                </div>
             @endforeach
         </tbody>
     </table>
+
+    <div wire:ignore.self class="modal fade" id="modalHistorico" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <livewire:modal-historico-creditos />
+        </div>
+    </div>
 </div>
+
+<script>
+    function abrirHistorico(userId, nome) {
+        Livewire.emit('abrirHistorico', userId, nome);
+    }
+</script>
