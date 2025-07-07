@@ -9,17 +9,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    @error('valor')
-                        <div class="text-danger fw-bold mt-2">{{ $message }}</div>
-                    @enderror
-
-                    @error('user')
-                        <div class="text-danger fw-bold mt-2">{{ $message }}</div>
-                    @enderror
-
                     <div class="card p-4 shadow-lg border-0">
                         <h5 class="text-secondary">Saldo Atual:
                             <span class="fw-bold text-danger">R$ {{ number_format($saldoAtual, 2, ',', '.') }}</span>
+                            @error('valor')
+                                <div class="text-danger fw-bold mt-2">{{ $message }}</div>
+                            @enderror
                         </h5>
 
                         <label class="form-label mt-3 fw-bold">Valor da Retirada:</label>
