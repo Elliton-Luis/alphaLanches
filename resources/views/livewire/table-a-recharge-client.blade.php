@@ -1,6 +1,11 @@
 <div class="container mt-4">
     <h2 class="text-center mb-5">Recarga de Créditos</h2>
 
+    <div class="d-flex flex-wrap gap-3 mb-4 justify-content">
+        <input type="text" class="form-control border-primary shadow-sm" placeholder="Pesquisar por nome..."
+            wire:model.lazy="filterName" style="max-width: 250px;" maxlength="100">
+    </div>
+
     <table class="table table-striped table-hover">
         <thead class="table-dark">
             <tr class="text-center">

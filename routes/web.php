@@ -75,8 +75,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(['auth'])->name('financeiro');
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(['auth'])->name('painel.usuarios');
-Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(VerifyAuthAdmin::class)->name('financeiro');
-Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(VerifyAuthAdmin::class)->name('painel.usuarios');
 Route::get('/painelStudents', [CreateStudentController::class, 'showPainelStudents'])->middleware(['auth'])->name('painel.students');
 Route::get('/historico', [HistoricoController::class, 'index'])->middleware(['auth'])->name('historico.index');
 
@@ -86,7 +84,6 @@ Route::middleware(['auth'])->prefix('pdv')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-
     Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
     Route::get('/historico/{id}', [HistoricoController::class, 'show'])->name('historico.show');
     Route::get('/meu-historico', [HistoricoController::class, 'meuHistorico'])->name('historico.meu');

@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class TableARechargeClient extends Component
@@ -20,14 +20,32 @@ class TableARechargeClient extends Component
     }
     public function render()
     {
-        $query = Auth::User()->alunos();
+        $user = Auth::user();
 
+        $users = $user->alunos()->get();
+        $users->prepend($user);
+
+        // Filtrar manualmente na Collection
         if ($this->filterName) {
-            $query->where('users.name', 'like', '%' . $this->filterName . '%');
+            $users = $users->filter(function ($item) {
+                return str_contains(strtolower($item->name), strtolower($this->filterName));
+            })->values(); // reindexar a coleção
         }
 
-        $users = $query->paginate(5);
+        // Paginação manual
+        $perPage = 5;
+        $page = request()->get('page', 1);
 
-        return view('livewire.table-a-recharge-client', ['users' => $users]);
+        $paginated = new LengthAwarePaginator(
+            $users->forPage($page, $perPage),
+            $users->count(),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('livewire.table-a-recharge-client', [
+            'users' => $paginated,
+        ]);
     }
 }
