@@ -18,6 +18,11 @@ class TableARechargeClient extends Component
     {
         $this->filterName = null;
     }
+    public function resetFilters()
+    {
+        $this->filterName = null;
+        $this->resetPage();
+    }
     public function render()
     {
         $user = Auth::user();
