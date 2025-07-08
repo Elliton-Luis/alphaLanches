@@ -78,6 +78,11 @@
                     <i class="bi bi-calendar-event fs-5 me-2"></i> Agendamento
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="/recargaCliente" class="nav-link text-white btn btn-secondary text-start">
+                    <i class="bi bi-wallet fs-5 me-2"></i> Recarga
+                </a>
+            </li>
         @endif
 
         @if (auth()->user()->type === 'student')
@@ -97,7 +102,8 @@
         </strong>
         <form id="logout-form" action="{{ route('login.logout') }}" method="POST" class="m-0 p-0">
             @csrf
-            <button type="submit" class="btn btn-outline-light btn-sm bi bi-box-arrow-in-right" style="font-weight: 600;">
+            <button type="submit" class="btn btn-outline-light btn-sm bi bi-box-arrow-in-right"
+                style="font-weight: 600;">
                 Sair
             </button>
         </form>

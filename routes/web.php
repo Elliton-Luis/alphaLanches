@@ -14,6 +14,7 @@ use App\Http\Controllers\RecargaController;
 use App\Http\Controllers\GuardRequestController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\PDVController;
+use App\Http\Controllers\RecargaClienteController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Middleware\VerifyAuthAdmin;
@@ -57,7 +58,10 @@ Route::middleware(['auth'])->prefix('estoque')->group(function () {
 
 Route::middleware(['auth'])->prefix('recarga')->group(function () {
     Route::get('/', [RecargaController::class, 'index'])->name('recarga.index');
-    Route::post('/process', [RecargaController::class, 'process'])->name('recarga.process');
+});
+
+Route::middleware(['auth'])->prefix('recargaCliente')->group(function () {
+    Route::get('/', [RecargaClienteController::class, 'index'])->name('recargaCliente.index');
 });
 
 Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
