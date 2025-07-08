@@ -73,7 +73,11 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/agendamento/{id}/cancelar', [AgendamentoController::class, 'cancelar'])->name('agendamento.cancelar');
 });
 
-Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(VerifyAuthAdmin::class)->name('financeiro');
+Route::middleware(VerifyAuthAdmin::class)->prefix('financeiro')->group(function () {
+    Route::get('/', [FinanceiroController::class, 'index'])->name('financeiro');
+    Route::get('/relatorio', [FinanceiroController::class, 'exportarPDF'])->name('relatorio');
+});
+
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(VerifyAuthAdmin::class)->name('painel.usuarios');
 Route::get('/painelStudents', [CreateStudentController::class, 'showPainelStudents'])->middleware(['auth'])->name('painel.students');
 

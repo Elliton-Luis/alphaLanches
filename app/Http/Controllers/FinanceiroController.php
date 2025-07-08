@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Sale;
 use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class FinanceiroController extends Controller
 {
@@ -112,5 +112,96 @@ class FinanceiroController extends Controller
             'paymentMethods',
             'ranking'
         ));
+    }
+
+    public function exportarPDF()
+    {
+        $user = auth()->user();
+        $inicio = Carbon::today()->subDays(6);
+        $fim = Carbon::today()->endOfDay();
+
+        // Buscando as vendas finalizadas no período
+        $vendas = Cart::with('items.product')
+            ->where('status', 'completed') // ajuste conforme seu sistema
+            ->whereBetween('created_at', [$inicio, $fim])
+            ->get();
+
+        if ($vendas->isEmpty()) {
+            return back()->with('error', 'Não há vendas nos últimos 7 dias para gerar o relatório.');
+        }
+
+        $totalVendas = 0;
+        $formasPagamento = [];
+        $produtosVendidos = [];
+
+        foreach ($vendas as $venda) {
+            $forma = $venda->paymentMethod ?? 'Desconhecida'; // ajuste se necessário
+            $vendaTotal = 0;
+
+            foreach ($venda->items as $item) {
+                $quantidade = $item->quantity;
+                $produto = $item->product;
+                $preco = $produto->price;
+
+                // Soma ao total geral
+                $vendaTotal += $quantidade * $preco;
+
+                if (!isset($produtosVendidos[$produto->id])) {
+                    $produtosVendidos[$produto->id] = [
+                        'nome' => $produto->name,
+                        'quantidade' => 0,
+                        'preco_unitario' => $preco,
+                        'total' => 0,
+                    ];
+                }
+
+                $produtosVendidos[$produto->id]['quantidade'] += $quantidade;
+                $produtosVendidos[$produto->id]['total'] += $quantidade * $preco;
+            }
+
+            $totalVendas += $vendaTotal;
+
+            // Agrupar por forma de pagamento
+            if (!isset($formasPagamento[$forma])) {
+                $formasPagamento[$forma] = 0;
+            }
+            $formasPagamento[$forma] += $vendaTotal;
+        }
+
+        $numVendas = $vendas->count();
+        $ticketMedio = $numVendas > 0 ? $totalVendas / $numVendas : 0;
+
+        // Processar formas de pagamento (percentual)
+        $formasPagamentoFormatadas = collect($formasPagamento)->map(function ($valor) use ($totalVendas) {
+            $percentual = $totalVendas > 0 ? ($valor / $totalVendas) * 100 : 0;
+            return [
+                'total' => $valor,
+                'percentual' => $percentual,
+            ];
+        });
+
+        $formaMaisUsada = collect($formasPagamento)->sortDesc()->keys()->first() ?? 'Nenhuma';
+
+        $maisVendidos = collect($produtosVendidos)
+            ->sortByDesc('quantidade')
+            ->take(10);
+
+        $produtoMaisVendido = $maisVendidos->first()['nome'] ?? 'Nenhum';
+
+        $data = [
+            'usuario' => $user->name,
+            'inicio' => $inicio->format('d/m/Y'),
+            'fim' => $fim->format('d/m/Y'),
+            'totalVendas' => $totalVendas,
+            'numVendas' => $numVendas,
+            'ticketMedio' => $ticketMedio,
+            'formaMaisUsada' => $formaMaisUsada,
+            'produtoMaisVendido' => $produtoMaisVendido,
+            'produtos' => $maisVendidos,
+            'formasPagamento' => $formasPagamentoFormatadas,
+        ];
+
+        $pdf = Pdf::loadView('relatorios', $data);
+        return $pdf->download('relatorio.pdf');
     }
 }
