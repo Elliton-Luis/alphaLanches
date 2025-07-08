@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/painelCompras" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
+                            <a href="/historico" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
                                 <i class="bi bi-basket3 me-2"></i> Histórico
                             </a>
                         </li>
@@ -47,7 +47,7 @@
 
                     @if (in_array(auth()->user()->type, ['guard']))
                         <li>
-                            <a href="/painelCompras" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
+                            <a href="/historico" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
                                 <i class="bi bi-basket3 me-2"></i> Histórico
                             </a>
                         </li>
@@ -85,7 +85,7 @@
 
                     @if (auth()->user()->type === 'student')
                         <li>
-                            <a href="/PainelHistorico" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
+                            <a href="/historico" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
                                 <i class="bi bi-basket3 me-2"></i> Histórico
                             </a>
                         </li>

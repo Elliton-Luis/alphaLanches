@@ -15,7 +15,7 @@ use App\Http\Controllers\GuardRequestController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\PDVController;
 use App\Http\Controllers\AgendamentoController;
-use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\HistoricoController;
 use App\Http\Middleware\VerifyAuthAdmin;
 
 Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware('auth');
@@ -74,9 +74,21 @@ Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'
 Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(VerifyAuthAdmin::class)->name('financeiro');
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(VerifyAuthAdmin::class)->name('painel.usuarios');
 Route::get('/painelStudents', [CreateStudentController::class, 'showPainelStudents'])->middleware(['auth'])->name('painel.students');
-Route::get('/HistoricoDeCompras', [HistoryController::class, 'showHistory'])->middleware(['auth'])->name('index.historic');
+Route::get('/historico', [HistoricoController::class, 'index'])->middleware(['auth'])->name('historico.index');
 
 Route::middleware(['auth'])->prefix('pdv')->group(function () {
     Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
     Route::post('/repor', [PDVController::class, 'reporEstoque'])->name('repor');
+});
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
+    Route::get('/historico/{id}', [HistoricoController::class, 'show'])->name('historico.show');
+    Route::get('/meu-historico', [HistoricoController::class, 'meuHistorico'])->name('historico.meu');
+
+    Route::middleware('admin')->group(function () {
+        Route::get('/relatorio-vendas', [HistoricoController::class, 'relatorio'])->name('historico.relatorio');
+    });
+
 });
