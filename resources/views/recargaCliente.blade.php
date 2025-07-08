@@ -9,5 +9,5 @@
 </head>
 
 @section('content')
-    <livewire:table-a-recharge/>
+    <livewire:table-a-recharge-client/>
 @endsection

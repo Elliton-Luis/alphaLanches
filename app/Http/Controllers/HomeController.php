@@ -38,7 +38,7 @@ class HomeController extends Controller
             return [
                 ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
                 ['route' => 'painelStudents', 'icon' => 'people', 'label' => 'Alunos'],
-                ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
+                ['route' => 'recargaCliente', 'icon' => 'wallet', 'label' => 'Recarga'],
                 ['route' => 'agendamento', 'icon' => 'calendar-event', 'label' => 'Agendamento'],
                 ['route' => 'historico', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                 //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
