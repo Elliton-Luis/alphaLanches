@@ -138,8 +138,6 @@
     </div>
   </div>
 
-  {{-- Ranking de Produtos comentado --}}
-  {{--
   <div class="card shadow-sm border-0 my-4">
     <div class="card-body">
       <h5 class="fw-bold text-center mb-3">
@@ -161,7 +159,7 @@
               @endif
               {{ $item['name'] }}
             </span>
-            <span class="badge bg-success rounded-pill">{{ $item['quantity'] }} vendas</span>
+            <span class="badge bg-success rounded-pill">{{ $item['quantity'] }} unidades</span>
           </div>
           <div class="progress mt-2">
             <div class="progress-bar bg-success" role="progressbar"
@@ -176,7 +174,7 @@
       </ul>
     </div>
   </div>
-  --}}
+  
 </div>
 
 <!-- Scripts -->
