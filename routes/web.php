@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
 });
 
-Route::middleware(['auth'])->prefix('estoque')->group(function () {
+Route::prefix('estoque')->middleware(VerifyAuthAdmin::class)->group(function () {
     Route::get('/', [EstoqueController::class, 'index'])->name('estoque.index');
     Route::post('/update-stock/{id}', [EstoqueController::class, 'updateStock'])->name('estoque.updateStock');
     Route::post('/update-value/{id}', [EstoqueController::class, 'updateValue'])->name('estoque.updateValue');
@@ -56,7 +56,7 @@ Route::middleware(['auth'])->prefix('estoque')->group(function () {
     Route::delete('/delete/{id}', [EstoqueController::class, 'destroy'])->name('estoque.destroy');
 });
 
-Route::middleware(['auth'])->prefix('recarga')->group(function () {
+Route::prefix('recarga')->middleware(VerifyAuthAdmin::class)->group(function () {
     Route::get('/', [RecargaController::class, 'index'])->name('recarga.index');
 });
 
@@ -73,12 +73,12 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/agendamento/{id}/cancelar', [AgendamentoController::class, 'cancelar'])->name('agendamento.cancelar');
 });
 
-Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(['auth'])->name('financeiro');
-Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(['auth'])->name('painel.usuarios');
+Route::get('/financeiro', [FinanceiroController::class, 'index'])->middleware(VerifyAuthAdmin::class)->name('financeiro');
+Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(VerifyAuthAdmin::class)->name('painel.usuarios');
 Route::get('/painelStudents', [CreateStudentController::class, 'showPainelStudents'])->middleware(['auth'])->name('painel.students');
 Route::get('/historico', [HistoricoController::class, 'index'])->middleware(['auth'])->name('historico.index');
 
-Route::middleware(['auth'])->prefix('pdv')->group(function () {
+Route::middleware(VerifyAuthAdmin::class)->prefix('pdv')->group(function () {
     Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
     Route::post('/repor', [PDVController::class, 'reporEstoque'])->name('repor');
 });
