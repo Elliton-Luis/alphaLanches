@@ -11,7 +11,7 @@ class VerifyAuthAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if(auth()->check()){
-            if(auth()->user()->type == 'admin'){
+            if(auth()->user()->type == 'admin' || auth()->user()->type == 'func'){
                 return $next($request);
             }
         }

@@ -1,16 +1,9 @@
 <div class="container mt-4">
     <h2 class="text-center mb-5">Recarga de Créditos</h2>
-    <div class="input-group mb-3 gap-2">
+
+    <div class="d-flex flex-wrap gap-3 mb-4 justify-content">
         <input type="text" class="form-control border-primary shadow-sm" placeholder="Pesquisar por nome..."
             wire:model.lazy="filterName" style="max-width: 250px;" maxlength="100">
-
-        <select class="form-select border-primary rounded-2 shadow-sm" wire:model.lazy="filterType">
-            <option value="">Tipo</option>
-            <option value="admin">Administrador</option>
-            <option value="func">Funcionário</option>
-            <option value="guard">Responsável</option>
-            <option value="student">Aluno</option>
-        </select>
 
         <button id="btn-reset" class="btn btn-danger" type="button" onclick="location.reload();">
             Resetar

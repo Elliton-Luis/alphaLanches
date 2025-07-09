@@ -64,12 +64,20 @@ class ModalEditRecarga extends Component
 
     public function realizarRecarga()
     {
-        $valorFloat = floatval($this->valor);
 
-        if ($valorFloat <= 0 || !$this->metodo) {
-            $this->addError('valor', 'Preencha valor e método.');
-            return;
-        }
+        $this->validate([
+            'valor' => 'required|numeric|gt:0|lte:999.99',
+            'metodo' => 'required|string|in:pix,cartao,boleto',
+        ], [
+            'valor.required' => 'Informe o valor.',
+            'valor.numeric' => 'O valor deve ser numérico.',
+            'valor.gt' => 'O valor deve ser maior que zero.',
+            'valor.lte' => 'O valor deve ser menor que R$ 999,99.',
+            'metodo.required' => 'Escolha um método.',
+            'metodo.in' => 'Método inválido. Escolha entre pix, cartão ou boleto.',
+        ]);
+
+        $valorFloat = floatval($this->valor);
 
         $user = User::find($this->userId);
 
@@ -91,5 +99,6 @@ class ModalEditRecarga extends Component
 
         $this->saldoAtual = $user->credit;
         $this->reset(['valor', 'metodo', 'mostrarInfo', 'mensagem']);
+        return redirect(request()->header('Referer'));
     }
 }

@@ -8,9 +8,26 @@ use App\Models\User;
 
 class TableARecharge extends Component
 {
+    use WithPagination;
+    public $filterName;
+    public $filterType;
+    public function resetFilters()
+    {
+        $this->filterType = null;
+        $this->filterName = null;
+        $this->resetPage();
+    }
     public function render()
     {
         $query = User::query();
+
+        if ($this->filterType) {
+            $query->where('type', $this->filterType);
+        }
+
+        if ($this->filterName) {
+            $query->where('name', 'like', "%" . $this->filterName . "%");
+        }
 
         $users = $query->paginate(10);
 

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\CreditLog;
 
 class ModalEditRecargaNegativo extends Component
 {
@@ -46,12 +47,16 @@ class ModalEditRecargaNegativo extends Component
 
     public function realizarRetirada()
     {
-        $valorFloat = floatval($this->valor);
+        $this->validate([
+            'valor' => 'required|numeric|gt:0|lte:999.99',
+        ], [
+            'valor.required' => 'Informe o valor.',
+            'valor.numeric' => 'O valor deve ser numérico.',
+            'valor.gt' => 'O valor deve ser maior que zero.',
+            'valor.lte' => 'O valor deve ser menor que R$ 999,99.',
+        ]);
 
-        if ($valorFloat <= 0) {
-            $this->addError('valor', 'Preencha o valor.');
-            return;
-        }
+        $valorFloat = floatval($this->valor);
 
         $user = User::find($this->userId);
 
@@ -67,8 +72,16 @@ class ModalEditRecargaNegativo extends Component
 
         $user->save();
 
-        $this->saldoAtual = $user->credit;
+        CreditLog::create([
+            'user_id' => $user->id,
+            'valor' => $valorFloat,
+            'tipo' => 'saida',
+            'metodo_pagamento' => $this->metodo,
+            'executado_por' => auth()->id(),
+        ]);
 
+        $this->saldoAtual = $user->credit;
         $this->reset(['valor', 'metodo', 'mostrarInfo']);
+        return redirect(request()->header('Referer'));
     }
 }
