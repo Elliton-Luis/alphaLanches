@@ -98,8 +98,12 @@
     <hr>
 
     <div class="d-flex justify-content-center">
+        @php
+            use Illuminate\Support\Str;
+        @endphp
+
         <strong style="font-size: 19px; color: white; margin-right: 15px;">
-            {{ auth()->user()->name ?? 'Usuário' }}
+            {{ Str::limit(auth()->user()->name ?? 'Usuário', 11) }}
         </strong>
         <form id="logout-form" action="{{ route('login.logout') }}" method="POST" class="m-0 p-0">
             @csrf
