@@ -13,6 +13,7 @@ use App\Http\Controllers\FinanceiroController;
 use App\Http\Controllers\RecargaController;
 use App\Http\Controllers\GuardRequestController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\HistoricoRecargaController;
 use App\Http\Controllers\PDVController;
 use App\Http\Controllers\RecargaClienteController;
 use App\Http\Controllers\AgendamentoController;
@@ -84,6 +85,10 @@ Route::get('/painelStudents', [CreateStudentController::class, 'showPainelStuden
 Route::middleware(VerifyAuthAdmin::class)->prefix('pdv')->group(function () {
     Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
     Route::post('/repor', [PDVController::class, 'reporEstoque'])->name('repor');
+});
+
+Route::middleware(VerifyAuthAdmin::class)->group(function () {
+    Route::get('/historicoRecarga', [HistoricoRecargaController::class, 'index'])->name('historicoRecarga.index');
 });
 
 Route::middleware('auth')->group(function () {
