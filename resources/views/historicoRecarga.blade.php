@@ -6,11 +6,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4>{{ Auth::user()->isAdmin() ? 'Histórico de Recargas' : 'Meu Histórico de Recargas' }}</h4>
+                        <h4>Histórico de Recargas</h4>
                     </div>
 
                     <div class="card-body">
-                        <form method="GET" action="{{ route('historico.index') }}" class="mb-4">
+                        <form method="GET" action="{{ route('historicoRecarga.index') }}" class="mb-4">
                             <div class="row">
                                 <div class="col-md-3">
                                     <label for="data_inicio">Data Início</label>
@@ -41,43 +41,38 @@
                         </form>
 
                         <!-- Tabela de vendas -->
-                        @if($vendas->count() > 0)
+                        @if($logs->count() > 0)
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>Data</th>
-                                            @if(Auth::user()->isAdmin())
-                                                <th>Cliente</th>
-                                            @endif
-                                            <th>Itens</th>
-                                            <th>Valor Total</th>
-                                            <th>Ações</th>
+                                            <th>Cliente</th>
+                                            <th>Executado por</th>
+                                            <th>Tipo</th>
+                                            <th>Valor</th>
+                                            <th>Método de Pagamento</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($vendas as $venda)
+                                        @foreach($logs as $log)
                                             <tr>
-                                                <td>{{ \Carbon\Carbon::parse($venda->saleDate)->format('d/m/Y') }}</td>
-                                                @if(Auth::user()->isAdmin())
-                                                    <td>{{ $venda->user->name }}</td>
-                                                @endif
+                                                <td>{{ \Carbon\Carbon::parse($log->created_at)->format('d/m/Y H:i') }}</td>
+
+                                                <td>{{ $log->user?->name ?? '-' }}</td>
+                                                <td>{{ $log->executor?->name ?? '-' }}</td>
+
                                                 <td>
-                                                    <small>
-                                                        @foreach($venda->saleProducts as $item)
-                                                            {{ $item->productQuantity }}x {{ $item->product->name }}
-                                                            @if(!$loop->last), @endif
-                                                        @endforeach
-                                                    </small>
+                                                    <span class="badge {{ $log->tipo === 'entrada' ? 'bg-success' : 'bg-danger' }}">
+                                                        {{ ucfirst($log->tipo) }}
+                                                    </span>
                                                 </td>
+
                                                 <td>
-                                                    <strong>R$ {{ number_format($venda->value, 2, ',', '.') }}</strong>
+                                                    <strong>R$ {{ number_format($log->valor, 2, ',', '.') }}</strong>
                                                 </td>
-                                                <td>
-                                                    <a href="{{ route('historico.show', $venda->id) }}" class="btn btn-sm btn-info">
-                                                        <i class="fas fa-eye"></i> Ver
-                                                    </a>
-                                                </td>
+
+                                                <td>{{ $log->metodo_pagamento ?? '-' }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -86,17 +81,16 @@
 
                             <!-- Paginação -->
                             <div class="d-flex justify-content-center">
-                                {{ $vendas->appends(request()->query())->links() }}
+                                {{ $logs->appends(request()->query())->links() }}
                             </div>
                         @else
                             <div class="alert alert-info text-center">
                                 <i class="fas fa-info-circle"></i>
-                                {{ Auth::user()->isAdmin() ? 'Nenhuma venda encontrada.' : 'Você ainda não fez nenhuma compra.' }}
+                                Nenhum registro de crédito encontrado.
                             </div>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 @endsection
