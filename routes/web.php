@@ -27,12 +27,15 @@ Route::prefix('responsaveis')->middleware(VerifyAuthAdmin::class)->group(functio
     Route::post('/rejeitado/{id}', [GuardRequestController::class, 'rejectRequest'])->name('guardRequests.reject');
 });
 
-Route::prefix('auth')->controller(LoginController::class)->group(function () {
+Route::controller(LoginController::class)->group(function () {
     Route::get('/', 'showLogin')->name('login');
-    Route::post('/login', 'authUser')->name('login.auth');
-    Route::post('/logout', 'logoutUser')->name('login.logout');
-    Route::get('/cadastro', 'showCadastro')->name('login.cadastro');
-    Route::post('/store', 'storeUser')->name('login.store');
+
+    Route::prefix('auth')->group(function () {
+        Route::post('/login', 'authUser')->name('login.auth');
+        Route::post('/logout', 'logoutUser')->name('login.logout');
+        Route::get('/cadastro', 'showCadastro')->name('login.cadastro');
+        Route::post('/store', 'storeUser')->name('login.store');
+    });
 });
 
 Route::prefix('senha')->group(function () {
