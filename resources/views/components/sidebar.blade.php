@@ -53,7 +53,6 @@
                     <i class="bi bi-basket3 fs-5 me-2"></i> Histórico de Compras
                 </a>
             </li>
-
             <li class="nav-item">
                 <a href="/painelStudents" class="nav-link text-white btn btn-secondary text-start">
                     <i class="bi bi-people fs-5 me-2"></i> Alunos
@@ -65,6 +64,11 @@
             <li class="nav-item">
                 <a href="/profile" class="nav-link text-white btn btn-secondary text-start">
                     <i class="bi bi-person fs-5 me-2"></i> Perfil
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/recarga" class="nav-link text-white btn btn-secondary text-start">
+                    <i class="bi bi-wallet fs-5 me-2"></i> Recarga
                 </a>
             </li>
         @endif

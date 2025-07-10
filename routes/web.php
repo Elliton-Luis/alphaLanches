@@ -55,7 +55,7 @@ Route::prefix('estoque')->middleware(VerifyAuthAdmin::class)->group(function () 
     Route::get('/', [EstoqueController::class, 'index'])->name('estoque.index');
 });
 
-Route::prefix('recarga')->middleware(VerifyAuthAdmin::class)->group(function () {
+Route::prefix('recarga')->group(function () {
     Route::get('/', [RecargaController::class, 'index'])->name('recarga.index');
 });
 

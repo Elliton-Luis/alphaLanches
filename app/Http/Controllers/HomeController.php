@@ -32,6 +32,7 @@ class HomeController extends Controller
                 ['route' => 'estoque', 'icon' => 'box', 'label' => 'Estoque'],
                 ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
                 ['route' => 'historico', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
+                ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
                 ['route' => 'pdv', 'icon' => 'shop', 'label' => 'PDV'],
                 //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
             ];
@@ -41,6 +42,7 @@ class HomeController extends Controller
                 ['route' => 'painelStudents', 'icon' => 'people', 'label' => 'Alunos'],
                 ['route' => 'agendamento', 'icon' => 'calendar-event', 'label' => 'Agendamento'],
                 ['route' => 'historico', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
+                ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
                 //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
             ];
         } elseif (auth()->user()->type == 'student') {
@@ -48,6 +50,7 @@ class HomeController extends Controller
                 ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
                 ['route' => 'agendamento', 'icon' => 'calendar-event', 'label' => 'Agendamento'],
                 ['route' => 'historico', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
+                ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
                 //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
             ];
         }
