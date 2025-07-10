@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Middleware\verifyAdmin;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\CreateStudentController;
@@ -15,9 +14,9 @@ use App\Http\Controllers\GuardRequestController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\HistoricoRecargaController;
 use App\Http\Controllers\PDVController;
-use App\Http\Controllers\RecargaClienteController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\HistoricoController;
+
 use App\Http\Middleware\VerifyAuthAdmin;
 
 Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware('auth');
@@ -55,10 +54,6 @@ Route::prefix('estoque')->middleware(VerifyAuthAdmin::class)->group(function () 
 
 Route::prefix('recarga')->middleware(VerifyAuthAdmin::class)->group(function () {
     Route::get('/', [RecargaController::class, 'index'])->name('recarga.index');
-});
-
-Route::middleware(['auth'])->prefix('recargaCliente')->group(function () {
-    Route::get('/', [RecargaClienteController::class, 'index'])->name('recargaCliente.index');
 });
 
 Route::middleware(['verifyAdmin'])->prefix('create/user')->group(function () {

@@ -79,11 +79,6 @@
                     <i class="bi bi-calendar-event fs-5 me-2"></i> Agendamento
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="/recargaCliente" class="nav-link text-white btn btn-secondary text-start">
-                    <i class="bi bi-wallet fs-5 me-2"></i> Recarga
-                </a>
-            </li>
         @endif
 
         @if (auth()->user()->type === 'student')
