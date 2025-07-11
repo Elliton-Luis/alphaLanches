@@ -13,17 +13,20 @@ class AgendamentoController extends Controller
 {
     public function index()
     {
-        $pedidosEspera = Sale::where('customer_id', auth()->id())
+        $pedidosEspera = Sale::with('saleProducts.product')
+            ->where('customer_id', auth()->id())
             ->where('status', 'em espera')
             ->orderBy('scheduled_date', 'desc')
             ->get();
 
-        $pedidosCancelados = Sale::where('customer_id', auth()->id())
+        $pedidosCancelados = Sale::with('saleProducts.product')
+            ->where('customer_id', auth()->id())
             ->where('status', 'cancelado')
             ->orderBy('scheduled_date', 'desc')
             ->get();
-        
-        $pedidosConcluidos = Sale::where('customer_id', auth()->id())
+
+        $pedidosConcluidos = Sale::with('saleProducts.product')
+            ->where('customer_id', auth()->id())
             ->where('status', 'concluído')
             ->orderBy('scheduled_date', 'desc')
             ->get();

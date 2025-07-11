@@ -115,8 +115,16 @@
                     <h5>Pedidos em Espera</h5>
                     @forelse($pedidosEspera as $pedido)
                         <div class="border p-2 mb-2">
-                            <p><strong>Data:</strong> {{ $pedido->scheduled_date }}</p>
+                            <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($pedido->scheduled_date)->format('d/m/Y') }}</p>
                             <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
+
+                            <p><strong>Itens:</strong></p>
+                            <ul>
+                                @foreach($pedido->saleProducts as $item)
+                                    <li>{{ $item->product->name }} - Quantidade: {{ $item->productQuantity }}</li>
+                                @endforeach
+                            </ul>
+
                             <form method="POST" action="{{ route('agendamento.cancelar', $pedido->id) }}">
                                 @csrf
                                 @method('PATCH')
@@ -132,8 +140,16 @@
                     <h5>Pedidos Concluídos</h5>
                     @forelse($pedidosConcluidos as $pedido)
                         <div class="border p-2 mb-2">
-                            <p><strong>Data:</strong> {{ $pedido->scheduled_date }}</p>
+                            <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($pedido->scheduled_date)->format('d/m/Y') }}</p>
                             <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
+
+                            <p><strong>Itens:</strong></p>
+                            <ul>
+                                @foreach($pedido->saleProducts as $item)
+                                    <li>{{ $item->product->name }} - Quantidade: {{ $item->productQuantity }}</li>
+                                @endforeach
+                            </ul>
+
                             <span class="badge bg-success">Concluído</span>
                         </div>
                     @empty
@@ -145,8 +161,16 @@
                     <h5>Pedidos Cancelados</h5>
                     @forelse($pedidosCancelados as $pedido)
                         <div class="border p-2 mb-2">
-                            <p><strong>Data:</strong> {{ $pedido->scheduled_date }}</p>
+                            <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($pedido->scheduled_date)->format('d/m/Y') }}</p>
                             <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
+
+                            <p><strong>Itens:</strong></p>
+                            <ul>
+                                @foreach($pedido->saleProducts as $item)
+                                    <li>{{ $item->product->name }} - Quantidade: {{ $item->productQuantity }}</li>
+                                @endforeach
+                            </ul>
+
                             <span class="badge bg-danger">Cancelado</span>
                         </div>
                     @empty
