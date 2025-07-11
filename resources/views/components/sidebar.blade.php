@@ -40,11 +40,6 @@
                     <i class="bi bi-shop fs-5 me-2"></i> PDV
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="/recarga" class="nav-link text-white btn btn-secondary text-start">
-                    <i class="bi bi-wallet fs-5 me-2"></i> Recarga
-                </a>
-            </li>
         @endif
 
         @if (in_array(auth()->user()->type, ['guard']))
@@ -54,8 +49,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/painelStudents" class="nav-link text-white btn btn-secondary text-start">
-                    <i class="bi bi-people fs-5 me-2"></i> Alunos
+                <a href="/painelUsuarios" class="nav-link text-white btn btn-secondary text-start">
+                    <i class="bi bi-people fs-5 me-2"></i> Usuários
                 </a>
             </li>
         @endif
@@ -71,10 +66,12 @@
                     <i class="bi bi-wallet fs-5 me-2"></i> Recarga
                 </a>
             </li>
-        @endif
 
-        @if (in_array(auth()->user()->type, ['admin', 'guard']))
-
+            <li class="nav-item">
+                <a href="/historicoRecarga" class="nav-link text-white btn btn-secondary text-start">
+                    <i class="bi bi-receipt-cutoff fs-5 me-2"></i> Histórico de Recargas
+                </a>
+            </li>
         @endif
 
         @if (in_array(auth()->user()->type, ['guard', 'student']))

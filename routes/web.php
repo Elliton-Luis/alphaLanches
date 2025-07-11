@@ -65,8 +65,6 @@ Route::middleware(['verifyAdmin'])->prefix('create/user')->group(function () {
 
 Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(VerifyAuthAdmin::class)->name('painel.usuarios');
 
-Route::get('/painelStudents', [CreateStudentController::class, 'showPainelStudents'])->middleware(['auth'])->name('painel.students');
-
 Route::middleware(['auth'])->prefix('agendamento')->controller(AgendamentoController::class)->name('agendamento.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::post('/', 'store')->name('store');

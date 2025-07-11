@@ -52,9 +52,9 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="/painelStudents" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-people me-2"></i> Alunos
+                        <li class="nav-item">
+                            <a href="/painelUsuarios" class="nav-link text-white btn btn-secondary text-start">
+                                <i class="bi bi-people fs-5 me-2"></i> Usuários
                             </a>
                         </li>
                     @endif
@@ -65,12 +65,16 @@
                                 <i class="bi bi-person me-2"></i> Perfil
                             </a>
                         </li>
-                    @endif
 
-                    @if (in_array(auth()->user()->type, ['admin', 'guard']))
-                        <li>
-                            <a href="/recarga" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-wallet me-2"></i> Recarga
+                        <li class="nav-item">
+                            <a href="/recarga" class="nav-link text-white btn btn-secondary text-start">
+                                <i class="bi bi-wallet fs-5 me-2"></i> Recarga
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/historicoRecarga" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
+                                <i class="bi bi-basket3 me-2"></i> Histórico de Recargas
                             </a>
                         </li>
                     @endif
@@ -79,11 +83,6 @@
                         <li>
                             <a href="/agendamento" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
                                 <i class="bi bi-calendar-event me-2"></i> Agendamento
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/recargaCliente" class="nav-link text-white btn btn-secondary text-start">
-                                <i class="bi bi-wallet fs-5 me-2"></i> Recarga
                             </a>
                         </li>
                     @endif
