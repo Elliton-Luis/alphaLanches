@@ -22,8 +22,9 @@
         <form id="agendamento-form" method="POST" action="{{ route('agendamento.store') }}">
             @csrf
 
-            <div class="row">
-                <div class="col-md-6 border border-primary rounded" style="padding-top: 10px;">
+            <div class="d-flex flex-column align-items-center">
+                
+                <div class="border border-primary rounded mb-3 p-3" style="width: 100%; max-width: 600px;">
                     <h4>Produtos</h4>
                     <div class="input-group mb-2">
                         <input id="searchName" class="form-control border-primary" type="text"
@@ -57,7 +58,7 @@
                                         <span
                                             class="badge bg-primary">R${{ number_format($product->price, 2, ',', '.') }}</span>
                                         <br>
-                                        <span class="badge bg-secondary">Estoque: {{ $product->amount }}</span>
+                                        <span class="badge bg-secondary">Disponivel: {{ $product->available }}</span>
                                     </div>
                                 </div>
                             </li>
@@ -65,7 +66,7 @@
                     </ul>
                 </div>
 
-                <div class="col-md-6">
+                <div class="border border-primary rounded mb-3 p-3" style="width: 100%; max-width: 600px;">
                     <h4>Carrinho</h4>
                     <ul class="list-group mb-3" id="cart-list"></ul>
 
@@ -114,8 +115,16 @@
                     <h5>Pedidos em Espera</h5>
                     @forelse($pedidosEspera as $pedido)
                         <div class="border p-2 mb-2">
-                            <p><strong>Data:</strong> {{ $pedido->scheduled_date }}</p>
+                            <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($pedido->scheduled_date)->format('d/m/Y') }}</p>
                             <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
+
+                            <p><strong>Itens:</strong></p>
+                            <ul>
+                                @foreach($pedido->saleProducts as $item)
+                                    <li>{{ $item->product->name }} - Quantidade: {{ $item->productQuantity }}</li>
+                                @endforeach
+                            </ul>
+
                             <form method="POST" action="{{ route('agendamento.cancelar', $pedido->id) }}">
                                 @csrf
                                 @method('PATCH')
@@ -128,11 +137,40 @@
 
                     <hr>
 
+                    <h5>Pedidos Concluídos</h5>
+                    @forelse($pedidosConcluidos as $pedido)
+                        <div class="border p-2 mb-2">
+                            <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($pedido->scheduled_date)->format('d/m/Y') }}</p>
+                            <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
+
+                            <p><strong>Itens:</strong></p>
+                            <ul>
+                                @foreach($pedido->saleProducts as $item)
+                                    <li>{{ $item->product->name }} - Quantidade: {{ $item->productQuantity }}</li>
+                                @endforeach
+                            </ul>
+
+                            <span class="badge bg-success">Concluído</span>
+                        </div>
+                    @empty
+                        <p class="text-muted">Nenhum pedido Concluído.</p>
+                    @endforelse
+
+                    <hr>
+
                     <h5>Pedidos Cancelados</h5>
                     @forelse($pedidosCancelados as $pedido)
                         <div class="border p-2 mb-2">
-                            <p><strong>Data:</strong> {{ $pedido->scheduled_date }}</p>
+                            <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($pedido->scheduled_date)->format('d/m/Y') }}</p>
                             <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
+
+                            <p><strong>Itens:</strong></p>
+                            <ul>
+                                @foreach($pedido->saleProducts as $item)
+                                    <li>{{ $item->product->name }} - Quantidade: {{ $item->productQuantity }}</li>
+                                @endforeach
+                            </ul>
+
                             <span class="badge bg-danger">Cancelado</span>
                         </div>
                     @empty
