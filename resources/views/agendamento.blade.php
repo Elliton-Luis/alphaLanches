@@ -22,8 +22,9 @@
         <form id="agendamento-form" method="POST" action="{{ route('agendamento.store') }}">
             @csrf
 
-            <div class="row">
-                <div class="col-md-6 border border-primary rounded" style="padding-top: 10px;">
+            <div class="d-flex flex-column align-items-center">
+                
+                <div class="border border-primary rounded mb-3 p-3" style="width: 100%; max-width: 600px;">
                     <h4>Produtos</h4>
                     <div class="input-group mb-2">
                         <input id="searchName" class="form-control border-primary" type="text"
@@ -57,7 +58,7 @@
                                         <span
                                             class="badge bg-primary">R${{ number_format($product->price, 2, ',', '.') }}</span>
                                         <br>
-                                        <span class="badge bg-secondary">Estoque: {{ $product->amount }}</span>
+                                        <span class="badge bg-secondary">Disponivel: {{ $product->available }}</span>
                                     </div>
                                 </div>
                             </li>
@@ -65,7 +66,7 @@
                     </ul>
                 </div>
 
-                <div class="col-md-6">
+                <div class="border border-primary rounded mb-3 p-3" style="width: 100%; max-width: 600px;">
                     <h4>Carrinho</h4>
                     <ul class="list-group mb-3" id="cart-list"></ul>
 
@@ -124,6 +125,19 @@
                         </div>
                     @empty
                         <p class="text-muted">Nenhum pedido em espera.</p>
+                    @endforelse
+
+                    <hr>
+
+                    <h5>Pedidos Concluídos</h5>
+                    @forelse($pedidosConcluidos as $pedido)
+                        <div class="border p-2 mb-2">
+                            <p><strong>Data:</strong> {{ $pedido->scheduled_date }}</p>
+                            <p><strong>Total:</strong> R$ {{ number_format($pedido->value, 2, ',', '.') }}</p>
+                            <span class="badge bg-success">Concluído</span>
+                        </div>
+                    @empty
+                        <p class="text-muted">Nenhum pedido Concluído.</p>
                     @endforelse
 
                     <hr>

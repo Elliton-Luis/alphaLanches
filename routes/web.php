@@ -18,6 +18,7 @@ use App\Http\Controllers\PDVController;
 use App\Http\Controllers\RecargaClienteController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\HistoricoController;
+use App\Http\Controllers\PedidosReservadosController;
 use App\Http\Middleware\VerifyAuthAdmin;
 
 Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware('auth');
@@ -72,6 +73,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/agendamento', [AgendamentoController::class, 'store'])->name('agendamento.store');
     Route::get('/agendamento/search-user', [AgendamentoController::class, 'searchUser'])->name('agendamento.searchUser');
     Route::patch('/agendamento/{id}/cancelar', [AgendamentoController::class, 'cancelar'])->name('agendamento.cancelar');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pedidosReservados', [PedidosReservadosController::class, 'index'])->name('pedidosReservados.index');
+    Route::patch('/pedidosReservados/{id}/concluir', [PedidosReservadosController::class, 'concluir'])->name('pedidosReservados.concluir');
 });
 
 Route::middleware(VerifyAuthAdmin::class)->prefix('financeiro')->group(function () {
