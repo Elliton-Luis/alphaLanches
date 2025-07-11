@@ -56,22 +56,19 @@
                                 </div>
                                 @auth
                                     @if(auth()->user()->type === 'admin')
-                                        <button class="btn btn-danger">
-                                            <div class="col-12">
-                                                <label for="type" class="form-label text-secondary fw-semibold small">Tipo de
-                                                    conta*</label>
-                                                <select wire:model="type" id="type" class="form-select rounded-2 shadow-sm"
-                                                    required>
-                                                    <option value="">Selecione um tipo</option>
-                                                    <option value="admin">Administrador</option>
-                                                    <option value="func">Funcionário</option>
-                                                    <option value="guard">Responsável</option>
-                                                </select>
-                                            </div>
-                                        </button>
+                                        <div class="col-12">
+                                            <label for="type" class="form-label text-secondary fw-semibold small">Tipo de
+                                                conta*</label>
+                                            <select wire:model="type" id="type" class="form-select rounded-2 shadow-sm"
+                                                required>
+                                                <option value="">Selecione um tipo</option>
+                                                <option value="admin">Administrador</option>
+                                                <option value="func">Funcionário</option>
+                                                <option value="guard">Responsável</option>
+                                            </select>
+                                        </div>
                                     @endif
                                 @endauth
-
                             </div>
 
                             <div class="d-flex justify-content-end mt-4">

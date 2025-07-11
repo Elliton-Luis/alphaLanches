@@ -138,7 +138,6 @@
                                     <option value="admin">Administrador</option>
                                     <option value="func">Funcionário</option>
                                     <option value="guard">Responsável</option>
-                                    <option value="student">Aluno</option>
                                 </select>
                             </div>
                         @endif
