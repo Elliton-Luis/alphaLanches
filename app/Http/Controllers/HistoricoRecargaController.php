@@ -10,10 +10,19 @@ class HistoricoRecargaController extends Controller
 {
     public function index(Request $request)
     {
+        $user = auth()->user();
+
         $query = CreditLog::with(['user', 'executor'])
             ->orderBy('created_at', 'desc');
 
-        // Filtros
+        if ($user->type === 'guard') {
+            $alunoIds = $user->alunos()->pluck('users.id')->toArray();
+            $idsPermitidos = array_merge([$user->id], $alunoIds);
+
+            $query->whereIn('user_id', $idsPermitidos);
+        }
+
+        // Filtros adicionais
         if ($request->filled('data_inicio')) {
             $query->where('created_at', '>=', $request->data_inicio);
         }

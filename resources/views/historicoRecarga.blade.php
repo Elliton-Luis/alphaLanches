@@ -33,7 +33,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fas fa-search"></i> Filtrar
                                     </button>
-                                    <a href="{{ route('historico.index') }}" class="btn btn-secondary">
+                                    <a href="{{ route('historicoRecarga.index') }}" class="btn btn-secondary">
                                         <i class="fas fa-times"></i> Limpar
                                     </a>
                                 </div>

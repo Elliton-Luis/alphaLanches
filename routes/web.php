@@ -82,9 +82,7 @@ Route::middleware(VerifyAuthAdmin::class)->prefix('pdv')->group(function () {
     Route::post('/repor', [PDVController::class, 'reporEstoque'])->name('repor');
 });
 
-Route::middleware(VerifyAuthAdmin::class)->group(function () {
-    Route::get('/historicoRecarga', [HistoricoRecargaController::class, 'index'])->name('historicoRecarga.index');
-});
+Route::get('/historicoRecarga', [HistoricoRecargaController::class, 'index'])->name('historicoRecarga.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
