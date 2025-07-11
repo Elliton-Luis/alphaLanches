@@ -128,16 +128,21 @@
                         <input wire:model="editTelefone" type="text" class="form-control rounded-2 telefone"
                             maxlength="15">
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Tipo</label>
-                        <select wire:model="editType" class="form-select rounded-2" required>
-                            <option value="">Selecione</option>
-                            <option value="admin">Administrador</option>
-                            <option value="func">Funcionário</option>
-                            <option value="guard">Responsável</option>
-                            <option value="student">Aluno</option>
-                        </select>
-                    </div>
+
+                    @auth
+                        @if(auth()->user()->type === 'admin')
+                            <div class="mb-3">
+                                <label class="form-label">Tipo</label>
+                                <select wire:model="editType" class="form-select rounded-2" required>
+                                    <option value="">Selecione</option>
+                                    <option value="admin">Administrador</option>
+                                    <option value="func">Funcionário</option>
+                                    <option value="guard">Responsável</option>
+                                    <option value="student">Aluno</option>
+                                </select>
+                            </div>
+                        @endif
+                    @endauth
                 </div>
                 <div class="modal-footer bg-body-tertiary border-0">
                     <button type="button" class="btn btn-secondary rounded-2" data-bs-dismiss="modal">Cancelar</button>

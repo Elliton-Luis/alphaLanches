@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class TableACcountsAdmin extends Component
@@ -23,9 +23,10 @@ class TableACcountsAdmin extends Component
     public $editTelefone;
     public $editType;
     protected $paginationTheme = 'bootstrap';
-
+    public $userType;
     public function mount()
     {
+        $this->userType = Auth::user()->type;
         $this->filterName = null;
         $this->filterTelefone = null;
         $this->filterType = null;
@@ -33,6 +34,7 @@ class TableACcountsAdmin extends Component
 
     public function render()
     {
+        $authUser = Auth::user();
         $query = User::query();
 
         $query->where('id', '!=', auth()->id());
@@ -50,6 +52,13 @@ class TableACcountsAdmin extends Component
         if ($this->filterType) {
             $query->where('type', $this->filterType);
             $this->resetPage();
+        }
+
+        if ($this->userType === 'guard') {
+            $idsPermitidos = $authUser->alunos()->select('users.id')->pluck('id')->toArray();
+            $idsPermitidos[] = $authUser->id;
+
+            $query->whereIn('id', $idsPermitidos);
         }
 
         $users = $query->paginate(5);
