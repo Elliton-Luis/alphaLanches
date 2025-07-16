@@ -19,4 +19,9 @@ class Sale extends Model
     {
         return $this->hasMany(SaleProduct::class);
     }
+
+    public function reservedProducts()
+    {
+        return $this->hasMany(ReservedProduct::class);
+    }
 }

@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CreateUserController;
-use App\Http\Controllers\CreateStudentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EstoqueController;
@@ -16,7 +15,7 @@ use App\Http\Controllers\HistoricoRecargaController;
 use App\Http\Controllers\PDVController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\HistoricoController;
-
+use App\Http\Controllers\PedidosReservadosController;
 use App\Http\Middleware\VerifyAuthAdmin;
 
 Route::get('/home', [HomeController::class, 'showHome'])->name('home')->middleware('auth');
@@ -70,6 +69,11 @@ Route::middleware(['auth'])->prefix('agendamento')->controller(AgendamentoContro
     Route::post('/', 'store')->name('store');
     Route::get('/search-user', 'searchUser')->name('searchUser');
     Route::patch('/{id}/cancelar', 'cancelar')->name('cancelar');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pedidosReservados', [PedidosReservadosController::class, 'index'])->name('pedidosReservados.index');
+    Route::patch('/pedidosReservados/{id}/concluir', [PedidosReservadosController::class, 'concluir'])->name('pedidosReservados.concluir');
 });
 
 Route::middleware(VerifyAuthAdmin::class)->prefix('financeiro')->group(function () {

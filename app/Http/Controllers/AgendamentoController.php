@@ -7,24 +7,44 @@ use App\Models\Produto;
 use App\Models\Sale;
 use App\Models\SaleProduct;
 use App\Models\User;
+use App\Models\ReservedProduct;
 
 class AgendamentoController extends Controller
 {
     public function index()
     {
-        $pedidosEspera = Sale::where('customer_id', auth()->id())
+        $pedidosEspera = Sale::with('saleProducts.product')
+            ->where('customer_id', auth()->id())
             ->where('status', 'em espera')
             ->orderBy('scheduled_date', 'desc')
             ->get();
 
-        $pedidosCancelados = Sale::where('customer_id', auth()->id())
+        $pedidosCancelados = Sale::with('saleProducts.product')
+            ->where('customer_id', auth()->id())
             ->where('status', 'cancelado')
             ->orderBy('scheduled_date', 'desc')
             ->get();
 
+        $pedidosConcluidos = Sale::with('saleProducts.product')
+            ->where('customer_id', auth()->id())
+            ->where('status', 'concluído')
+            ->orderBy('scheduled_date', 'desc')
+            ->get();
+
         $products = Produto::all();
+
+        $reservados = ReservedProduct::selectRaw('product_id, SUM(quantity) as total_reserved')
+            ->groupBy('product_id')
+            ->pluck('total_reserved', 'product_id');
+
+        foreach ($products as $product) {
+            $reservedQty = $reservados[$product->id] ?? 0;
+            $product->available = $product->amount - $reservedQty;
+        }
+
         $todayTotal = Sale::whereDate('saleDate', today())->sum('value');
-        return view('agendamento', compact('products', 'todayTotal', 'pedidosEspera', 'pedidosCancelados'));
+        
+        return view('agendamento', compact('products', 'todayTotal', 'pedidosEspera', 'pedidosCancelados', 'pedidosConcluidos'));
     }
 
     public function store(Request $request)
@@ -69,13 +89,20 @@ class AgendamentoController extends Controller
 
         foreach ($items as $item) {
             $product = Produto::find($item['product_id']);
-            $product->amount -= $item['quantity'];
+            //$product->amount -= $item['quantity'];
             $product->save();
 
             SaleProduct::create([
                 'sale_id' => $sale->id,
                 'product_id' => $item['product_id'],
                 'productQuantity' => $item['quantity'],
+            ]);
+
+            ReservedProduct::create([
+            'sale_id' => $sale->id,
+            'product_id' => $item['product_id'],
+            'customer_id' => auth()->id(),
+            'quantity' => $item['quantity']
             ]);
         }
 
@@ -84,16 +111,18 @@ class AgendamentoController extends Controller
 
     public function cancelar($id)
     {
-    $pedido = Sale::findOrFail($id);
+        $pedido = Sale::findOrFail($id);
 
-    if ($pedido->customer_id !== auth()->id()) {
-        return redirect()->route('agendamento.index')->with('errorAuth', 'Ação não autorizada.');
-    }
+        if ($pedido->customer_id !== auth()->id()) {
+            return redirect()->route('agendamento.index')->with('errorAuth', 'Ação não autorizada.');
+        }
 
-    $pedido->status = 'cancelado';
-    $pedido->save();
+        ReservedProduct::where('sale_id', $pedido->id)->delete();
+        
+        $pedido->status = 'cancelado';
+        $pedido->save();
 
-    return redirect()->route('agendamento.index')->with('success', 'Pedido cancelado com sucesso.');
+        return redirect()->route('agendamento.index')->with('success', 'Pedido cancelado com sucesso.');
     }
 
     public function searchUser(Request $request)
