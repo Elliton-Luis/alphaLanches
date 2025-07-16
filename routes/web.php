@@ -54,15 +54,15 @@ Route::prefix('estoque')->middleware(VerifyAuthAdmin::class)->group(function () 
     Route::get('/', [EstoqueController::class, 'index'])->name('estoque.index');
 });
 
-Route::prefix('recarga')->group(function () {
+Route::prefix('recarga')->middleware(['auth'])->group(function () {
     Route::get('/', [RecargaController::class, 'index'])->name('recarga.index');
 });
 
-Route::middleware(['verifyAdmin'])->prefix('create/user')->group(function () {
+Route::middleware(VerifyAuthAdmin::class)->prefix('create/user')->group(function () {
     Route::get('/', [CreateUserController::class, 'showIndex'])->name('create.user.index');
 });
 
-Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->name('painel.usuarios');
+Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->name('painel.usuarios')->middleware(['auth']);
 
 Route::middleware(['auth'])->prefix('agendamento')->controller(AgendamentoController::class)->name('agendamento.')->group(function () {
     Route::get('/', 'index')->name('index');
@@ -71,7 +71,7 @@ Route::middleware(['auth'])->prefix('agendamento')->controller(AgendamentoContro
     Route::patch('/{id}/cancelar', 'cancelar')->name('cancelar');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(VerifyAuthAdmin::class)->group(function () {
     Route::get('/pedidosReservados', [PedidosReservadosController::class, 'index'])->name('pedidosReservados.index');
     Route::patch('/pedidosReservados/{id}/concluir', [PedidosReservadosController::class, 'concluir'])->name('pedidosReservados.concluir');
 });
@@ -86,7 +86,7 @@ Route::middleware(VerifyAuthAdmin::class)->prefix('pdv')->group(function () {
     Route::post('/repor', [PDVController::class, 'reporEstoque'])->name('repor');
 });
 
-Route::get('/historicoRecarga', [HistoricoRecargaController::class, 'index'])->name('historicoRecarga.index');
+Route::get('/historicoRecarga', [HistoricoRecargaController::class, 'index'])->name('historicoRecarga.index')->middleware(['auth']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
