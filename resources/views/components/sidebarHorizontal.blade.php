@@ -9,90 +9,100 @@
                     <i class="bi bi-list fs-3"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow rounded-3 mt-2">
+
+                    {{-- ADMIN --}}
                     @if (auth()->user()->type === 'admin')
-                        <li>
-                            <a href="/financeiro" class="dropdown-item btn btn-secondary text-start w-100">
-                                <i class="bi bi-cash-coin me-2"></i> Financeiro
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/painelUsuarios" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-people me-2"></i> Usuários
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/responsaveis/" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-journal-plus me-2"></i> Pedidos
-                            </a>
-                        </li>
+                        <li><a href="{{ route('financeiro') }}" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-cash-coin me-2"></i> Financeiro</a></li>
+                        <li><a href="{{ route('estoque') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i class="bi bi-box me-2"></i>
+                                Estoque</a></li>
+                        <li><a href="{{ route('pdv') }}" class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-shop me-2"></i> PDV</a></li>
+                        <li><a href="{{ route('historico') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-basket3 me-2"></i> Histórico de Compras</a></li>
+                        <li><a href="{{ route('historicoRecarga') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-receipt-cutoff me-2"></i> Histórico de Recargas</a></li>
+                        <li><a href="{{ route('recarga') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-wallet me-2"></i> Recarga</a></li>
+                        <li><a href="{{ route('responsaveis') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-journal-plus me-2"></i> Pedidos de Responsáveis</a></li>
+                        <li><a href="{{ route('painelUsuarios') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-people me-2"></i> Usuários</a></li>
+                        <li><a href="{{ route('profile') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-person me-2"></i> Perfil</a></li>
+                        <li><a href="{{ route('pedidosReservados') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-bookmark me-2"></i> Pedidos Reservados</a></li>
                     @endif
 
-                    @if (in_array(auth()->user()->type, ['admin', 'func']))
-                        <li>
-                            <a href="/estoque" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-box me-2"></i> Estoque
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/historico" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-basket3 me-2"></i> Histórico
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/pdv" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-shop me-2"></i> PDV
-                            </a>
-                        </li>
+                    {{-- FUNCIONÁRIO --}}
+                    @if (auth()->user()->type === 'func')
+                        <li><a href="{{ route('estoque') }}" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-box me-2"></i> Estoque</a></li>
+                        <li><a href="{{ route('pdv') }}" class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-shop me-2"></i> PDV</a></li>
+                        <li><a href="{{ route('historico') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-basket3 me-2"></i> Histórico de Compras</a></li>
+                        <li><a href="{{ route('historicoRecarga') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-receipt-cutoff me-2"></i> Histórico de Recargas</a></li>
+                        <li><a href="{{ route('recarga') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-wallet me-2"></i> Recarga</a></li>
+                        <li><a href="{{ route('painelUsuarios') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-people me-2"></i> Usuários</a></li>
+                        <li><a href="{{ route('profile') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-person me-2"></i> Perfil</a></li>
                     @endif
 
-                    @if (in_array(auth()->user()->type, ['guard']))
-                        <li>
-                            <a href="/historico" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-basket3 me-2"></i> Histórico
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="/painelUsuarios" class="nav-link text-white btn btn-secondary text-start">
-                                <i class="bi bi-people fs-5 me-2"></i> Usuários
-                            </a>
-                        </li>
+                    {{-- RESPONSÁVEL --}}
+                    @if (auth()->user()->type === 'guard')
+                        <li><a href="{{ route('painelUsuarios') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-people me-2"></i>
+                                Alunos</a></li>
+                        <li><a href="{{ route('agendamento') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-calendar-event me-2"></i> Agendamento</a></li>
+                        <li><a href="{{ route('historico') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-basket3 me-2"></i> Histórico de Compras</a></li>
+                        <li><a href="{{ route('historicoRecarga') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-receipt-cutoff me-2"></i> Histórico de Recargas</a></li>
+                        <li><a href="{{ route('recarga') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-wallet me-2"></i> Recarga</a></li>
+                        <li><a href="{{ route('profile') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-person me-2"></i> Perfil</a></li>
                     @endif
 
-                    @if (in_array(auth()->user()->type, ['admin', 'func', 'guard', 'student']))
-                        <li>
-                            <a href="/profile" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-person me-2"></i> Perfil
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="/recarga" class="nav-link text-white btn btn-secondary text-start">
-                                <i class="bi bi-wallet fs-5 me-2"></i> Recarga
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="/historicoRecarga" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-basket3 me-2"></i> Histórico de Recargas
-                            </a>
-                        </li>
-                    @endif
-
-                    @if (in_array(auth()->user()->type, ['guard', 'student']))
-                        <li>
-                            <a href="/agendamento" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-calendar-event me-2"></i> Agendamento
-                            </a>
-                        </li>
-                    @endif
-
+                    {{-- ALUNO --}}
                     @if (auth()->user()->type === 'student')
-                        <li>
-                            <a href="/historico" class="dropdown-item btn btn-secondary text-start w-100 mt-1">
-                                <i class="bi bi-basket3 me-2"></i> Histórico
-                            </a>
-                        </li>
+                        <li><a href="{{ route('agendamento') }}" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-calendar-event me-2"></i> Agendamento</a></li>
+                        <li><a href="{{ route('historico') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-basket3 me-2"></i> Histórico de Compras</a></li>
+                        <li><a href="{{ route('historicoRecarga') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-receipt-cutoff me-2"></i> Histórico de Recargas</a></li>
+                        <li><a href="{{ route('recarga') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-wallet me-2"></i> Recarga</a></li>
+                        <li><a href="{{ route('profile') }}"
+                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                    class="bi bi-person me-2"></i> Perfil</a></li>
                     @endif
 
                     <hr class="my-2 text-secondary">
@@ -110,8 +120,10 @@
                 </ul>
             </div>
 
-            <a href="{{ route('home') }}" class="text-white text-decoration-none fs-4 fw-bold"><img
-                    src="{{ asset('images/AlphaLanches-Logo.png') }}" height="78px" alt="Logo Alpha"></a>
+            <!-- Logo -->
+            <a href="{{ route('home') }}" class="text-white text-decoration-none fs-4 fw-bold">
+                <img src="{{ asset('images/AlphaLanches-Logo.png') }}" height="78px" alt="Logo Alpha">
+            </a>
         </div>
     </nav>
 </div>
