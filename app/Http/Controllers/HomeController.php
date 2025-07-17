@@ -37,12 +37,14 @@ class HomeController extends Controller
                 ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
                 ['route' => 'painelUsuarios', 'icon' => 'people', 'label' => 'Usuários'],
                 ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],
+                ['route' => 'pedidosReservados', 'icon' => 'bookmark', 'label' => 'Pedidos Reservados'],
                 //['route' => 'sobre', 'icon' => 'info-circle', 'label' => 'Sobre Nós'],
             ];
         } elseif (auth()->user()->type == 'guard') {
             return [
                 ['route' => 'painelUsuarios', 'icon' => 'people', 'label' => 'Alunos'],
                 ['route' => 'agendamento', 'icon' => 'calendar-event', 'label' => 'Agendamento'],
+                ['route' => 'pedidosReservados', 'icon' => 'bookmark', 'label' => 'Pedidos Reservados'],
                 ['route' => 'historico', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
                 ['route' => 'historicoRecarga', 'icon' => 'receipt-cutoff', 'label' => 'Histórico de Recargas'],
                 ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
@@ -53,6 +55,7 @@ class HomeController extends Controller
             return [
                 ['route' => 'agendamento', 'icon' => 'calendar-event', 'label' => 'Agendamento'],
                 ['route' => 'historico', 'icon' => 'basket3', 'label' => 'Histórico de Compras'],
+                ['route' => 'pedidosReservados', 'icon' => 'bookmark', 'label' => 'Pedidos Reservados'],
                 ['route' => 'historicoRecarga', 'icon' => 'receipt-cutoff', 'label' => 'Histórico de Recargas'],
                 ['route' => 'recarga', 'icon' => 'wallet', 'label' => 'Recarga'],
                 ['route' => 'profile', 'icon' => 'person', 'label' => 'Perfil'],

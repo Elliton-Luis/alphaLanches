@@ -8,105 +8,104 @@
                     aria-expanded="false">
                     <i class="bi bi-list fs-3"></i>
                 </button>
+
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow rounded-3 mt-2">
 
                     {{-- ADMIN --}}
                     @if (auth()->user()->type === 'admin')
-                        <li><a href="{{ route('financeiro') }}" class="dropdown-item btn btn-secondary text-start w-100"><i
+                        <li><a href="/financeiro" class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-cash-coin me-2"></i> Financeiro</a></li>
-                        <li><a href="{{ route('estoque') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i class="bi bi-box me-2"></i>
-                                Estoque</a></li>
-                        <li><a href="{{ route('pdv') }}" class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-shop me-2"></i> PDV</a></li>
-                        <li><a href="{{ route('historico') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-basket3 me-2"></i> Histórico de Compras</a></li>
-                        <li><a href="{{ route('historicoRecarga') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-receipt-cutoff me-2"></i> Histórico de Recargas</a></li>
-                        <li><a href="{{ route('recarga') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-wallet me-2"></i> Recarga</a></li>
-                        <li><a href="{{ route('responsaveis') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-journal-plus me-2"></i> Pedidos de Responsáveis</a></li>
-                        <li><a href="{{ route('painelUsuarios') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-people me-2"></i> Usuários</a></li>
-                        <li><a href="{{ route('profile') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-person me-2"></i> Perfil</a></li>
-                        <li><a href="{{ route('pedidosReservados') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-bookmark me-2"></i> Pedidos Reservados</a></li>
-                    @endif
-
-                    {{-- FUNCIONÁRIO --}}
-                    @if (auth()->user()->type === 'func')
-                        <li><a href="{{ route('estoque') }}" class="dropdown-item btn btn-secondary text-start w-100"><i
+                        <li class="mt-1"><a href="/estoque" class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-box me-2"></i> Estoque</a></li>
-                        <li><a href="{{ route('pdv') }}" class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                        <li class="mt-1"><a href="/pdv" class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-shop me-2"></i> PDV</a></li>
-                        <li><a href="{{ route('historico') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-basket3 me-2"></i> Histórico de Compras</a></li>
-                        <li><a href="{{ route('historicoRecarga') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                        <li class="mt-1"><a href="/HistoricoDeCompras"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-basket3 me-2"></i>
+                                Histórico de Compras</a></li>
+                        <li class="mt-1"><a href="/historicoRecarga"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-receipt-cutoff me-2"></i> Histórico de Recargas</a></li>
-                        <li><a href="{{ route('recarga') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                        <li class="mt-1"><a href="/recarga" class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-wallet me-2"></i> Recarga</a></li>
-                        <li><a href="{{ route('painelUsuarios') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-people me-2"></i> Usuários</a></li>
-                        <li><a href="{{ route('profile') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-person me-2"></i> Perfil</a></li>
-                    @endif
-
-                    {{-- RESPONSÁVEL --}}
-                    @if (auth()->user()->type === 'guard')
-                        <li><a href="{{ route('painelUsuarios') }}"
+                        <li class="mt-1"><a href="/responsaveis" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-journal-plus me-2"></i> Pedidos de Responsáveis</a></li>
+                        <li class="mt-1"><a href="/painelUsuarios"
                                 class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-people me-2"></i>
-                                Alunos</a></li>
-                        <li><a href="{{ route('agendamento') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-calendar-event me-2"></i> Agendamento</a></li>
-                        <li><a href="{{ route('historico') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-basket3 me-2"></i> Histórico de Compras</a></li>
-                        <li><a href="{{ route('historicoRecarga') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                                Usuários</a></li>
+                        <li class="mt-1"><a href="/profile" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-person me-2"></i> Perfil</a></li>
+                        <li class="mt-1"><a href="/pedidosReservados"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-bookmark me-2"></i>
+                                Pedidos Reservados</a></li>
+                    @endif
+
+                    {{-- FUNC --}}
+                    @if (auth()->user()->type === 'func')
+                        <li><a href="/estoque" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-box me-2"></i> Estoque</a></li>
+                        <li class="mt-1"><a href="/pdv" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-shop me-2"></i> PDV</a></li>
+                        <li class="mt-1"><a href="/HistoricoDeCompras"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-basket3 me-2"></i>
+                                Histórico de Compras</a></li>
+                        <li class="mt-1"><a href="/historicoRecarga"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-receipt-cutoff me-2"></i> Histórico de Recargas</a></li>
-                        <li><a href="{{ route('recarga') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                        <li class="mt-1"><a href="/recarga" class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-wallet me-2"></i> Recarga</a></li>
-                        <li><a href="{{ route('profile') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                        <li class="mt-1"><a href="/painelUsuarios"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-people me-2"></i>
+                                Usuários</a></li>
+                        <li class="mt-1"><a href="/profile" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-person me-2"></i> Perfil</a></li>
+                        <li class="mt-1"><a href="/pedidosReservados"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-bookmark me-2"></i>
+                                Pedidos Reservados</a></li>
+                    @endif
+
+                    {{-- GUARD --}}
+                    @if (auth()->user()->type === 'guard')
+                        <li><a href="/painelUsuarios" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-people me-2"></i> Alunos</a></li>
+                        <li class="mt-1"><a href="/agendamento" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-calendar-event me-2"></i> Agendamento</a></li>
+                        <li class="mt-1"><a href="/pedidosReservados"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-bookmark me-2"></i>
+                                Pedidos Reservados</a></li>
+                        <li class="mt-1"><a href="/HistoricoDeCompras"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-basket3 me-2"></i>
+                                Histórico de Compras</a></li>
+                        <li class="mt-1"><a href="/historicoRecarga"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-receipt-cutoff me-2"></i> Histórico de Recargas</a></li>
+                        <li class="mt-1"><a href="/recarga" class="dropdown-item btn btn-secondary text-start w-100"><i
+                                    class="bi bi-wallet me-2"></i> Recarga</a></li>
+                        <li class="mt-1"><a href="/profile" class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-person me-2"></i> Perfil</a></li>
                     @endif
 
-                    {{-- ALUNO --}}
+                    {{-- STUDENT --}}
                     @if (auth()->user()->type === 'student')
-                        <li><a href="{{ route('agendamento') }}" class="dropdown-item btn btn-secondary text-start w-100"><i
+                        <li><a href="/agendamento" class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-calendar-event me-2"></i> Agendamento</a></li>
-                        <li><a href="{{ route('historico') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
-                                    class="bi bi-basket3 me-2"></i> Histórico de Compras</a></li>
-                        <li><a href="{{ route('historicoRecarga') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                        <li class="mt-1"><a href="/pedidosReservados"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-bookmark me-2"></i>
+                                Pedidos Reservados</a></li>
+                        <li class="mt-1"><a href="/HistoricoDeCompras"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i class="bi bi-basket3 me-2"></i>
+                                Histórico de Compras</a></li>
+                        <li class="mt-1"><a href="/historicoRecarga"
+                                class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-receipt-cutoff me-2"></i> Histórico de Recargas</a></li>
-                        <li><a href="{{ route('recarga') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                        <li class="mt-1"><a href="/recarga" class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-wallet me-2"></i> Recarga</a></li>
-                        <li><a href="{{ route('profile') }}"
-                                class="dropdown-item btn btn-secondary text-start w-100 mt-1"><i
+                        <li class="mt-1"><a href="/profile" class="dropdown-item btn btn-secondary text-start w-100"><i
                                     class="bi bi-person me-2"></i> Perfil</a></li>
                     @endif
 
                     <hr class="my-2 text-secondary">
 
+                    {{-- Logout --}}
                     <li>
                         <form id="logout-form" action="{{ route('login.logout') }}" method="POST"
                             style="display: none;">
