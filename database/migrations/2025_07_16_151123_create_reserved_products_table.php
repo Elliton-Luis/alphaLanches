@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sale_id')->constrained('sales', 'id')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products', 'id')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('student_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->integer('quantity');
             $table->timestamps();
         });
@@ -22,6 +24,6 @@ return new class extends Migration
         Schema::table('sale_products', function (Blueprint $table) {
             $table->dropForeign(['product_id']); // Remove a FK que aponta para products
         });
-        Schema::dropIfExists('sale_products');
+        Schema::dropIfExists('reserved_products');
     }
 };
