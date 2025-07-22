@@ -73,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/agendamento', [AgendamentoController::class, 'store'])->name('agendamento.store');
     Route::get('/agendamento/search-user', [AgendamentoController::class, 'searchUser'])->name('agendamento.searchUser');
     Route::patch('/agendamento/{id}/cancelar', [AgendamentoController::class, 'cancelar'])->name('agendamento.cancelar');
+    Route::get('/agendamento/estudantes', [AgendamentoController::class, 'pedidosEstudantes'])->name('agendamento.estudantes');
 });
 
 Route::middleware(['auth'])->group(function () {

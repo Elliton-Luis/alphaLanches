@@ -8,28 +8,60 @@ use App\Models\Sale;
 use App\Models\SaleProduct;
 use App\Models\User;
 use App\Models\ReservedProduct;
+use Illuminate\Support\Facades\Auth;
 
 class AgendamentoController extends Controller
 {
     public function index()
     {
-        $pedidosEspera = Sale::with('saleProducts.product')
-            ->where('customer_id', auth()->id())
-            ->where('status', 'em espera')
-            ->orderBy('scheduled_date', 'desc')
-            ->get();
 
-        $pedidosCancelados = Sale::with('saleProducts.product')
-            ->where('customer_id', auth()->id())
-            ->where('status', 'cancelado')
-            ->orderBy('scheduled_date', 'desc')
-            ->get();
+        $user = Auth::user();
 
-        $pedidosConcluidos = Sale::with('saleProducts.product')
-            ->where('customer_id', auth()->id())
-            ->where('status', 'concluído')
-            ->orderBy('scheduled_date', 'desc')
-            ->get();
+        if ($user->type === 'student') {
+            // Filtra vendas pelas reservas que têm o student_id correspondente
+            $pedidosEspera = Sale::whereHas('reservedProducts', function ($query) use ($user) {
+                    $query->where('student_id', $user->id);
+                })
+                ->with('saleProducts.product')
+                ->where('status', 'em espera')
+                ->orderBy('scheduled_date', 'desc')
+                ->get();
+
+            $pedidosCancelados = Sale::whereHas('reservedProducts', function ($query) use ($user) {
+                    $query->where('student_id', $user->id);
+                })
+                ->with('saleProducts.product')
+                ->where('status', 'cancelado')
+                ->orderBy('scheduled_date', 'desc')
+                ->get();
+
+            $pedidosConcluidos = Sale::whereHas('reservedProducts', function ($query) use ($user) {
+                    $query->where('student_id', $user->id);
+                })
+                ->with('saleProducts.product')
+                ->where('status', 'concluído')
+                ->orderBy('scheduled_date', 'desc')
+                ->get();
+        } else {
+            // Continua usando o customer_id para responsáveis
+            $pedidosEspera = Sale::with('saleProducts.product')
+                ->where('customer_id', $user->id)
+                ->where('status', 'em espera')
+                ->orderBy('scheduled_date', 'desc')
+                ->get();
+
+            $pedidosCancelados = Sale::with('saleProducts.product')
+                ->where('customer_id', $user->id)
+                ->where('status', 'cancelado')
+                ->orderBy('scheduled_date', 'desc')
+                ->get();
+
+            $pedidosConcluidos = Sale::with('saleProducts.product')
+                ->where('customer_id', $user->id)
+                ->where('status', 'concluído')
+                ->orderBy('scheduled_date', 'desc')
+                ->get();
+        }
 
         $products = Produto::all();
 
@@ -44,7 +76,9 @@ class AgendamentoController extends Controller
 
         $todayTotal = Sale::whereDate('saleDate', today())->sum('value');
         
-        return view('agendamento', compact('products', 'todayTotal', 'pedidosEspera', 'pedidosCancelados', 'pedidosConcluidos'));
+        $students = auth()->user()->alunos;
+
+        return view('agendamento', compact('products', 'todayTotal', 'pedidosEspera', 'pedidosCancelados', 'pedidosConcluidos', 'students'));
     }
 
     public function store(Request $request)
@@ -55,6 +89,7 @@ class AgendamentoController extends Controller
             'customer_id' => 'required|exists:users,id',
             'items_json' => 'required|string',
             'payment_method' => 'required|in:dinheiro,credit,cartao,pix',
+            'student_id' => 'nullable|exists:users,id',
             'scheduled_date' => 'required|date|after_or_equal:today',
         ]);        
 
@@ -98,15 +133,38 @@ class AgendamentoController extends Controller
                 'productQuantity' => $item['quantity'],
             ]);
 
+            $user = auth()->user();
+
+            // Verificação: se for responsável e não enviou student_id, retorna erro
+            if ($user->type === 'responsible' && !$request->filled('student_id')) {
+                return back()->withErrors('Você precisa selecionar um estudante para o pedido.');
+            }
+
+            // Criação do ReservedProduct
             ReservedProduct::create([
-            'sale_id' => $sale->id,
-            'product_id' => $item['product_id'],
-            'customer_id' => auth()->id(),
-            'quantity' => $item['quantity']
+                'sale_id' => $sale->id,
+                'product_id' => $item['product_id'],
+                'customer_id' => $user->id,
+                'student_id' => $user->type === 'student' ? $user->id : $request->student_id,
+                'quantity' => $item['quantity'],
             ]);
         }
 
         return redirect()->route('agendamento.index')->with('success', 'Venda realizada com sucesso!');
+    }
+
+    public function pedidosEstudantes()
+    {
+        $user = auth()->user();
+
+        if ($user->type !== 'guard') {
+            return redirect()->route('agendamento.index')->with('errorAuth', 'Acesso negado.');
+        }
+
+        // Supondo que exista relação `students()` no model User
+       $students = $user->alunos()->with(['reservedProducts.sale.saleProducts.product'])->get();
+
+        return view('agendamento.estudantes', compact('students'));
     }
 
     public function cancelar($id)
