@@ -71,20 +71,20 @@
                                 <tbody>
                                     @foreach($vendas as $venda)
                                         <tr>
-                                            <td>{{ \Carbon\Carbon::parse($venda->saleDate)->format('d/m/Y') }}</td>
+                                            <td>{{ $venda->created_at->format('d/m/Y') }}</td>
                                             @if(Auth::user()->isAdmin())
                                                 <td>{{ $venda->user->name }}</td>
                                             @endif
                                             <td>
                                                 <small>
-                                                    @foreach($venda->saleProducts as $item)
-                                                        {{ $item->productQuantity }}x {{ $item->product->name }}
+                                                    @foreach($venda->items as $item)
+                                                        {{ $item->quantity }}x {{ $item->product->name ?? 'Produto removido' }}
                                                         @if(!$loop->last), @endif
                                                     @endforeach
                                                 </small>
                                             </td>
                                             <td>
-                                                <strong>R$ {{ number_format($venda->value, 2, ',', '.') }}</strong>
+                                                <strong>R$ {{ number_format($venda->total, 2, ',', '.') }}</strong>
                                             </td>
                                             <td>
                                                 <a href="{{ route('historico.show', $venda->id) }}"
