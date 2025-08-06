@@ -9,7 +9,7 @@ class ReservedProduct extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['sale_id', 'product_id', 'quantity', 'customer_id'];
+    protected $fillable = ['sale_id', 'product_id', 'quantity', 'customer_id', 'student_id'];
 
     public function product()
     {

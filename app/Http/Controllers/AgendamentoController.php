@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\User;
 use App\Models\ReservedProduct;
+use Illuminate\Support\Facades\Auth;
 
 class AgendamentoController extends Controller
 {
@@ -60,7 +61,8 @@ class AgendamentoController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'items_json' => 'required|string',
-            'payment_method' => 'required|in:cash,credit,card,pix',
+            'payment_method' => 'required|in:dinheiro,credit,cartao,pix',
+            'student_id' => 'nullable|exists:users,id',
             'scheduled_date' => 'required|date|after_or_equal:today',
         ]);
 
@@ -99,15 +101,38 @@ class AgendamentoController extends Controller
                 'quantity' => $item['quantity'],
             ]);
 
+            $user = auth()->user();
+
+            // Verificação: se for responsável e não enviou student_id, retorna erro
+            if ($user->type === 'responsible' && !$request->filled('student_id')) {
+                return back()->withErrors('Você precisa selecionar um estudante para o pedido.');
+            }
+
+            // Criação do ReservedProduct
             ReservedProduct::create([
                 'sale_id' => $cart->id,
                 'product_id' => $item['product_id'],
-                'customer_id' => auth()->id(),
-                'quantity' => $item['quantity']
+                'customer_id' => $user->id,
+                'student_id' => $user->type === 'student' ? $user->id : $request->student_id,
+                'quantity' => $item['quantity'],
             ]);
         }
 
         return redirect()->route('agendamento.index')->with('success', 'Venda agendada com sucesso!');
+    }
+
+    public function pedidosEstudantes()
+    {
+        $user = auth()->user();
+
+        if ($user->type !== 'guard') {
+            return redirect()->route('agendamento.index')->with('errorAuth', 'Acesso negado.');
+        }
+
+        // Supondo que exista relação `students()` no model User
+       $students = $user->alunos()->with(['reservedProducts.sale.saleProducts.product'])->get();
+
+        return view('agendamento.estudantes', compact('students'));
     }
 
     public function cancelar($id)
