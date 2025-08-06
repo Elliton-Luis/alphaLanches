@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    public function reservedProducts()
+    {
+        return $this->hasMany(ReservedProduct::class, 'student_id');
+    }
 }
