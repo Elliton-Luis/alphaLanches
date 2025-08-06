@@ -2,10 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Middleware\verifyAdmin;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CreateUserController;
-use App\Http\Controllers\CreateStudentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EstoqueController;
@@ -15,7 +13,6 @@ use App\Http\Controllers\GuardRequestController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\HistoricoRecargaController;
 use App\Http\Controllers\PDVController;
-use App\Http\Controllers\RecargaClienteController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\PedidosReservadosController;
@@ -29,11 +26,16 @@ Route::prefix('responsaveis')->middleware(VerifyAuthAdmin::class)->group(functio
     Route::post('/rejeitado/{id}', [GuardRequestController::class, 'rejectRequest'])->name('guardRequests.reject');
 });
 
-Route::get('/', [LoginController::class, 'showLogin'])->name('login');
-Route::post('/auth', [LoginController::class, 'authUser'])->name('login.auth');
-Route::post('/logout', [LoginController::class, 'logoutUser'])->name('login.logout');
-Route::get('/cadastro', [LoginController::class, 'showCadastro'])->name('login.cadastro');
-Route::post('/store', [LoginController::class, 'storeUser'])->name('login.store');
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/', 'showLogin')->name('login');
+
+    Route::prefix('auth')->group(function () {
+        Route::post('/login', 'authUser')->name('login.auth');
+        Route::post('/logout', 'logoutUser')->name('login.logout');
+        Route::get('/cadastro', 'showCadastro')->name('login.cadastro');
+        Route::post('/store', 'storeUser')->name('login.store');
+    });
+});
 
 Route::prefix('senha')->group(function () {
     Route::get('resetar', [PasswordController::class, 'showLinkRequestForm'])->name('password.request');
@@ -42,38 +44,31 @@ Route::prefix('senha')->group(function () {
     Route::post('resetar', [PasswordController::class, 'reset'])->name('password.update');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile/remove-picture', [ProfileController::class, 'removePicture'])->name('profile.removePicture');
-    Route::post('/profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
+Route::middleware(['auth'])->controller(ProfileController::class)->prefix('profile')->name('profile.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::post('/update', 'update')->name('update');
+    Route::delete('/delete', 'delete')->name('delete');
 });
 
 Route::prefix('estoque')->middleware(VerifyAuthAdmin::class)->group(function () {
     Route::get('/', [EstoqueController::class, 'index'])->name('estoque.index');
-    Route::post('/update-stock/{id}', [EstoqueController::class, 'updateStock'])->name('estoque.updateStock');
-    Route::post('/update-value/{id}', [EstoqueController::class, 'updateValue'])->name('estoque.updateValue');
-    Route::get('/edit/{id}', [EstoqueController::class, 'edit'])->name('estoque.edit');
-    Route::post('/update/{id}', [EstoqueController::class, 'update'])->name('estoque.update');
-    Route::delete('/delete/{id}', [EstoqueController::class, 'destroy'])->name('estoque.destroy');
 });
 
-Route::prefix('recarga')->middleware(VerifyAuthAdmin::class)->group(function () {
+Route::prefix('recarga')->middleware(['auth'])->group(function () {
     Route::get('/', [RecargaController::class, 'index'])->name('recarga.index');
 });
 
-Route::middleware(['auth'])->prefix('recargaCliente')->group(function () {
-    Route::get('/', [RecargaClienteController::class, 'index'])->name('recargaCliente.index');
+Route::middleware(VerifyAuthAdmin::class)->prefix('create/user')->group(function () {
+    Route::get('/', [CreateUserController::class, 'showIndex'])->name('create.user.index');
 });
 
-Route::get('/create/user', [CreateUserController::class, 'showIndex'])->name('create.user.index')->middleware(verifyAdmin::class);
+Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->name('painel.usuarios')->middleware(['auth']);
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/agendamento', [AgendamentoController::class, 'index'])->name('agendamento.index');
-    Route::post('/agendamento', [AgendamentoController::class, 'store'])->name('agendamento.store');
-    Route::get('/agendamento/search-user', [AgendamentoController::class, 'searchUser'])->name('agendamento.searchUser');
-    Route::patch('/agendamento/{id}/cancelar', [AgendamentoController::class, 'cancelar'])->name('agendamento.cancelar');
-    Route::get('/agendamento/estudantes', [AgendamentoController::class, 'pedidosEstudantes'])->name('agendamento.estudantes');
+Route::middleware(['auth'])->prefix('agendamento')->controller(AgendamentoController::class)->name('agendamento.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::post('/', 'store')->name('store');
+    Route::get('/search-user', 'searchUser')->name('searchUser');
+    Route::patch('/{id}/cancelar', 'cancelar')->name('cancelar');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -86,25 +81,15 @@ Route::middleware(VerifyAuthAdmin::class)->prefix('financeiro')->group(function 
     Route::get('/relatorio', [FinanceiroController::class, 'exportarPDF'])->name('relatorio');
 });
 
-Route::get('/painelUsuarios', [CreateUserController::class, 'showPainelUsuarios'])->middleware(VerifyAuthAdmin::class)->name('painel.usuarios');
-Route::get('/painelStudents', [CreateStudentController::class, 'showPainelStudents'])->middleware(['auth'])->name('painel.students');
-
 Route::middleware(VerifyAuthAdmin::class)->prefix('pdv')->group(function () {
     Route::get('/', [PDVController::class, 'index'])->name('pdv.index');
     Route::post('/repor', [PDVController::class, 'reporEstoque'])->name('repor');
 });
 
-Route::middleware(VerifyAuthAdmin::class)->group(function () {
-    Route::get('/historicoRecarga', [HistoricoRecargaController::class, 'index'])->name('historicoRecarga.index');
-});
+Route::get('/historicoRecarga', [HistoricoRecargaController::class, 'index'])->name('historicoRecarga.index')->middleware(['auth']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
     Route::get('/historico/{id}', [HistoricoController::class, 'show'])->name('historico.show');
     Route::get('/meu-historico', [HistoricoController::class, 'meuHistorico'])->name('historico.meu');
-
-    Route::middleware('admin')->group(function () {
-        Route::get('/relatorio-vendas', [HistoricoController::class, 'relatorio'])->name('historico.relatorio');
-    });
-
 });

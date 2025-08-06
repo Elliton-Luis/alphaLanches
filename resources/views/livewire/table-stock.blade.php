@@ -19,6 +19,18 @@
 
     <h2 class="text-center my-5 fw-bold">Controle de Estoque</h2>
 
+    @if (session()->has('success'))
+        <div class="alert alert-success mt-2">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session()->has('error'))
+        <div class="alert alert-danger mt-2">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="d-flex flex-wrap gap-3 mb-4 justify-content-center">
         <input type="text" class="form-control border-primary shadow-sm" placeholder="Pesquisar por nome..."
             wire:model.lazy="filterName" style="max-width: 250px;" maxlength="100">
@@ -76,13 +88,11 @@
                                     wire:click="editProduct({{ $product->id }})" data-bs-toggle="modal"
                                     data-bs-target="#modal-edit">Editar</button>
 
-                                <form action="{{ route('estoque.destroy', $product->id) }}" method="POST"
-                                    onsubmit="return confirm('Deseja realmente excluir?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger fw-semibold py-2"
-                                        style="width: 100px;">Excluir</button>
-                                </form>
+                                <button class="btn btn-danger fw-semibold py-2" style="width: 100px;"
+                                    wire:click="destroy({{ $product->id }})"
+                                    onclick="return confirm('Deseja realmente excluir?')">
+                                    Excluir
+                                </button>
                             </div>
                         </td>
                     </tr>

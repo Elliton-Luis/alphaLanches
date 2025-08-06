@@ -2,9 +2,8 @@
     <div class="accordion" id="accordionForm">
         <div class="accordion-item border-0 shadow-sm rounded-3 bg-white">
             <h2 class="accordion-header">
-                <button class="accordion-button rounded-3 bg-body-tertiary" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#formOne"
-                        aria-expanded="true" aria-controls="collapseOne">
+                <button class="accordion-button rounded-3 bg-body-tertiary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#formOne" aria-expanded="true" aria-controls="collapseOne">
                     ✏️ Criar Conta
                 </button>
             </h2>
@@ -32,43 +31,44 @@
 
                                 <div class="col-md-6">
                                     <label for="name" class="form-label text-secondary fw-semibold small">Nome*</label>
-                                    <input wire:model="name" type="text"
-                                        class="form-control rounded-2 shadow-sm"
+                                    <input wire:model="name" type="text" class="form-control rounded-2 shadow-sm"
                                         id="name" placeholder="Ex: Fulano de Tal" required maxlength="100">
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="email" class="form-label text-secondary fw-semibold small">Email*</label>
-                                    <input wire:model="email" type="email"
-                                        class="form-control rounded-2 shadow-sm"
+                                    <label for="email"
+                                        class="form-label text-secondary fw-semibold small">Email*</label>
+                                    <input wire:model="email" type="email" class="form-control rounded-2 shadow-sm"
                                         id="email" placeholder="Ex: email@mail.com" required maxlength="254">
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="telefone" class="form-label text-secondary fw-semibold small">Telefone</label>
-                                    <input wire:model="telefone" type="text"
-                                        class="form-control rounded-2 shadow-sm"
+                                    <label for="telefone"
+                                        class="form-label text-secondary fw-semibold small">Telefone</label>
+                                    <input wire:model="telefone" type="text" class="form-control rounded-2 shadow-sm"
                                         id="telefone" placeholder="(99) 99999-9999" maxlength="15">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="cpf" class="form-label text-secondary fw-semibold small">CPF</label>
-                                    <input wire:model="cpf" type="text"
-                                        class="form-control rounded-2 shadow-sm"
+                                    <input wire:model="cpf" type="text" class="form-control rounded-2 shadow-sm"
                                         id="cpf" placeholder="999.999.999-99" maxlength="14">
                                 </div>
-
-                                <div class="col-12">
-                                    <label for="type" class="form-label text-secondary fw-semibold small">Tipo de conta*</label>
-                                    <select wire:model="type" id="type"
-                                        class="form-select rounded-2 shadow-sm" required>
-                                        <option value="">Selecione um tipo</option>
-                                        <option value="admin">Administrador</option>
-                                        <option value="func">Funcionário</option>
-                                        <option value="guard">Responsável</option>
-                                    </select>
-                                </div>
-
+                                @auth
+                                    @if(auth()->user()->type === 'admin')
+                                        <div class="col-12">
+                                            <label for="type" class="form-label text-secondary fw-semibold small">Tipo de
+                                                conta*</label>
+                                            <select wire:model="type" id="type" class="form-select rounded-2 shadow-sm"
+                                                required>
+                                                <option value="">Selecione um tipo</option>
+                                                <option value="admin">Administrador</option>
+                                                <option value="func">Funcionário</option>
+                                                <option value="guard">Responsável</option>
+                                            </select>
+                                        </div>
+                                    @endif
+                                @endauth
                             </div>
 
                             <div class="d-flex justify-content-end mt-4">

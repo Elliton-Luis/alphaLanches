@@ -11,13 +11,13 @@ class ReservedProduct extends Model
 
     protected $fillable = ['sale_id', 'product_id', 'quantity', 'customer_id', 'student_id'];
 
-    public function sale()
-    {
-        return $this->belongsTo(Sale::class);
-    }
-
     public function product()
     {
-        return $this->belongsTo(Produto::class);
+        return $this->belongsTo(Produto::class, 'product_id');
+    }
+
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class, 'cart_id');
     }
 }

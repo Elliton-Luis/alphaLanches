@@ -4,7 +4,6 @@
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/perfil.css') }}">
-    <script src="{{ asset('js/perfil.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 

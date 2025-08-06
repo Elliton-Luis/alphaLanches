@@ -17,12 +17,16 @@
     </script>
     @endscript
 
+    @php
+        $nomeBotao = auth()->user()->tipo === 'admin' ? '📑 Contas Cadastradas' : '📑 Seus Alunos';
+    @endphp
+
     <div class="accordion" id="accordionTableAccounts">
         <div class="accordion-item border-0 shadow-sm rounded-3 bg-white">
             <h2 class="accordion-header">
                 <button class="accordion-button rounded-3 bg-body-tertiary" type="button" data-bs-toggle="collapse"
                     data-bs-target="#tableOne" aria-expanded="true" aria-controls="collapseOne">
-                    📑 Contas Cadastradas
+                    {{ $nomeBotao }}
                 </button>
             </h2>
 
@@ -124,16 +128,20 @@
                         <input wire:model="editTelefone" type="text" class="form-control rounded-2 telefone"
                             maxlength="15">
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Tipo</label>
-                        <select wire:model="editType" class="form-select rounded-2" required>
-                            <option value="">Selecione</option>
-                            <option value="admin">Administrador</option>
-                            <option value="func">Funcionário</option>
-                            <option value="guard">Responsável</option>
-                            <option value="student">Aluno</option>
-                        </select>
-                    </div>
+
+                    @auth
+                        @if(auth()->user()->type === 'admin')
+                            <div class="mb-3">
+                                <label class="form-label">Tipo</label>
+                                <select wire:model="editType" class="form-select rounded-2" required>
+                                    <option value="">Selecione</option>
+                                    <option value="admin">Administrador</option>
+                                    <option value="func">Funcionário</option>
+                                    <option value="guard">Responsável</option>
+                                </select>
+                            </div>
+                        @endif
+                    @endauth
                 </div>
                 <div class="modal-footer bg-body-tertiary border-0">
                     <button type="button" class="btn btn-secondary rounded-2" data-bs-dismiss="modal">Cancelar</button>
@@ -145,23 +153,23 @@
 </div>
 
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
-<script>
-  function applyMasks() {
-    document.querySelectorAll('.telefone').forEach(input => {
-      Inputmask({
-        mask: '(99) 99999-9999',
-        clearIncomplete: true,
-        showMaskOnHover: false,
-        showMaskOnFocus: true,
-      }).mask(input);
-    });
-  }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
+    <script>
+        function applyMasks() {
+            document.querySelectorAll('.telefone').forEach(input => {
+                Inputmask({
+                    mask: '(99) 99999-9999',
+                    clearIncomplete: true,
+                    showMaskOnHover: false,
+                    showMaskOnFocus: true,
+                }).mask(input);
+            });
+        }
 
-  document.addEventListener('DOMContentLoaded', applyMasks);
+        document.addEventListener('DOMContentLoaded', applyMasks);
 
-  document.addEventListener('livewire:load', () => {
-    Livewire.hook('message.processed', applyMasks);
-  });
-</script>
+        document.addEventListener('livewire:load', () => {
+            Livewire.hook('message.processed', applyMasks);
+        });
+    </script>
 @endpush

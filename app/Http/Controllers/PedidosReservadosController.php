@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Sale;
+use App\Models\Cart;
 use App\Models\Produto;
 use App\Models\ReservedProduct;
 use Illuminate\Support\Facades\DB;
@@ -13,8 +12,8 @@ class PedidosReservadosController extends Controller
     // Exibe os pedidos em espera
     public function index()
     {
-        $reservas = Sale::with(['user', 'reservedProducts.product'])
-            ->where('status', 'em espera')
+        $reservas = Cart::with(['user', 'reservedProducts.product'])
+            ->where('status', 'open')
             ->orderBy('scheduled_date')
             ->get();
 
@@ -25,14 +24,14 @@ class PedidosReservadosController extends Controller
     public function concluir($id)
     {
         DB::transaction(function () use ($id) {
-            $reserva = Sale::findOrFail($id);
+            $reserva = Cart::findOrFail($id);
 
-            // Atualiza o status da venda
-            $reserva->status = 'concluido';
+            // Atualiza o status do carrinho
+            $reserva->status = 'completed';
             $reserva->save();
 
             // Atualiza o estoque dos produtos reservados
-            $reservedProducts = ReservedProduct::where('sale_id', $reserva->id)->get();
+            $reservedProducts = ReservedProduct::where('cart_id', $reserva->id)->get();
 
             foreach ($reservedProducts as $reserved) {
                 $product = Produto::find($reserved->product_id);
@@ -41,7 +40,7 @@ class PedidosReservadosController extends Controller
             }
 
             // Remove os produtos reservados (pois já deram baixa)
-            ReservedProduct::where('sale_id', $reserva->id)->delete();
+            ReservedProduct::where('cart_id', $reserva->id)->delete();
         });
 
         return redirect()->route('pedidosReservados.index')->with('success', 'Baixa realizada com sucesso.');

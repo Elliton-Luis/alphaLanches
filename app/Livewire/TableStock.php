@@ -77,11 +77,11 @@ class TableStock extends Component
         ]);
 
         Produto::create([
-            'name'     => $this->name,
+            'name' => $this->name,
             'describe' => $this->describe,
-            'price'    => $this->price,
-            'type'     => $this->type,
-            'amount'   => $this->amount
+            'price' => $this->price,
+            'type' => $this->type,
+            'amount' => $this->amount
         ]);
 
         $this->resetForm();
@@ -94,16 +94,17 @@ class TableStock extends Component
         $product = Produto::findOrFail($id);
 
         $this->editingProductId = $product->id;
-        $this->name     = $product->name;
+        $this->name = $product->name;
         $this->describe = $product->describe;
-        $this->price    = $product->price;
-        $this->type     = $product->type;
-        $this->amount   = $product->amount;
+        $this->price = $product->price;
+        $this->type = $product->type;
+        $this->amount = $product->amount;
     }
 
     public function updateProduct()
     {
-        if (!$this->editingProductId) return;
+        if (!$this->editingProductId)
+            return;
 
         $this->validate([
             'name' => 'required|string|max:100|unique:products,name,' . $this->editingProductId,
@@ -163,5 +164,24 @@ class TableStock extends Component
         $this->price = null;
         $this->type = null;
         $this->amount = null;
+    }
+
+    public function destroy($id)
+    {
+        $produto = Produto::find($id);
+
+        if (!$produto) {
+            session()->flash('error', 'Produto não encontrado.');
+            return;
+        }
+
+        try {
+            $produto->delete();
+            session()->flash('success', 'Produto excluído com sucesso.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Erro ao excluir produto: ' . $e->getMessage());
+        }
+
+        return redirect()->route('estoque.index');
     }
 }
