@@ -71,7 +71,7 @@ Route::middleware(['auth'])->prefix('agendamento')->controller(AgendamentoContro
     Route::patch('/{id}/cancelar', 'cancelar')->name('cancelar');
 });
 
-Route::middleware(VerifyAuthAdmin::class)->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/pedidosReservados', [PedidosReservadosController::class, 'index'])->name('pedidosReservados.index');
     Route::patch('/pedidosReservados/{id}/concluir', [PedidosReservadosController::class, 'concluir'])->name('pedidosReservados.concluir');
 });

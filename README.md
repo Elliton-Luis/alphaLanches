@@ -38,14 +38,15 @@ Sistema web desenvolvido com Laravel para gerenciar uma lanchonete, incluindo fu
 * 📊 Ranking de produtos mais vendidos
 * 🔎 Filtro e busca de produtos e usuários
 * 🔐 Autenticação e controle de acesso
+* ✅ Histórico de vendas e pedidos
+* 🕰️ Agendamento de um pedido
 
 ---
 
 ## 📅 Futuras Funcionalidades
 
 * 🔑 Recuperação de senha através do email
-* ✅ Histórico de vendas e pedidos
-* 🕰️ Agendamento de um pedido
+
 ---
 
 ## 💻 Tecnologias Utilizadas
